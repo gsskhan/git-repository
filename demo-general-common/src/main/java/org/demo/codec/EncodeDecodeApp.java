@@ -15,6 +15,7 @@ public class EncodeDecodeApp {
 		log.info("Original = "+ str);
 		log.info("Encoded = " + encodedString);
 		log.info("Decoded = "+ new String(Base64.decodeBase64(encodedString)));
+		log.info("end of program ...");
 	}
 
 }
