@@ -5,8 +5,10 @@ Created on 03-Jul-2016
 '''
 
 
-import sys, logging, mysql.connector
+import sys, logging 
 from logging.handlers import RotatingFileHandler
+import sqlite3
+
 
 def _enable_logging(log_file_location):
     log = logging.getLogger()
@@ -21,17 +23,24 @@ def _enable_logging(log_file_location):
     fh.setFormatter(frmt)
     log.addHandler(fh)
     
-def _get_mysqldb_connection(user, password, database='test', host='localhost', port=3306):
+def _get_db_connection(db_filename):
     try:
-        conn = mysql.connector.connect(user=user, password=password, 
-                                      host=host, port=port, database=database)        
+        logging.info('sqlite3 database adaptor, or built-in pysqlite3 version: ' + str(sqlite3.version_info))        
+        logging.info('sqlite3 database version: ' + str(sqlite3.sqlite_version_info))        
+        conn = sqlite3.connect(db_filename)       
     except Exception as e:
-        logging.error("problem connecting mysqldb...")
+        logging.error("problem connecting sqlite db ...")
         logging.exception(e)
         raise e
     else:
-        logging.info("connection to mysqldb at host:"+ str(host)+ ", port:"+str(port)+" successful ...")
+        logging.info("connection to sqlite db :"+ str(db_filename)+ " successful ...")
     return conn
 
-def _close_mysqldb_connection(connection):
-    connection.close()
+def _close_db_connection(connection):
+    try:
+        connection.close()
+    except Exception as e:
+        logging.error("problem closing connection ...")
+        logging.exception(e)
+    else:
+        logging.info("connection closed successfully ...")    

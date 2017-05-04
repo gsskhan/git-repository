@@ -7,6 +7,4 @@ Created on 03-Jul-2016
 
 # program variables
 logfile_location = "/home/gsskhan/logs/"
-database_name ="ergcp"
-database_username ="root"
-database_user_password ="password"
+sqlite_db_filename="/home/gsskhan/sihir.db"

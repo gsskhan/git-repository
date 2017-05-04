@@ -6,7 +6,7 @@ Created on 02-Jul-2016
 
 import os, logging
 from sihir_root.pre_checks import _perform_prechecks
-from sihir_root.common_utility import _enable_logging, _get_mysqldb_connection, _close_mysqldb_connection
+from sihir_root.common_utility import _enable_logging, _get_db_connection, _close_db_connection
 from sihir_root.db_access import DatabaseAccess
 from sihir_root.common_conf import *
 
@@ -16,10 +16,14 @@ from sihir_root.common_conf import *
 def _main():
     logging.info("sihir started with process id ("+ str(os.getpid())+") ...")
     _perform_prechecks()
-    mysqldb_cnx = _get_mysqldb_connection(user=database_username, password=database_user_password, database=database_name)
-    dao = DatabaseAccess(mysqldb_cnx)
+    
+    db_cnx = _get_db_connection(db_filename=sqlite_db_filename)
+    dao = DatabaseAccess(db_cnx)
+    
+    # testing db operations
+    dao._set_test_table()
     dao._get_test_records()
-    _close_mysqldb_connection(mysqldb_cnx)
+    _close_db_connection(db_cnx)
     
     
 if __name__ == "__main__" :
