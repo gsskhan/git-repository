@@ -50,6 +50,6 @@ def _print_environment_attributes():
     logging.info("\t"+ "operating system version- " + str(platform.version()))
     logging.info("\t"+ "linux system            - " + str(platform.linux_distribution()))
     logging.info("\t"+ "mac system              - " + str(platform.mac_ver()))
-    #logging.info("\t"+ "login id                - " + str(os.getlogin()))
+    logging.info("\t"+ "login id                - " + str(os.getenv("USER")))
     logging.info("\t"+ "python version          - " + str(platform.python_version()))
     
