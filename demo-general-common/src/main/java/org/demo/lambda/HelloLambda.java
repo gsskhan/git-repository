@@ -8,14 +8,14 @@ public class HelloLambda {
 
 	public static void main(String[] args) {
 		log.info("program started...");
-		log.info("declaring method body");
+		log.info("declaring method body ...");
 		
 		SayHello method1 =  (name) -> { 
 			log.info("Hello ! "+ name);
 			return true;
 			};
 			
-		log.info("runnning method1");
+		log.info("runnning method1 ...");
 		method1.print("Gulam");
 		
 		SayHello method2 =  (name) -> { 
@@ -23,11 +23,10 @@ public class HelloLambda {
 			return true;
 			};
 			
-		log.info("runnning method2");
+		log.info("runnning method2 ...");
 		method2.print("Gulam");
 		
 		log.info("program end ...");
-
 	}
 
 }
