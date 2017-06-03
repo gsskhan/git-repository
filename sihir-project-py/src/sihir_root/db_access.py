@@ -13,16 +13,20 @@ class DatabaseAccess():
     def __init__(self, connection):
         self.connection = connection
         
-    def _set_test_table(self):
+    def _add_startup_time(self):
         cursor = self.connection.cursor()
-        cursor.execute("DROP TABLE IF EXISTS TEST")
-        cursor.execute("create table TEST (trans text, symbol text, qty real, price real)")
-        cursor.execute("insert into TEST values('BUY','RHAT',100,35.14)") 
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS RUN_STARTUP (
+                            RUN_ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                            START_TIME TEXT NOT NULL,
+                            END_TIME TEXT )
+                    ''')
+        cursor.execute(" insert into RUN_STARTUP values (null, datetime('now'), null) ") 
         self.connection.commit()     
+        logging.info("added startup time ...")
         
     def _get_test_records(self):
         cursor = self.connection.cursor()
-        cursor.execute("select * from test")
+        cursor.execute("select * from RUN_STARTUP")
         for row in cursor:
             logging.info(str(row))
         cursor.close()

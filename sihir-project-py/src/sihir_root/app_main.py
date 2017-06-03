@@ -6,9 +6,9 @@ Created on 02-Jul-2016
 
 import os, logging
 from sihir_root.pre_checks import _perform_prechecks
-from sihir_root.common_utility import _enable_logging, _get_db_connection, _close_db_connection
-from sihir_root.db_access import DatabaseAccess
-from sihir_root.common_conf import *
+from sihir_root.common_utility import _enable_logging
+from sihir_root.common_conf import logfile_location
+from sihir_root.app_service import _start_operations_
 
 
 
@@ -16,14 +16,8 @@ from sihir_root.common_conf import *
 def _main():
     logging.info("sihir started with process id ("+ str(os.getpid())+") ...")
     _perform_prechecks()
-    
-    db_cnx = _get_db_connection(db_filename=sqlite_db_filename)
-    dao = DatabaseAccess(db_cnx)
-    
-    # testing db operations
-    dao._set_test_table()
-    dao._get_test_records()
-    _close_db_connection(db_cnx)
+    logging.info('pre-checks successful, starting operations ...')
+    _start_operations_()   
     
     
 if __name__ == "__main__" :
@@ -35,4 +29,3 @@ if __name__ == "__main__" :
         logging.exception(e)
     else:
         logging.info("sihir completed...")
-
