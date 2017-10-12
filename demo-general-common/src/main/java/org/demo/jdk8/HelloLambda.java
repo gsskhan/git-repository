@@ -1,4 +1,4 @@
-package org.demo.lambda;
+package org.demo.jdk8;
 
 import org.apache.log4j.Logger;
 
