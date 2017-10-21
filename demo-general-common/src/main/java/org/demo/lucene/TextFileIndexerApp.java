@@ -43,12 +43,13 @@ public class TextFileIndexerApp {
 		IndexWriter iw = new IndexWriter(directory, irw);
 		
 		// optional - to delete all existing docs in index
-		// And create input directory if it not exists
 		log.info("Existing total docs in index: "+ iw.numDocs());
 		if (iw.numDocs() > 0) {
 			iw.deleteAll();
 			log.info("all docs deleted from index ...");
-		}		
+		}
+		
+		// optional - And create input directory if it not exists
 		File inputFilesDirectory = new File(filesLocation);
 		if (inputFilesDirectory.isDirectory() == false ){
 			inputFilesDirectory.mkdir();
