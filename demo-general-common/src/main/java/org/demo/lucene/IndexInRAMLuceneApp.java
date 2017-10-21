@@ -21,9 +21,9 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
-public class HelloLucene {
+public class IndexInRAMLuceneApp {
 	
-	private static Logger log = Logger.getLogger(HelloLucene.class);
+	private static Logger log = Logger.getLogger(IndexInRAMLuceneApp.class);
 	
 	public static void main(String[] args) throws IOException, ParseException {
 		log.info("program started ...");
