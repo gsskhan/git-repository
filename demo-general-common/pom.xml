@@ -7,6 +7,23 @@
 	<name>demo-general-common</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<!-- START - Lucene Dependencies -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>7.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>7.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>7.1.0</version>
+        </dependency>
+        <!-- END - Lucene Dependencies -->
 		<!-- Apache poi Dependencies -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
