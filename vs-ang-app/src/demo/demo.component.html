@@ -1,0 +1,22 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div>
+    <h1>{{title}}</h1>
+    <input type="text" value="{{title}}" /> 
+
+    <h1 [textContent]="title"></h1>
+    <input type="text" [value]="title" /> 
+
+    <h1 bind-textContent="title"></h1>
+    <input type="text" bind-value="title" /> 
+
+    <h1>Event Binding - {{title}}</h1>
+    <input type="text" [value]="title" (keypress)="showSomeMessage()"/> 
+
+    <h1>Event Binding Advanced - {{title}}</h1>
+    <input type="text" [value]="title" (keypress)="showSomeMessageWithKeyPressedValue($event)"/> 
+
+    <h1>Two way Binding - {{title}}</h1>
+    <input type="text" [(ngModel)]="title" /> 
+</div> 
+
+  
