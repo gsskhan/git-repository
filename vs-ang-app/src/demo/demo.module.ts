@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 
 import { DemoComponent} from "./demo.component";
 
+/* simple module */
 
 @NgModule({
   declarations: [DemoComponent],
