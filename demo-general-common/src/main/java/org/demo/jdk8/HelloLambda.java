@@ -26,7 +26,7 @@ public class HelloLambda {
 		log.info("runnning method2 ...");
 		method2.print("Gulam");
 		
-		log.info("program end ...");
+		log.info("program end .....");
 	}
 
 }
