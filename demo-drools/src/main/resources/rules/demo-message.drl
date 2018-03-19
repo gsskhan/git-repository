@@ -1,0 +1,22 @@
+//created on: 18 Mar, 2018
+package demo
+
+//list any import classes here.
+import com.demo.drools.model.Message
+
+//declare any global variables here
+
+
+rule "Rule 1"
+    when
+        $msg : Message( text == "Hello" )
+    then
+        System.out.println("Hello ....");
+end
+
+rule "Rule 2"
+    when
+        $msg : Message( text == "Bye" )
+    then
+        System.out.println("Bye ....");
+end
