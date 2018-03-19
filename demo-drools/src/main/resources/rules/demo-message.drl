@@ -6,6 +6,7 @@ import com.demo.drools.model.Message;
 
 //declare any global variables here
 global org.slf4j.Logger log;
+global com.demo.drools.dao.AppLogDao appLogDao;
 
 
 rule "Rule 1"
@@ -16,6 +17,7 @@ rule "Rule 1"
         $msg.setText("Bye");
         update($msg);
         log.info(" updated message ....");
+        appLogDao.addLogRecord("Rule 1 execution end");
         
 end
 
@@ -23,5 +25,6 @@ rule "Rule 2"
     when
         $msg : Message( text == "Bye" )
     then
-        log.info("Bye ....");
+    	log.info("Bye ....");
+    	appLogDao.addLogRecord("Rule 2 execution end");
 end
