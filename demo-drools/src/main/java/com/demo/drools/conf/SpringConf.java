@@ -6,8 +6,11 @@ import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieModule;
+import org.kie.api.builder.Message;
 import org.kie.api.runtime.KieContainer;
 import org.kie.internal.io.ResourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,18 +24,27 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class SpringConf {
 	
-	private static final String drlFile = "rules/demo-message.drl";
-	 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	
     @Bean
     public KieContainer kieContainer() {
-        KieServices kieServices = KieServices.Factory.get();
- 
+    	long startTime = System.currentTimeMillis();    	
+        KieServices kieServices = KieServices.Factory.get(); 
+        
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/demo-message-adhoc.drl"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/demo-message.drl"));
+        
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
-        kieBuilder.buildAll();
-        KieModule kieModule = kieBuilder.getKieModule();
- 
+        kieBuilder.buildAll();        
+        // To capture and log errors during build
+        if (kieBuilder.getResults().hasMessages(Message.Level.ERROR)) {
+            throw new RuntimeException("Build Errors:\n" + kieBuilder.getResults().toString());
+        }        
+        long endTime = System.currentTimeMillis();
+        log.info("Time to build rules : " + (endTime - startTime)  + " ms");
+        
+        KieModule kieModule = kieBuilder.getKieModule(); 
         return kieServices.newKieContainer(kieModule.getReleaseId());
     }
     

@@ -16,7 +16,7 @@ rule "Rule 1"
         log.info("Hello ....");
         $msg.setText("Bye");
         update($msg);
-        log.info(" updated message ....");
+        log.info("updated message ....");
         appLogDao.addLogRecord("Rule 1 execution end");
         
 end

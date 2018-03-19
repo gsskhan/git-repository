@@ -1,0 +1,24 @@
+//created on: 19 Mar, 2018
+package demo
+
+//list any import classes here.
+import com.demo.drools.model.Message;
+
+//declare any global variables here
+global org.slf4j.Logger log;
+
+
+rule "Rule 1 adhoc"
+    when
+        $msg : Message( text == "Hello" )
+    then
+        log.info("Hello from adhoc ....");
+        
+end
+
+rule "Rule 2 adhoc"
+    when
+        $msg : Message( text == "Bye" )
+    then
+    	log.info("Bye from adhoc....");
+end
