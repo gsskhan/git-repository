@@ -2,21 +2,26 @@
 package demo
 
 //list any import classes here.
-import com.demo.drools.model.Message
+import com.demo.drools.model.Message;
 
 //declare any global variables here
+global org.slf4j.Logger log;
 
 
 rule "Rule 1"
     when
         $msg : Message( text == "Hello" )
     then
-        System.out.println("Hello ....");
+        log.info("Hello ....");
+        $msg.setText("Bye");
+        update($msg);
+        log.info(" updated message ....");
+        
 end
 
 rule "Rule 2"
     when
         $msg : Message( text == "Bye" )
     then
-        System.out.println("Bye ....");
+        log.info("Bye ....");
 end
