@@ -21,7 +21,7 @@ public class AppMain1 {
 		KieServices kieServices = KieServices.Factory.get();
 		 
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/demo-message.drl"));
+        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/demo-message-adhoc.drl"));
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
         kieBuilder.buildAll();
         KieModule kieModule = kieBuilder.getKieModule();
@@ -40,7 +40,7 @@ public class AppMain1 {
         kieSession.fireAllRules();
         kieSession.dispose();
         
-        log.info("Program completed ...");
+        log.info("Program completed ... OK");
 		
 	}	
 
