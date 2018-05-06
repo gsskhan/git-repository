@@ -1,0 +1,1 @@
+mvn archetype:generate -DarchetypeArtifactId=maven-archetype-webapp -DgroupId=com.demo.sample -DartifactId=SampleWebApp -DinteractiveMode=false
