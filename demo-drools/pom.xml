@@ -16,7 +16,8 @@
 			<artifactId>drools-compiler</artifactId>
 			<version>${drools.version}</version>
 		</dependency>
-		<!-- 		<dependency>
+		<!-- Needed if using excel to write rules ... 		
+		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-decisiontables</artifactId>
 			<version>${drools.version}</version>
@@ -41,6 +42,12 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
 		</dependency>
+		<!-- Spring State Machine dependency -->
+		<dependency>
+        	<groupId>org.springframework.statemachine</groupId>
+        	<artifactId>spring-statemachine-core</artifactId>
+        	<version>${spring.statemachine.version}</version>
+    	</dependency>
 		<!-- junit dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -55,6 +62,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<drools.version>7.5.0.Final</drools.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
+		<spring.statemachine.version>2.0.2.RELEASE</spring.statemachine.version>
 		<junit.version>4.12</junit.version>
 	</properties>
 </project>
