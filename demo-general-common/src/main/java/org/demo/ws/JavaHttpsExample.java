@@ -52,7 +52,6 @@ class SimpleX509TrustManager implements X509TrustManager {
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        // TODO Auto-generated method stub
         return null;
     }
 

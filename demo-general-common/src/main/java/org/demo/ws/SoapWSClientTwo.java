@@ -158,22 +158,17 @@ public class SoapWSClientTwo {
 						
 						@Override
 						public X509Certificate[] getAcceptedIssuers() {
-							// TODO Auto-generated method stub
 							return null;
 						}
 						
 						@Override
 						public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-								throws CertificateException {
-							// TODO Auto-generated method stub
-							
+								throws CertificateException {							
 						}
 						
 						@Override
 						public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-								throws CertificateException {
-							// TODO Auto-generated method stub
-							
+								throws CertificateException {							
 						}
 					}
 			};
