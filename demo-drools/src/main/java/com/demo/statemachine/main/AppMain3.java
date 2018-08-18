@@ -31,10 +31,10 @@ public class AppMain3{
     }
     
     private static void runMyStateMachine(StateMachine<States, Events> stateMachine) {
-    	//stateMachine.start();
+    	stateMachine.start();
         stateMachine.sendEvent(Events.E1);
         stateMachine.sendEvent(Events.E2);    	
-        //stateMachine.stop();
+        stateMachine.stop();
     }
 
 }
