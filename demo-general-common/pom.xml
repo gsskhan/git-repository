@@ -7,6 +7,18 @@
 	<name>demo-general-common</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<!-- RabbitMQ client -->
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>4.8.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- START - Lucene Dependencies -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
