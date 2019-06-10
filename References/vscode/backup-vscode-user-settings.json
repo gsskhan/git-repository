@@ -1,0 +1,19 @@
+{
+    "telemetry.enableTelemetry": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "terminal.integrated.rendererType": "dom",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.project": true,
+        "**/.pyc": true,
+        "**/.settings": true
+    },
+    "python.jediEnabled": false,
+    "explorer.confirmDelete": false,
+    "editor.minimap.enabled": false,
+    "java.home": "/opt/java/jdk-11.0.3",
+    "maven.terminal.useJavaHome": true
+}
