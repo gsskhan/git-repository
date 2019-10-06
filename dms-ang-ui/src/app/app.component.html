@@ -2,9 +2,9 @@
 <mat-toolbar role="heading" color="primary">  
     <span>{{title}}</span>
     <span class="spacer-toolbar"></span>
+    <span>{{userFirstName | titlecase}}&nbsp;</span>
     <span>
-        <!-- <a mat-button [matMenuTriggerFor]="menu" color="primary">Menu</a> -->
-        <a mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <a mat-icon-button [matMenuTriggerFor]="menu" >
             <mat-icon>more_vert</mat-icon>
         </a>
         <mat-menu #menu="matMenu">

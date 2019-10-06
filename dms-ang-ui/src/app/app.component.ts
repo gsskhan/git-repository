@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Demo Angular 8 based UI';
-
+  title = 'Document Management System - Angular 8 based UI';
+  userFirstName = 'gulam';
 }
