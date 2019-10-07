@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from "../model/user";
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  user = new User;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  onClickSubmit(data) {
-    console.log("Entered details is : " + JSON.stringify(data));
+  onClickSubmit() {
+    console.log("Entered details is : " + JSON.stringify(this.user));
  }
 
 }
