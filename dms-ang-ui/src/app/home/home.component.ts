@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from "../model/user";
 import { UserService } from "../service/user.service";
 
@@ -10,7 +10,10 @@ import { UserService } from "../service/user.service";
 export class HomeComponent implements OnInit {
 
   loginStatus: Boolean;
+
+  @Input()
   user = new User;
+  userRecord = new User;
 
   constructor(private userService: UserService) { }
 
@@ -18,8 +21,12 @@ export class HomeComponent implements OnInit {
   }
 
   onClickSubmit() {
-    console.log("Submitted details is : " + JSON.stringify(this.user));
-    this.loginStatus = this.userService.userLoginAuthentication(this.user);
+    console.log("Submitted details is --> " + JSON.stringify(this.user));
+    this.userService.getUserWithUsername(this.user.userName)
+              .subscribe (u => this.userRecord = u);
+
+    console.log ("check DB -->" , this.userRecord.userName , this.userRecord.password , this.userRecord.userId )
+    console.log ("check UI -->" , this.user.userName , this.user.password )
   }
 
 }
