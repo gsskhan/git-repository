@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from "../model/user";
+import { UserService } from "../service/user.service";
 
 @Component({
   selector: 'app-home',
@@ -8,15 +9,17 @@ import { User } from "../model/user";
 })
 export class HomeComponent implements OnInit {
 
+  loginStatus: Boolean;
   user = new User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
   onClickSubmit() {
-    console.log("Entered details is : " + JSON.stringify(this.user));
- }
+    console.log("Submitted details is : " + JSON.stringify(this.user));
+    this.loginStatus = this.userService.userLoginAuthentication(this.user);
+  }
 
 }

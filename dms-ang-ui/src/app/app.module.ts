@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { UserService } from "./service/user.service";
+import { LogService } from "./service/log.service";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,10 @@ import { MatIconModule } from "@angular/material/icon";
     MatMenuModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    LogService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
