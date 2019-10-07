@@ -29,6 +29,7 @@ public class IntegrationTest extends DmsAppApplicationTests {
 		user.setLastname("T1");
 		user.setEmail("tester1@dms.org");
 		user.setRole(RolesEnum.SYSADMIN.toString());
+		user.setPassword("password");
 		user = userRepository.save (user);
 		log.info("Inserted user record successfully [{}].", user);
 		assertNotNull(user.getId());

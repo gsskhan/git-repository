@@ -14,7 +14,7 @@ import lombok.Data;
 @Document(collection = "users")
 public class User {
 	
-	@JsonProperty("id")
+	@JsonProperty("userId")
 	@Id
 	private ObjectId id;	
 	
@@ -39,5 +39,9 @@ public class User {
 	@JsonProperty("role")
 	@Field(value = "role")
 	private String role;
+	
+	@JsonProperty("password")
+	@Field(value = "password")
+	private String password;
 
 }
