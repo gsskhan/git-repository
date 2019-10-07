@@ -1,9 +1,17 @@
 <mat-tab-group color="primary">
     <mat-tab label="Login">
-        Login Form 
+        <form #userlogin="ngForm" (ngSubmit)="onClickSubmit(userlogin.value)" class="example-form">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="User Name" name="userName" ngModel>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input type="password" matInput placeholder="Password" name="userPassword" ngModel>
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Sign in</button>
+        </form>
     </mat-tab>
+
     <mat-tab label="Register">
         Register Form
     </mat-tab>
 </mat-tab-group>
-  

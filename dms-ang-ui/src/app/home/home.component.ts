@@ -12,4 +12,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClickSubmit(data) {
+    console.log("Entered details is : " + JSON.stringify(data));
+ }
+
 }
