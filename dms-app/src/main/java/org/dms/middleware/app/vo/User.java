@@ -1,6 +1,5 @@
 package org.dms.middleware.app.vo;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +15,7 @@ public class User {
 	
 	@JsonProperty("userId")
 	@Id
-	private ObjectId id;	
+	private String id;	
 	
 	@JsonProperty("userName")
 	@Indexed(unique = true)

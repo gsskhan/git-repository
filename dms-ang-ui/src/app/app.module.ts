@@ -9,6 +9,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { UserService } from "./service/user.service";
 import { LogService } from "./service/log.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LogService } from "./service/log.service";
     BrowserAnimationsModule,
     MatToolbarModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [
     UserService,
