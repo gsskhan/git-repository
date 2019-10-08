@@ -7,6 +7,7 @@ import { FormsModule }   from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from "@angular/common";
 import { HomeComponent } from "./component/home/home.component";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [ 
     { path: '', component: LoginRegisterComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
       MatTabsModule,
       MatInputModule,
       MatButtonModule,
+      MatSnackBarModule,
       CommonModule
   ],
   exports: [ RouterModule ]

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { User } from "../../model/user";
 import { UserService } from "../../service/user.service";
 import { Router } from "@angular/router";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-register',
@@ -16,7 +17,9 @@ export class LoginRegisterComponent implements OnInit {
   @Input()
   user = new User;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService
+    , private _router: Router
+    , private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -29,12 +32,20 @@ export class LoginRegisterComponent implements OnInit {
         console.log("Recieved from service --> " , JSON.stringify(u));
         if (u.password === this.user.password && u.userName === this.user.userName) {
           this.isUserLoggedIn = true;
-          this.router.navigate(['/home']);
+          this._router.navigate(['/home']);
+          this.displayMessage("Login successful. Welcome! " + u.firstName );
         } else {
           this.isUserLoggedIn = false;
-          this.router.navigate(['']);
+          this._router.navigate(['']);
+          this.displayMessage("Login failed. Please check username/password.");
         }
       });
+  }
+
+  displayMessage(message: string){
+    this._snackBar.open(message , 'Dismiss', {
+      duration : 5000
+    });
   }
 
 }
