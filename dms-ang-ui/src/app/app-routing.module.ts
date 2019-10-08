@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginRegisterComponent } from './login-register/login-register.component';
+import { LoginRegisterComponent } from './component/login-register/login-register.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input'
 import { FormsModule }   from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from "@angular/common";
-import { HomeComponent } from "./home/home.component";
+import { HomeComponent } from "./component/home/home.component";
 
 const routes: Routes = [ 
     { path: '', component: LoginRegisterComponent },
