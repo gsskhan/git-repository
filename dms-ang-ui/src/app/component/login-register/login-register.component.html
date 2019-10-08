@@ -2,17 +2,46 @@
     <mat-tab label="Login">
         <form #userlogin="ngForm" (ngSubmit)="authenticateLogin()" class="example-form">
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="User Name" name="userName" [(ngModel)]="user.userName">
+                <input matInput required placeholder="User Name" name="userName" [(ngModel)]="user.userName">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <input type="password" matInput placeholder="Password" name="userPassword" [(ngModel)]="user.password">
+                <input type="password" required matInput placeholder="Password" name="userPassword" [(ngModel)]="user.password">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Role</mat-label>
+                <mat-select required name="role" [(ngModel)]="user.role">
+                    <mat-option *ngFor="let r of rolesArray" [value]="r">{{r}}</mat-option>
+                </mat-select>
             </mat-form-field>
             <button type="submit" mat-raised-button>Sign in</button>
         </form>
     </mat-tab>
 
     <mat-tab label="Register">
-        Register Form
+        <form #userRegister="ngForm" (ngSubmit)="registerNewUser()" class="example-form">
+            <mat-form-field class="example-full-width">
+                <input matInput required placeholder="User Name" name="userName" [(ngModel)]="newuser.userName">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput required placeholder="First Name" name="firstName" [(ngModel)]="newuser.firstName">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput required placeholder="Last Name" name="lastName" [(ngModel)]="newuser.lastName">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input type="email" required matInput placeholder="Email" name="email" [(ngModel)]="newuser.email">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Role</mat-label>
+                <mat-select required name="role" [(ngModel)]="newuser.role">
+                    <mat-option *ngFor="let r of rolesArray" [value]="r">{{r}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input type="password" required matInput placeholder="Password" name="password" [(ngModel)]="newuser.password">
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Submit</button>
+        </form>
     </mat-tab>
 </mat-tab-group>
 

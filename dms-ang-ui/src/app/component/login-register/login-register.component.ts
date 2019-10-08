@@ -17,6 +17,12 @@ export class LoginRegisterComponent implements OnInit {
   @Input()
   user = new User;
 
+  @Input()
+  newuser = new User;
+
+  @Input()
+  rolesArray: string[] = ['SYSADMIN','APPROVER','REVIEWER','PUBLISHER'];
+
   constructor(private userService: UserService
     , private _router: Router
     , private _snackBar: MatSnackBar) { }
@@ -30,14 +36,14 @@ export class LoginRegisterComponent implements OnInit {
       .getUserWithUsername(this.user.userName)
       .subscribe(u => {
         console.log("Recieved from service --> " , JSON.stringify(u));
-        if (u.password === this.user.password && u.userName === this.user.userName) {
+        if (u.password === this.user.password && u.userName === this.user.userName && u.role === this.user.role) {
           this.isUserLoggedIn = true;
           this._router.navigate(['/home']);
           this.displayMessage("Login successful. Welcome! " + u.firstName );
         } else {
           this.isUserLoggedIn = false;
           this._router.navigate(['']);
-          this.displayMessage("Login failed. Please check username/password.");
+          this.displayMessage("Login failed. Please check username/password/role.");
         }
       });
   }
