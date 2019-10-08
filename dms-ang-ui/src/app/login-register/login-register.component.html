@@ -1,0 +1,21 @@
+<mat-tab-group color="primary">
+    <mat-tab label="Login">
+        <form #userlogin="ngForm" (ngSubmit)="authenticateLogin()" class="example-form">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="User Name" name="userName" [(ngModel)]="user.userName">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input type="password" matInput placeholder="Password" name="userPassword" [(ngModel)]="user.password">
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Sign in</button>
+        </form>
+    </mat-tab>
+
+    <mat-tab label="Register">
+        Register Form
+    </mat-tab>
+</mat-tab-group>
+
+<div *ngIf="isUserLoggedIn">
+    <span>Yay! logged in.</span>
+</div>

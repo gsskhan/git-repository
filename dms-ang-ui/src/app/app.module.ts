@@ -9,7 +9,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { UserService } from "./service/user.service";
 import { HttpClientModule } from "@angular/common/http";
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [

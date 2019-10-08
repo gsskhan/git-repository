@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from "../model/user";
-import { UserService } from "../service/user.service";
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -10,27 +7,9 @@ import { UserService } from "../service/user.service";
 })
 export class HomeComponent implements OnInit {
 
-  @Input()
-  isUserLoggedIn :boolean = false;
-
-  @Input()
-  user = new User;
-
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  onClickSubmit() {
-    console.log("Submitted form data --> " + JSON.stringify(this.user));
-    this.userService.getUserWithUsername(this.user.userName)
-              .subscribe (u => {
-                if (u.password === this.user.password && u.userName === this.user.userName ){
-                  this.isUserLoggedIn = true;
-                } else {
-                  this.isUserLoggedIn = false;
-                }
-              });
   }
 
 }
