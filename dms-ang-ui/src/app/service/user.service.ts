@@ -9,9 +9,13 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
+  url :string;
+
   constructor(protected http: HttpClient) { }
 
   public getUserWithUsername ( uname: String) : Observable<User> {
+    this.url = Endpoints.FIND_USER_GET + "/" + uname;
+    console.log("Initiated REST GET Call --> ", this.url);
     return this.http.get<User>(Endpoints.FIND_USER_GET + "/" + uname);
   } 
 

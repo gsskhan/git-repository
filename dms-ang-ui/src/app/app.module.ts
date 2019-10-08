@@ -8,8 +8,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { UserService } from "./service/user.service";
-import { LogService } from "./service/log.service";
 import { HttpClientModule } from "@angular/common/http";
+import { CommonModule } from '@angular/common'; 
 
 @NgModule({
   declarations: [
@@ -20,14 +20,14 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
+    CommonModule,
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
     HttpClientModule
   ],
   providers: [
-    UserService,
-    LogService
+    UserService
   ],
   bootstrap: [AppComponent]
 })
