@@ -11,10 +11,9 @@ from sihir_root.common_conf import logfile_location
 from sihir_root.app_service import _start_operations_
 
 
-
 # main method
 def _main():
-    logging.info("sihir started with process id ("+ str(os.getpid())+") ...")
+    logging.info("sihir started with process id (" + str(os.getpid()) + ") ...")
     _perform_prechecks()
     logging.info('pre-checks successful, starting operations ...')
     _start_operations_()   
@@ -25,7 +24,7 @@ if __name__ == "__main__" :
         _enable_logging(logfile_location)
         _main()
     except Exception as e:
-        logging.critical("sihir encountered error, program terminated... exception{"+str(e)+"}")   
+        logging.critical("sihir encountered error, program terminated... exception{" + str(e) + "}")   
         logging.exception(e)
     else:
         logging.info("sihir completed...")

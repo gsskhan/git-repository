@@ -4,7 +4,6 @@ Created on 03-Jul-2016
 @author: gsskhan
 '''
 
-
 import sys, logging 
 from logging.handlers import RotatingFileHandler
 import sqlite3
@@ -19,9 +18,10 @@ def _enable_logging(log_file_location):
     ch.setFormatter(frmt)
     log.addHandler(ch)    
     # file logger
-    fh = RotatingFileHandler(log_file_location+"/sihir-log.log", maxBytes=1000000 , backupCount=3)
+    fh = RotatingFileHandler(log_file_location + "/sihir-log.log", maxBytes=1000000 , backupCount=3)
     fh.setFormatter(frmt)
     log.addHandler(fh)
+
     
 def _get_db_connection(db_filename):
     try:
@@ -33,8 +33,9 @@ def _get_db_connection(db_filename):
         logging.exception(e)
         raise e
     else:
-        logging.info("connection to sqlite db :"+ str(db_filename)+ " successful ...")
+        logging.info("connection to sqlite db :" + str(db_filename) + " successful ...")
     return conn
+
 
 def _close_db_connection(connection):
     try:

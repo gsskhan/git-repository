@@ -5,6 +5,7 @@ Created on 03-Jul-2016
 '''
 import logging
 
+
 class DatabaseAccess():
     '''
     this class contains methods for accessing database objects
