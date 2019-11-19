@@ -50,10 +50,9 @@ def _check_sqlite3_in_os_():
 
         
 def _print_environment_attributes():    
-    logging.info("\t" + "operating system        - " + str(platform.uname()))
-    logging.info("\t" + "operating system version- " + str(platform.version()))
-    logging.info("\t" + "linux system            - " + str(platform.linux_distribution()))
-    logging.info("\t" + "mac system              - " + str(platform.mac_ver()))
-    logging.info("\t" + "login id                - " + str(os.getenv("USER")))
-    logging.info("\t" + "python version          - " + str(platform.python_version()))
+    logging.info("\t" + "operating system (OS)        - " + str(platform.system()))
+    logging.info("\t" + "operating system (OS) release- " + str(platform.release()))
+    logging.info("\t" + "operating system (OS) version- " + str(platform.version()))
+    logging.info("\t" + "login id                     - " + str(os.getenv("USER")))
+    logging.info("\t" + "python version               - " + str(platform.python_version()))
     
