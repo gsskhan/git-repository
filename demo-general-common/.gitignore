@@ -1,4 +1,9 @@
 /target/
+
+# eclipse
 /.classpath
 /.project
 /.settings/
+
+# vscode
+/.vscode/
