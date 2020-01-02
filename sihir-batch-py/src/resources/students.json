@@ -1,21 +1,32 @@
-{
-    "name": "Gulam Khan",
-    "roll": 11,
-    "marks": [{
-            "subject": "English",
-            "mark": 9.5
-        },
-        {
-            "subject": "Hindi",
-            "mark": 8.5
-        },
-        {
-            "subject": "Mathematics",
-            "mark": 7
-        },
-        {
-            "subject": "Science",
-            "mark": 8
-        }
-    ]
-}
+[{
+        "name": "Gulam Khan",
+        "roll": 11,
+        "marks": [
+            { "subject": "English", "mark": 9.5 },
+            { "subject": "Hindi", "mark": 8.5 },
+            { "subject": "Mathematics", "mark": 7 },
+            { "subject": "Science", "mark": 8 }
+        ]
+    },
+    {
+        "name": "Rahul Kumar",
+        "roll": 12,
+        "marks": [
+            { "subject": "English", "mark": 8.5 },
+            { "subject": "Hindi", "mark": 9.5 },
+            { "subject": "Mathematics", "mark": 10 },
+            { "subject": "Science", "mark": 9 }
+        ],
+        "grade": "A"
+    },
+    {
+        "name": "Priya Kumari",
+        "roll": 13,
+        "marks": [
+            { "subject": "English", "mark": 8 },
+            { "subject": "Hindi", "mark": 7.5 },
+            { "subject": "Mathematics", "mark": 8 },
+            { "subject": "Science", "mark": 10 }
+        ]
+    }
+]
