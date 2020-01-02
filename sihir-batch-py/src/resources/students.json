@@ -1,0 +1,21 @@
+{
+    "name": "Gulam Khan",
+    "roll": 11,
+    "marks": [{
+            "subject": "English",
+            "mark": 9.5
+        },
+        {
+            "subject": "Hindi",
+            "mark": 8.5
+        },
+        {
+            "subject": "Mathematics",
+            "mark": 7
+        },
+        {
+            "subject": "Science",
+            "mark": 8
+        }
+    ]
+}
