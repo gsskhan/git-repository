@@ -26,7 +26,7 @@ students_df3 = pd.DataFrame(students_json)
 print ( "Students DataFrame(3) using pandas.DataFrame(): \n %s" %(students_df3) )
 
 frames = [students_df1, students_df2, students_df3]
-students_df = pd.concat(frames)
+students_df = pd.concat(frames, ignore_index=True)
 print ( "Students DataFrame(concated all three) using pandas.concat(): \n %s" %(students_df) )
 
     
