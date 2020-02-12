@@ -3,11 +3,10 @@
 #
 ## Alternatively, detailed results can be extracted using: 
 # $ conda env export > environment.yml
-name: sihir-py3
+name: dev
 channels:
   - defaults
 dependencies:
   - pymongo
   - python=3
-prefix: /home/gsskhan/.conda/envs/sihir-py3
-
+prefix: /home/gsskhan/.conda/envs/dev

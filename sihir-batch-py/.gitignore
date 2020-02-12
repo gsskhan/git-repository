@@ -1,3 +1,13 @@
+# Don't ignore .gitignore
+!.gitignore
+
+# IDE
 /.project
 /.settings/
 /.vscode/
+
+# app
+/build/
+/dist/
+/sihir.egg-info/
+**/*__pycache__/*

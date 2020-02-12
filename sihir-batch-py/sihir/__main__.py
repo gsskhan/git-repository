@@ -1,10 +1,17 @@
+#-*- coding: utf-8 -*-
+
 '''
 Created on 02-Jul-2016
 
 @author: gsskhan
 '''
 
-import os, logging
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
+import logging
+
 from sihir_root.pre_checks import _perform_prechecks
 from sihir_root.common_utility import _enable_logging
 from sihir_root.common_conf import logfile_location
