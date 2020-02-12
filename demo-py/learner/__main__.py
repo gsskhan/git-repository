@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+'''
+Learner module main program
+'''
 
 import sys
 import os
+sys.path.append(os.path.abspath(os.path.join( os.path.dirname(__file__), '.' )))
+
 
 def _display_initial_stmts():
     print("PYTHONPATH :" + str(sys.path))
