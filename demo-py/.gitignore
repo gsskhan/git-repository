@@ -9,5 +9,5 @@
 # app
 /build/
 /dist/
-/sihir.egg-info/
+/demopy.egg-info/
 **/__pycache__/*
