@@ -1,0 +1,11 @@
+# Don't ignore .gitignore
+!.gitignore
+
+# IDE
+/.project
+/.settings/
+/.vscode/
+
+# App build/debug
+/batch-app/bin/
+/batch-app/obj/
