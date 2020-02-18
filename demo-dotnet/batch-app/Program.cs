@@ -1,4 +1,5 @@
 ﻿using System;
+using Validation;
 
 namespace batch_app
 {
@@ -6,8 +7,9 @@ namespace batch_app
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello from Gulam!");
-            Console.WriteLine("This is my first .NET core console app...");
+            Console.WriteLine("Batch started ...");
+            var validation = new App();
+            validation.checkStartUp();
         }
     }
 }
