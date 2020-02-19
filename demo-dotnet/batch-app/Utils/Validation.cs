@@ -1,8 +1,8 @@
 using System;
 
-namespace Validation
+namespace AppUtilities
 {
-    class App
+    class Validation
     {
         public void checkStartUp(){
             Console.WriteLine("validating startup ...");

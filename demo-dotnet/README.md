@@ -51,5 +51,13 @@ Console type app: batch-app
 
     $ dotnet run
         Hello World!
-        
-    $ 
+    
+    To add new nuget package to project
+    -----------------------------------
+    $ dotnet add package <package name>
+
+        Example: $ dotnet add package Newtonsoft.Json
+
+        After the command completes, open the .csproj file to see the added reference.
+
+    
