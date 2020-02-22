@@ -11,4 +11,6 @@
 /dist/
 /sihir.egg-info/
 **/*__pycache__/*
-/env/
+
+# Python virtual env
+/.env/
