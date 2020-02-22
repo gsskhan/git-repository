@@ -1,0 +1,4 @@
+pip==20.0.2
+pymongo==3.10.1
+setuptools==40.8.0
+wheel==0.34.2
