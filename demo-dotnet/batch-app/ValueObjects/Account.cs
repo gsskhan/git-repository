@@ -1,6 +1,6 @@
 using System;
 
-namespace AppValueObjects
+namespace Demo.Batch.App.ValueObjects
 {
     class Account
     {

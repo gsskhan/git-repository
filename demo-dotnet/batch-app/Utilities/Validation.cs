@@ -1,6 +1,6 @@
 using System;
 
-namespace AppUtilities
+namespace Demo.Batch.App.Utilities
 {
     class Validation
     {

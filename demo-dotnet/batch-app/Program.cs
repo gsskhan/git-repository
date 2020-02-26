@@ -1,9 +1,9 @@
 ﻿using System;
-using AppUtilities;
-using AppValueObjects;
+using Demo.Batch.App.Utilities;
+using Demo.Batch.App.ValueObjects;
 using Newtonsoft.Json;
 
-namespace batch_app
+namespace Demo.Batch.App
 {
     class Program
     {

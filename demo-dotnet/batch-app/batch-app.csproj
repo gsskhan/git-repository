@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>batch_app</RootNamespace>
+    <RootNamespace>Demo.Batch.App</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
