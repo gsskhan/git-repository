@@ -1,10 +1,12 @@
 package org.demo.big.data.spark.conf;
 
+import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
 public class Spark {
 	
+	private SparkConf sparkConf;
 	private SparkSession sparkSession;
 	private JavaSparkContext sparkContext;
 	
@@ -17,16 +19,22 @@ public class Spark {
 	 *            connection
 	 */
 	public Spark(String appName, String masterName) {
+		this.sparkConf = new SparkConf()
+							.setAppName(appName)
+							.setMaster(masterName);
 		this.sparkSession = SparkSession
 							.builder()
-							.appName(appName)
-							.master(masterName)
+							.config(this.sparkConf)
 							.getOrCreate();
 		this.sparkContext = new JavaSparkContext(this.sparkSession.sparkContext());
 	}
 	
 	public JavaSparkContext getSparkContext() {
 		return this.sparkContext;
+	}
+
+	public SparkSession getSparkSession() {
+		return this.sparkSession;
 	}
 
 }
