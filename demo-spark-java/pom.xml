@@ -13,7 +13,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spark.version>2.4.5</spark.version>
 		<scala.version>2.12</scala.version>
-		<hadoop.version>2.7.7</hadoop.version>
 		<mongo.spark.connector.version>2.4.1</mongo.spark.connector.version>
 	</properties>
 	<dependencies>
@@ -27,6 +26,12 @@
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-sql_${scala.version}</artifactId>
 			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-mllib_${scala.version}</artifactId>
+			<version>${spark.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Mongo db spark connector/driver -->
 		<dependency>
