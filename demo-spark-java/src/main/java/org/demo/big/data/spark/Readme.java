@@ -31,6 +31,8 @@ public class Readme {
             log.info(l);
         });
 
+        sc.close();
+
     }
 
 }
