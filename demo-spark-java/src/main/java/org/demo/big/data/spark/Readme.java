@@ -2,11 +2,13 @@ package org.demo.big.data.spark;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.UUID;
 
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function2;
+import org.apache.spark.api.java.function.VoidFunction;
 import org.demo.big.data.spark.conf.Spark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,18 +41,25 @@ public class Readme {
             log.info(l);
         });
 
+        /****************** Word count example **************************/
+
         // Split up into words.
         JavaRDD<String> wordsDS = readmeDS.flatMap(l -> {
             Iterator<String> list = Arrays.asList(l.split(" ")).iterator();
             return list;
         });
-
         // Transform into pairs and count.
         JavaPairRDD<String, Integer> countsDS = wordsDS
                                 .mapToPair(s-> new Tuple2<>(s, 1))
-                                .reduceByKey( (Function2<Integer, Integer, Integer>) (a, b) -> a + b);
+                                .reduceByKey( (Function2<Integer, Integer, Integer>) (w, c) -> w + c);
 
-        countsDS.saveAsTextFile("/tmp/word_count_of_readme_md");
+        // write results on disk
+        countsDS.saveAsTextFile("/tmp/word_count_of_readme_md_"+ UUID.randomUUID());
+        
+        log.info("Total words = {}", countsDS.count());
+        countsDS.foreach( (VoidFunction<Tuple2<String,Integer>>) (t) ->  {
+            log.info("word [{}] count [{}]", t._1(), t._2());
+        });
 
         // Destroy spark context
         sc.stop();
