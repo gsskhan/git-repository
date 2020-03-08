@@ -24,7 +24,7 @@ public class Readme {
 
     public static void main(String[] args) {
         JavaSparkContext sc = new Spark("Readme-Calculations", "local").getSparkContext();
-        String file = sc.getSparkHome().get() + "/README.md";
+        String file = "samples/README.md";
 
         // Load the README.md file and display the contents
         JavaRDD<String> readmeDS = sc.textFile(file);
