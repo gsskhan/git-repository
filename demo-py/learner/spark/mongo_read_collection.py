@@ -1,12 +1,8 @@
 # -*- coding:utf-8 -*-
 
 #import required modules
-import logging
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession
-
-#configure logging
-log = logging.getLogger(__name__)
 
 #Create spark configuration object
 conf = SparkConf()
@@ -15,6 +11,12 @@ conf.setMaster("local").setAppName("Mongo Read Collections")
 #Create spark context and sparksession
 sc = SparkContext.getOrCreate(conf=conf)
 spark = SparkSession(sparkContext = sc)
+
+#configure logging, Log Level
+log4jLogger = sc._jvm.org.apache.log4j
+log4jLogger.LogManager.getRootLogger().setLevel(log4jLogger.Level.INFO)
+log4jLogger.LogManager.getLogger("org.apache.spark").setLevel(log4jLogger.Level.WARN)
+log = log4jLogger.LogManager.getLogger(__name__)
 
 #mongodb connection details
 mongo_hostname = "127.0.0.1"
@@ -35,7 +37,7 @@ people = spark.createDataFrame(data = [("Bilbo Baggins",  50),
                                 ("Fili", 82),
                                 ("Bombur", None)],
                                schema= ["name", "age"])
-log.warning("dataframe object created ...")
+log.info("dataframe object created ...")
 
 # create a dataframe of people
 people.write.format("mongo").mode("append") \
@@ -43,12 +45,12 @@ people.write.format("mongo").mode("append") \
     .option("database", mongo_db_name) \
     .option("collection", mongo_collection) \
     .save()
-log.warning("dataframe object saved to db ...")
+log.info("dataframe object saved to db ...")
 
 #read mongodb collection data into a spark dataframe
 peopleDF = spark.read.format("mongo").option("uri", mongo_uri).load()
 
 #show the data loaded into dataframe
-log.warning("dataframe object read from db ...")
+log.info("dataframe object read from db ...")
 
 peopleDF.show()
