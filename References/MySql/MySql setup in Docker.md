@@ -250,3 +250,70 @@ Open Workbench and use below as connection details
     port: 3406
     username: dev
     password: password
+
+To enable external access to the database, you need to change localhost to % for user.
+======================================================================================
+For root user: You can do via Workbench - by logging as user "dev", since you granted all previledges to it.
+
+    In workbench, navigate to "Administration" > "Users And Priveledges" > Change "Limits to host matching" for root; user to % from localhost.
+
+Alternatively,
+
+    From docker container (Not verified -- Approach)
+
+    gsskhan@gsskhan-Inspiron-3542:~/Downloads$ docker exec -it mysql bash
+    bash-4.2# mysql -uroot -p        
+    Enter password: 
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 89
+    Server version: 8.0.19 MySQL Community Server - GPL
+
+    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql> SELECT User, Host FROM mysql.user;
+    +------------------+-----------+
+    | User             | Host      |
+    +------------------+-----------+
+    | dev              | %         |
+    | root             | localhost |
+    | healthchecker    | localhost |
+    | mysql.infoschema | localhost |
+    | mysql.session    | localhost |
+    | mysql.sys        | localhost |
+    +------------------+-----------+
+    6 rows in set (0.00 sec)
+
+    mysql> UPDATE mysql.user SET Host='%' WHERE Host='localhost' AND User='root';
+    Query OK, 0 rows affected (0.00 sec)
+    Rows matched: 0  Changed: 0  Warnings: 0
+
+    mysql> UPDATE mysql.db SET Host='%' WHERE Host='localhost' AND User='root';
+    Query OK, 0 rows affected (0.00 sec)
+    Rows matched: 0  Changed: 0  Warnings: 0
+
+    mysql> SELECT User, Host FROM mysql.user;
+    +------------------+-----------+
+    | User             | Host      |
+    +------------------+-----------+
+    | dev              | %         |
+    | root             | %         |
+    | healthchecker    | localhost |
+    | mysql.infoschema | localhost |
+    | mysql.session    | localhost |
+    | mysql.sys        | localhost |
+    +------------------+-----------+
+    6 rows in set (0.00 sec)
+
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.01 sec)
+
+    mysql> 
+
+
+
