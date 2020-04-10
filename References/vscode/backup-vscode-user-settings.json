@@ -1,19 +1,22 @@
 {
+    "workbench.startupEditor": "none",
+    "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
-    "workbench.startupEditor": "newUntitledFile",
-    "terminal.integrated.rendererType": "dom",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "breadcrumbs.enabled": false,
+    "editor.minimap.enabled": false,
     "files.exclude": {
         "**/.classpath": true,
-        "**/.factorypath": true,
         "**/.project": true,
-        "**/.pyc": true,
-        "**/.settings": true
+        "**/.settings": true,
+        "**/.factorypath": true
     },
-    "python.jediEnabled": false,
+    "maven.executable.preferMavenWrapper": false,
+    "maven.terminal.useJavaHome": true,
+    "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/home/gsskhan/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
     "explorer.confirmDelete": false,
-    "editor.minimap.enabled": false,
-    "java.home": "/opt/java/jdk-11.0.3",
-    "maven.terminal.useJavaHome": true
+    "explorer.confirmDragAndDrop": false,
+    "python.condaPath": "/opt/anaconda/anaconda3/bin/conda",
+    "python.pythonPath": "/opt/anaconda/anaconda3/bin/python",
 }
