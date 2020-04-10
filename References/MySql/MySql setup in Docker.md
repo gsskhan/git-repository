@@ -2,20 +2,20 @@ Downloading a MySQL Server Docker Image
 =======================================
 Command: docker pull mysql/mysql-server:tag
 
-gsskhan@gsskhan-Inspiron-3542:~$ docker pull mysql/mysql-server
-Using default tag: latest
-latest: Pulling from mysql/mysql-server
-c7127dfa6d78: Pull complete 
-530b30ab10d9: Pull complete 
-59c6388c2493: Pull complete 
-cca3f8362bb0: Pull complete 
-Digest: sha256:7cd104d6ff11f7e6a16087f88b1ce538bcb0126c048a60cd28632e7cf3dbe1b7
-Status: Downloaded newer image for mysql/mysql-server:latest
-docker.io/mysql/mysql-server:latest
+    gsskhan@gsskhan-Inspiron-3542:~$ docker pull mysql/mysql-server
+    Using default tag: latest
+    latest: Pulling from mysql/mysql-server
+    c7127dfa6d78: Pull complete 
+    530b30ab10d9: Pull complete 
+    59c6388c2493: Pull complete 
+    cca3f8362bb0: Pull complete 
+    Digest: sha256:7cd104d6ff11f7e6a16087f88b1ce538bcb0126c048a60cd28632e7cf3dbe1b7
+    Status: Downloaded newer image for mysql/mysql-server:latest
+    docker.io/mysql/mysql-server:latest
 
-gsskhan@gsskhan-Inspiron-3542:~$ docker images
-REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
-mysql/mysql-server   latest              a7a39f15d42d        2 months ago        381MB
+    gsskhan@gsskhan-Inspiron-3542:~$ docker images
+    REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+    mysql/mysql-server   latest              a7a39f15d42d        2 months ago        381MB
 
 Starting a MySQL Server Instance
 ================================
@@ -23,12 +23,12 @@ Command: docker run --name=container_name -d image_name:tag
 
 (The -d option used in the docker run command above makes the container run in the background. )
 
-gsskhan@gsskhan-Inspiron-3542:~$ docker run --name=mysql -d mysql/mysql-server:latest
-04e6d9f9e16b7cbfd3e3f5534a80e2fe8576b36df02eef42aeff72789ef965b9
+    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name=mysql -d mysql/mysql-server:latest
+    04e6d9f9e16b7cbfd3e3f5534a80e2fe8576b36df02eef42aeff72789ef965b9
 
-gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
-CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                            PORTS                 NAMES
-04e6d9f9e16b        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   10 seconds ago      Up 9 seconds (health: starting)   3306/tcp, 33060/tcp   mysql
+    gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
+    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                            PORTS                 NAMES
+    04e6d9f9e16b        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   10 seconds ago      Up 9 seconds (health: starting)   3306/tcp, 33060/tcp   mysql
 
 Monitor output of container
 ===========================
@@ -76,8 +76,8 @@ Check the password with, for example, with following:
 
 Command: docker logs container_name 2>&1 | grep GENERATED
 
-gsskhan@gsskhan-Inspiron-3542:~$ docker logs mysql 2>&1 | grep GENERATED
-[Entrypoint] GENERATED ROOT PASSWORD: nIDgErGON9yfgAcuRYwH3fR@gq
+    gsskhan@gsskhan-Inspiron-3542:~$ docker logs mysql 2>&1 | grep GENERATED
+    [Entrypoint] GENERATED ROOT PASSWORD: nIDgErGON9yfgAcuRYwH3fR@gq
 
 Connecting to MySQL Server from within the Container
 ====================================================
