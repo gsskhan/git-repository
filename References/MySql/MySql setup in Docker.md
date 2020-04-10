@@ -153,3 +153,100 @@ To delete the MySQL container, stop it first, and then use the docker rm command
 =================================================================================
 docker stop mysql
 docker rm mysql
+
+
+# Connecting with Mysql Workbench
+=================================
+=================================
+
+Download and install same version of Workbench from MySql Oracle website, as same/compatible to mysql version you are running.
+
+Then, we need to run the mysql image exposing ports. 
+
+Also we cant connect as root user outside docker container. 
+
+    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
+    e8249e5afbdcb938853d3bb641ae0ee1095469495888a4fd34275c96543ebb18
+
+There, is trick. To set root user password, Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As above).
+
+    gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
+    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                    PORTS                               NAMES
+    e8249e5afbdc        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   39 seconds ago      Up 38 seconds (healthy)   33060/tcp, 0.0.0.0:3406->3306/tcp   mysql
+
+Login to container, then login to mysql with user root; and password. Create a new user, which can be accessed from outside container.
+
+    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
+    bash-4.2# mysql -uroot -p
+    Enter password: 
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 10
+    Server version: 8.0.19 MySQL Community Server - GPL
+
+    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql>
+
+I create a user named "dev", grant all privileges, and quit.
+
+Important:
+=========
+This step is required to log into MySQL from outside the container. The root user will not be able to log in from the host OS (Linux). Use % instead of localhost in dev@localhost.
+
+
+    mysql> CREATE USER 'dev'@'%' IDENTIFIED BY 'password';
+    Query OK, 0 rows affected (0.02 sec)
+
+    mysql> GRANT ALL PRIVILEGES ON * . * TO 'dev'@'%';
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> exit
+    Bye
+
+Test your connection of new user "dev"
+
+    bash-4.2# mysql -udev -ppassword
+    mysql: [Warning] Using a password on the command line interface can be insecure.
+    Welcome to the MySQL monitor.  Commands end with ; or \g.
+    Your MySQL connection id is 14
+    Server version: 8.0.19 MySQL Community Server - GPL
+
+    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+    Oracle is a registered trademark of Oracle Corporation and/or its
+    affiliates. Other names may be trademarks of their respective
+    owners.
+
+    Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+    mysql> SELECT User, Host FROM mysql.user;
+    +------------------+-----------+
+    | User             | Host      |
+    +------------------+-----------+
+    | dev              | %         |
+    | healthchecker    | localhost |
+    | mysql.infoschema | localhost |
+    | mysql.session    | localhost |
+    | mysql.sys        | localhost |
+    | root             | localhost |
+    +------------------+-----------+
+    6 rows in set (0.00 sec)
+
+    mysql> quit
+    Bye
+    bash-4.2# exit
+    exit
+    gsskhan@gsskhan-Inspiron-3542:~$
+
+Open Workbench and use below as connection details
+==================================================
+    hostname: localhost
+    port: 3406
+    username: dev
+    password: password
