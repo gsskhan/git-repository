@@ -42,6 +42,20 @@ peopleDF = spark.createDataFrame(data = [("Bilbo Baggins",  50),
 log.info ("people - data frame created")
 peopleDF.show()
 
+log.info ("people - data frame schema")
+peopleDF.printSchema()
+
+log.info ("people - data frame columns = {}".format(peopleDF.columns))
+
+
+log.info("Type of peopleDF = {}".format( type(peopleDF) ))
+
+count_of_people=peopleDF.count()
+log.info("people - data frame has {} rows(s)".format(count_of_people))
+
+oldestPersonDF=peopleDF.rdd.max(key= lambda x: 0 if (x[1] == None) else int(x[1]))
+log.info("people - dataframe with oldest age = {}".format(oldestPersonDF[0]))
+
 # write a dataframe of people
 peopleDF.write.format("jdbc").options(
     url = db_url,
@@ -58,7 +72,7 @@ jdbcDF = spark.read.format("jdbc").options(
     driver=driver_name,
     user=db_user,
     password=db_password).load()
-log.info ("people - data frame read. Row(s) = {}".format(jdbcDF.count()))
+log.info ("people - data frame read back. Row(s) = {}".format(jdbcDF.count()))
 jdbcDF.show()
 
 
