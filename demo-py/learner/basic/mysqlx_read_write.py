@@ -28,7 +28,6 @@ else:
     print("Created new collection: {}".format(countryinfo.get_name()))
 
 db.start_transaction()
-
 # Add a document to 'my_collection'
 result = countryinfo.add({'_id': '1', 'name': 'Sakovia', 'area': 15}).execute()
 
@@ -38,10 +37,13 @@ result = countryinfo.add({'_id': '2', 'name': 'Krakazis', 'area': 15},
             {'_id': '4', 'name': 'Mayura', 'area': 37}).execute()
 
 print("Total record(s): {}".format(countryinfo.count()))
-
 db.commit()
 
 # Read the records
-
+result = countryinfo.find().execute()
+doc = result.fetch_one()
+while doc:
+    print("Record: {}".format(doc))
+    doc = result.fetch_one()
 
 db.close()
