@@ -14,6 +14,7 @@ dependencies:
   - matplotlib
   - scipy
   - numpy
+  - mysql-connector-python
   - python=3
 prefix: /home/gsskhan/.conda/envs/dev
 
