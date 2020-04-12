@@ -31,3 +31,18 @@ $ python3 -m pip install dist/demopy-0.1-py3-none-any.whl
 The package got installed at following location for myself: /home/gsskhan/.local/lib/python3.6/site-packages
 
 Note: Packages installed by Pure distutils packages, the pip unistall command is not able to remove/delete them.
+
+PyDev Settings
+==============
+
+The default .pydevproject file
+
+	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<?eclipse-pydev version="1.0"?>
+	<pydev_project>
+	<pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
+		<path>/${PROJECT_DIR_NAME}</path>
+	</pydev_pathproperty>
+	<pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python interpreter</pydev_property>
+	<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+	</pydev_project>

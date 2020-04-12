@@ -11,3 +11,4 @@
 /dist/
 /demopy.egg-info/
 **/__pycache__/*
+/.pydevproject
