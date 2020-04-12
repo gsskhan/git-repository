@@ -20,11 +20,6 @@ else:
     schema = db.create_schema("dms_x")
     print("Created new schema: {}".format(schema.get_name()))
 
-
-#try:
-#    
-#except Exception as ex:
-#    print("failed to get collection")
 if schema.get_collection("country").exists_in_database():
     countryinfo = schema.get_collection("country")
     print("Found collection: {}".format(countryinfo.get_name()))
@@ -32,19 +27,21 @@ else:
     countryinfo = schema.create_collection("country")
     print("Created new collection: {}".format(countryinfo.get_name()))
 
+db.start_transaction()
+
 # Add a document to 'my_collection'
-countryinfo.add({'_id': '1', 'name': 'Sakovia', 'area': 15}).execute()
+result = countryinfo.add({'_id': '1', 'name': 'Sakovia', 'area': 15}).execute()
 
 # You can also add multiple documents at once
-countryinfo.add({'_id': '2', 'name': 'Krakazis', 'area': 15},
+result = countryinfo.add({'_id': '2', 'name': 'Krakazis', 'area': 15},
             {'_id': '3', 'name': 'Roshuland', 'area': 15},
             {'_id': '4', 'name': 'Mayura', 'area': 37}).execute()
 
-# Remove the document with '_id' = '1'
-countryinfo.remove('_id = 1').execute()
-
 print("Total record(s): {}".format(countryinfo.count()))
- 
-# commit and close the connections
+
 db.commit()
+
+# Read the records
+
+
 db.close()
