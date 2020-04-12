@@ -161,18 +161,18 @@ docker rm mysql
 
 Download and install same version of Workbench from MySql Oracle website, as same/compatible to mysql version you are running.
 
-Then, we need to run the mysql image exposing ports. 
+Then, we need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
 
 Also we cant connect as root user outside docker container. 
 
-    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
-    e8249e5afbdcb938853d3bb641ae0ee1095469495888a4fd34275c96543ebb18
+    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -p 33406:33060 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
+    f46ab2a9236098a602604277ec9b023b9e396ebfd21b9491bc912592985fb834
 
 There, is trick. To set root user password, Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As above).
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
-    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                    PORTS                               NAMES
-    e8249e5afbdc        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   39 seconds ago      Up 38 seconds (healthy)   33060/tcp, 0.0.0.0:3406->3306/tcp   mysql
+    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                      PORTS                                              NAMES
+    f46ab2a92360        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   39 seconds ago      Up 39 seconds (healthy)     0.0.0.0:3406->3306/tcp, 0.0.0.0:33406->33060/tcp   mysql
 
 Login to container, then login to mysql with user root; and password. Create a new user, which can be accessed from outside container.
 
@@ -197,7 +197,7 @@ I create a user named "dev", grant all privileges, and quit.
 
 Important:
 =========
-This step is required to log into MySQL from outside the container. The root user will not be able to log in from the host OS (Linux). Use % instead of localhost in dev@localhost.
+This step is required to log into MySQL from outside the container. The root user will not be able to log in from the host OS (Linux) by default. Use % instead of localhost in dev@localhost.
 
 
     mysql> CREATE USER 'dev'@'%' IDENTIFIED BY 'password';
