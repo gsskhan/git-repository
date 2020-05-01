@@ -7,10 +7,10 @@
     "breadcrumbs.enabled": false,
     "editor.minimap.enabled": false,
     "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true,
+      "**/.factorypath": true
     },
     "maven.executable.preferMavenWrapper": false,
     "maven.terminal.useJavaHome": true,
@@ -19,4 +19,20 @@
     "explorer.confirmDragAndDrop": false,
     "python.condaPath": "/opt/anaconda/anaconda3/bin/conda",
     "python.pythonPath": "/opt/anaconda/anaconda3/bin/python",
+    "java.semanticHighlighting.enabled": true,
+    "java.configuration.runtimes": [
+        {
+          "name": "JavaSE-1.7",
+          "path": "/opt/java/jdk1.7.0_80",
+        },
+        {
+          "name": "JavaSE-1.8",
+          "path": "/opt/java/jdk1.8.0_251",
+        },
+        {
+          "name": "JavaSE-11",
+          "path": "/opt/java/jdk-11",
+          "default": true
+        }
+      ]
 }
