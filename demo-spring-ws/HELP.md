@@ -3,10 +3,10 @@
 
 ##### WebService Url
 
-http://localhost:8080/ws/countries.wsdl
+http://localhost:8080/ws/v1/countries.wsdl
 
 #####	Request:
-	[POST] http://localhost:8080/ws
+	[POST] http://localhost:8080/ws/v1/countries.wsdl
 	<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
 				xmlns:gs="http://spring.io/guides/gs-producing-web-service">
 	<soapenv:Header/>
