@@ -5,5 +5,8 @@
 // Generated on: 2020.05.01 at 07:38:23 PM IST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://spring.io/guides/gs-producing-web-service", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://spring.io/guides/gs-producing-web-service"
+, elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+, xmlns = {
+        @javax.xml.bind.annotation.XmlNs(prefix = "", namespaceURI = "http://spring.io/guides/gs-producing-web-service") })
 package org.demo.ws.server.stubs.countries;
