@@ -54,8 +54,4 @@ export class LoginRegisterComponent implements OnInit {
     });
   }
 
-  registerNewUser(){
-    console.log("Submitted form data --> " + JSON.stringify(this.newuser));
-  }
-
 }

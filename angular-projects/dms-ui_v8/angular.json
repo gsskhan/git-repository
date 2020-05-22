@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "dms-ui": {
+    "demo-ang-ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,19 +13,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dms-ui",
+            "outputPath": "dist/dms-ang-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -43,6 +41,7 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -64,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dms-ui:build"
+            "browserTarget": "demo-ang-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "dms-ui:build:production"
+              "browserTarget": "demo-ang-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dms-ui:build"
+            "browserTarget": "demo-ang-ui:build"
           }
         },
         "test": {
@@ -90,7 +89,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -113,16 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "dms-ui:serve"
+            "devServerTarget": "demo-ang-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "dms-ui:serve:production"
+              "devServerTarget": "demo-ang-ui:serve:production"
             }
           }
         }
       }
-    }
-  },
-  "defaultProject": "dms-ui"
+    }},
+  "defaultProject": "demo-ang-ui"
 }
