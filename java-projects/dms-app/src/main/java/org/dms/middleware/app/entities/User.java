@@ -1,4 +1,4 @@
-package org.dms.middleware.app.domain.entities;
+package org.dms.middleware.app.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

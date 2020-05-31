@@ -1,4 +1,4 @@
-package org.dms.middleware.app.domain.model;
+package org.dms.middleware.app.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

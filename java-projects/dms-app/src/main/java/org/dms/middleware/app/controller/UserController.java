@@ -2,7 +2,7 @@ package org.dms.middleware.app.controller;
 
 import static org.dms.middleware.app.constants.AppConstants.*;
 import org.dms.middleware.app.dao.repository.UserRecordRepository;
-import org.dms.middleware.app.domain.model.UserRecord;
+import org.dms.middleware.app.model.UserRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
