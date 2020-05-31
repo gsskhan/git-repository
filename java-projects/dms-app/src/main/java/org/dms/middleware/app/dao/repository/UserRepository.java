@@ -1,24 +1,12 @@
 package org.dms.middleware.app.dao.repository;
 
-import org.dms.middleware.app.vo.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import org.dms.middleware.app.domain.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
+public interface UserRepository extends JpaRepository<User, Long>{
 	
-	/* Below Two ways to query Mongodb using repository interface.
-	 * 
-	 * 1st way, mongo itself infers.
-	 * 
-	 * 2nd way, we use Uses {@link Query} annotation to define the query to be executed.
-	 * 
-	 */
-
 	public User findByUsername(String username);
-	
-	@Query(value = "{ 'user_name' : ?0 }")
-	public User findUserHavingUserName(String username);
 
 }

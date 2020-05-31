@@ -1,4 +1,4 @@
-package org.dms.middleware.app.vo;
+package org.dms.middleware.app.domain.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,12 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "users")
-public class User {
-	
-	@JsonProperty("userId")
+public class UserRecord {
+
+	@JsonProperty("id")
 	@Id
-	private String id;	
-	
+	private String id;
+
+	@JsonProperty("userId")
+	@Field(value = "user_id")
+	private Long userId;
+
 	@JsonProperty("userName")
 	@Indexed(unique = true)
 	@Field(value = "user_name")
@@ -42,7 +46,7 @@ public class User {
 	@JsonProperty("role")
 	@Field(value = "role")
 	private String role;
-	
+
 	@JsonProperty("password")
 	@Field(value = "password")
 	private String password;
