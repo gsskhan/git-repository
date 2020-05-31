@@ -1,5 +1,7 @@
 package org.dms.middleware.app.init;
 
+import javax.annotation.PostConstruct;
+
 import org.dms.middleware.app.constants.RolesEnum;
 import org.dms.middleware.app.dao.repository.UserRecordRepository;
 import org.dms.middleware.app.dao.repository.UserRepository;
@@ -21,24 +23,25 @@ public class IntitializeUsers {
 	@Autowired
 	private UserRepository userRepository;
 
-	public IntitializeUsers() {
-		//this.addAdminUsers();
-	}
-
+	@PostConstruct
+	public void init() {
+		this.addAdminUsers();
+	}	
+	
 	private void addAdminUsers() {
 		UserRecord userRecord = userRecordRepository.findByUsername("admin");
 		User user = userRepository.findByUsername("admin");
 
 		if (userRecord == null) {
 			userRecord = new UserRecord(null, null, "admin", "Super", "Administrator", "admin@dms.org",
-					RolesEnum.SYSADMIN.toString(), "password");
+					RolesEnum.SYSADMIN.name(), "password");
 			userRecord = userRecordRepository.save(userRecord);
 			log.info("Admin user record added in NoSQL. {}", userRecord);
 		} else {
 			userRecord.setFirstname("Super");
 			userRecord.setLastname("Administrator");
 			userRecord.setEmail("admin@dms.org");
-			userRecord.setRole(RolesEnum.SYSADMIN.toString());
+			userRecord.setRole(RolesEnum.SYSADMIN.name());
 			userRecord.setPassword("password");
 			userRecord = userRecordRepository.save(userRecord);
 			log.info("Admin user record updated in NoSQL. {}", userRecord);
@@ -46,7 +49,7 @@ public class IntitializeUsers {
 
 		if (user == null) {
 			user = new User(userRecord.getId(), null, "admin", "Super", "Administrator", "admin@dms.org",
-					RolesEnum.SYSADMIN.toString(), "password");
+					RolesEnum.SYSADMIN.name(), "password");
 			user = userRepository.save(user);
 			log.info("Admin user record added in RDBMs. {}", user);
 		} else {
@@ -54,7 +57,7 @@ public class IntitializeUsers {
 			user.setFirstName("Super");
 			user.setLastName("Administrator");
 			user.setEmail("admin@dms.org");
-			user.setRole(RolesEnum.SYSADMIN.toString());
+			user.setRole(RolesEnum.SYSADMIN.name());
 			user.setPassword("password");
 			user = userRepository.save(user);
 			log.info("Admin user record updated in RDMBs. {}", userRecord);
