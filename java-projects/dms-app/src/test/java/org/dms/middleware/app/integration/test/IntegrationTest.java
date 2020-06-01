@@ -3,8 +3,8 @@ package org.dms.middleware.app.integration.test;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.dms.middleware.app.DmsAppApplicationTests;
-import org.dms.middleware.app.dao.repository.UserRepository;
 import org.dms.middleware.app.dao.repository.UserRecordRepository;
+import org.dms.middleware.app.dao.repository.UserRepository;
 import org.dms.middleware.app.entities.User;
 import org.dms.middleware.app.model.UserRecord;
 import org.junit.jupiter.api.Test;

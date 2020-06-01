@@ -1,6 +1,7 @@
-package org.dms.middleware.app.controller;
+package org.dms.middleware.app.web.controller;
 
 import static org.dms.middleware.app.constants.AppConstants.*;
+
 import org.dms.middleware.app.dao.repository.UserRecordRepository;
 import org.dms.middleware.app.model.UserRecord;
 import org.slf4j.Logger;

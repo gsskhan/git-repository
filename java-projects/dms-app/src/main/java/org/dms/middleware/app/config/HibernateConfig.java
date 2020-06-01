@@ -21,8 +21,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {
-		"org.dms.middleware.app.dao.repository" }, entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
+@EnableJpaRepositories(
+	  basePackages = {"org.dms.middleware.app.dao.repository" }
+	, entityManagerFactoryRef = "entityManagerFactory"
+	, transactionManagerRef = "transactionManager")
 public class HibernateConfig {
 
 	@Bean

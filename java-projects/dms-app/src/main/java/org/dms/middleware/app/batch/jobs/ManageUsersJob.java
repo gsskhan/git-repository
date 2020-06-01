@@ -1,6 +1,4 @@
-package org.dms.middleware.app.init;
-
-import javax.annotation.PostConstruct;
+package org.dms.middleware.app.batch.jobs;
 
 import org.dms.middleware.app.constants.RolesEnum;
 import org.dms.middleware.app.dao.repository.UserRecordRepository;
@@ -10,12 +8,12 @@ import org.dms.middleware.app.model.UserRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class IntitializeUsers {
+@Component
+public class ManageUsersJob {
 
-	private static final Logger log = LoggerFactory.getLogger(IntitializeUsers.class);
+	private static final Logger log = LoggerFactory.getLogger(ManageUsersJob.class);
 
 	@Autowired
 	private UserRecordRepository userRecordRepository;
@@ -23,12 +21,20 @@ public class IntitializeUsers {
 	@Autowired
 	private UserRepository userRepository;
 
-	@PostConstruct
 	public void init() {
 		this.addAdminUsers();
-	}	
+		this.loadUsersDataFromNoSQltoRDBMs();
+	}
+	
+	private void loadUsersDataFromNoSQltoRDBMs() {
+		long taskStartTime = System.currentTimeMillis();
+		
+		long taskEndTime = System.currentTimeMillis();
+		log.info("loaded users data from NoSQL to RDMBs. duration {} milliseconds ...", (taskEndTime - taskStartTime));
+	}
 	
 	private void addAdminUsers() {
+		long taskStartTime = System.currentTimeMillis();
 		UserRecord userRecord = userRecordRepository.findByUsername("admin");
 		User user = userRepository.findByUsername("admin");
 
@@ -36,7 +42,7 @@ public class IntitializeUsers {
 			userRecord = new UserRecord(null, null, "admin", "Super", "Administrator", "admin@dms.org",
 					RolesEnum.SYSADMIN.name(), "password");
 			userRecord = userRecordRepository.save(userRecord);
-			log.info("Admin user record added in NoSQL. {}", userRecord);
+			log.debug("admin user record added in NoSQL. {}", userRecord);
 		} else {
 			userRecord.setFirstname("Super");
 			userRecord.setLastname("Administrator");
@@ -44,14 +50,14 @@ public class IntitializeUsers {
 			userRecord.setRole(RolesEnum.SYSADMIN.name());
 			userRecord.setPassword("password");
 			userRecord = userRecordRepository.save(userRecord);
-			log.info("Admin user record updated in NoSQL. {}", userRecord);
+			log.debug("admin user record updated in NoSQL. {}", userRecord);
 		}
 
 		if (user == null) {
 			user = new User(userRecord.getId(), null, "admin", "Super", "Administrator", "admin@dms.org",
 					RolesEnum.SYSADMIN.name(), "password");
 			user = userRepository.save(user);
-			log.info("Admin user record added in RDBMs. {}", user);
+			log.debug("admin user record added in RDBMs. {}", user);
 		} else {
 			user.setNosqlId(userRecord.getId());
 			user.setFirstName("Super");
@@ -60,12 +66,13 @@ public class IntitializeUsers {
 			user.setRole(RolesEnum.SYSADMIN.name());
 			user.setPassword("password");
 			user = userRepository.save(user);
-			log.info("Admin user record updated in RDMBs. {}", userRecord);
+			log.debug("admin user record updated in RDMBs. {}", userRecord);
 		}
 
 		userRecord.setUserId(user.getUserId());
 		userRecord = userRecordRepository.save(userRecord);
-		log.info("Admin user record synced in NoSQL and RDMBs both.");
+		long taskEndTime = System.currentTimeMillis();
+		log.info("admin user record synced in both NoSQL & RDMBs. duration {} milliseconds ...", (taskEndTime - taskStartTime));
 	}
 
 }
