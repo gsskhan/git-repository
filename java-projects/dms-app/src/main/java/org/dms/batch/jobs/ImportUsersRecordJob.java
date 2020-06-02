@@ -34,6 +34,9 @@ public class ImportUsersRecordJob {
 
 	@Autowired
 	public MongoTemplate mongoTemplate;
+	
+	@Autowired
+	public JobExecutionNotificationListener listener;
 
 	@Autowired
 	public EntityManagerFactory emf;
@@ -65,22 +68,22 @@ public class ImportUsersRecordJob {
 	}
 	
 	@Bean
-	public Job importUserRecordJob(JobExecutionNotificationListener listener, Step importUserRecordJobStep1) {
+	public Job importUserRecordJob() {
 	  return jobBuilderFactory.get("importUserRecordJob")
 	    .incrementer(new RunIdIncrementer())
 	    .listener(listener)
-	    .flow(importUserRecordJobStep1)
+	    .flow(importUserRecordJobStep1())
 	    .end()
 	    .build();
 	}
 
 	@Bean
-	public Step importUserRecordJobStep1(JpaItemWriter<User> userRecordWriter) {
+	public Step importUserRecordJobStep1() {
 	  return stepBuilderFactory.get("importUserRecordJobStep1")
 	    .<UserRecord, User> chunk(10)
 	    .reader(userRecordReader())
 	    .processor(userRecordProcessor())
-	    .writer(userRecordWriter)
+	    .writer(userRecordWriter())
 	    .build();
 	}
 
