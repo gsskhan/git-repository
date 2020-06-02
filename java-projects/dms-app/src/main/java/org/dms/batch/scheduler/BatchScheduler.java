@@ -1,6 +1,6 @@
-package org.dms.middleware.app.batch.scheduler;
+package org.dms.batch.scheduler;
 
-import org.dms.middleware.app.batch.jobs.ManageUsersJob;
+import org.dms.batch.jobs.ManageUsersJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package org.dms.middleware.app.converters;
+package org.dms.core.converters;
 
 import org.springframework.stereotype.Component;
 

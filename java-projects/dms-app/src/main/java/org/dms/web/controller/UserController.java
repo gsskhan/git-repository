@@ -1,9 +1,9 @@
-package org.dms.middleware.app.web.controller;
+package org.dms.web.controller;
 
-import static org.dms.middleware.app.constants.AppConstants.*;
+import static org.dms.core.constants.AppConstants.*;
 
-import org.dms.middleware.app.dao.repository.UserRecordRepository;
-import org.dms.middleware.app.model.UserRecord;
+import org.dms.core.dao.repository.UserRecordRepository;
+import org.dms.core.model.UserRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

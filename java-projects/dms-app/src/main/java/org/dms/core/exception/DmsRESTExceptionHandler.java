@@ -1,4 +1,4 @@
-package org.dms.middleware.app.exception;
+package org.dms.core.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

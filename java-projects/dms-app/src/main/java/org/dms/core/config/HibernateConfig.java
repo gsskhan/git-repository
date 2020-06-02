@@ -1,4 +1,4 @@
-package org.dms.middleware.app.config;
+package org.dms.core.config;
 
 import java.util.Properties;
 
@@ -16,15 +16,14 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-	  basePackages = {"org.dms.middleware.app.dao.repository" }
+	  basePackages = {"org.dms.core.dao.repository" }
 	, entityManagerFactoryRef = "entityManagerFactory"
-	, transactionManagerRef = "transactionManager")
+	, transactionManagerRef = "jpaTransactionManager")
 public class HibernateConfig {
 
 	@Bean
@@ -47,7 +46,7 @@ public class HibernateConfig {
 
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan("org.dms.middleware.app.entities");
+		em.setPackagesToScan("org.dms.core.entities");
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(additionalProperties());
 		return em;
@@ -63,7 +62,7 @@ public class HibernateConfig {
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+	public JpaTransactionManager jpaTransactionManager(EntityManagerFactory emf) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(emf);
 		return transactionManager;

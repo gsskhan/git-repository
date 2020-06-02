@@ -1,4 +1,4 @@
-package org.dms.middleware.app.exception;
+package org.dms.core.exception;
 
 public class DmsException extends Exception {
 

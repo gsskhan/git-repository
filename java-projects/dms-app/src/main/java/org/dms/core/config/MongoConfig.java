@@ -1,4 +1,4 @@
-package org.dms.middleware.app.config;
+package org.dms.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

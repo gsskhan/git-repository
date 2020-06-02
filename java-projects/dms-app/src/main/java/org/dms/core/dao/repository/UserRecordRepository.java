@@ -1,6 +1,6 @@
-package org.dms.middleware.app.dao.repository;
+package org.dms.core.dao.repository;
 
-import org.dms.middleware.app.model.UserRecord;
+import org.dms.core.model.UserRecord;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

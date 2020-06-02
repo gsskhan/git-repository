@@ -2,11 +2,11 @@ package org.dms.middleware.app.integration.test;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.dms.core.dao.repository.UserRecordRepository;
+import org.dms.core.dao.repository.UserRepository;
+import org.dms.core.entities.User;
+import org.dms.core.model.UserRecord;
 import org.dms.middleware.app.DmsAppApplicationTests;
-import org.dms.middleware.app.dao.repository.UserRecordRepository;
-import org.dms.middleware.app.dao.repository.UserRepository;
-import org.dms.middleware.app.entities.User;
-import org.dms.middleware.app.model.UserRecord;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

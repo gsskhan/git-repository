@@ -1,10 +1,10 @@
-package org.dms.middleware.app.batch.jobs;
+package org.dms.batch.jobs;
 
-import org.dms.middleware.app.constants.RolesEnum;
-import org.dms.middleware.app.dao.repository.UserRecordRepository;
-import org.dms.middleware.app.dao.repository.UserRepository;
-import org.dms.middleware.app.entities.User;
-import org.dms.middleware.app.model.UserRecord;
+import org.dms.core.constants.RolesEnum;
+import org.dms.core.dao.repository.UserRecordRepository;
+import org.dms.core.dao.repository.UserRepository;
+import org.dms.core.entities.User;
+import org.dms.core.model.UserRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

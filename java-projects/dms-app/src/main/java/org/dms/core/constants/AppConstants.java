@@ -1,4 +1,4 @@
-package org.dms.middleware.app.constants;
+package org.dms.core.constants;
 
 public interface AppConstants {
 

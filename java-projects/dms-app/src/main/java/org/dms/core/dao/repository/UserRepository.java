@@ -1,6 +1,6 @@
-package org.dms.middleware.app.dao.repository;
+package org.dms.core.dao.repository;
 
-import org.dms.middleware.app.entities.User;
+import org.dms.core.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
