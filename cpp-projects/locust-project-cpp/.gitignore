@@ -1,3 +1,8 @@
-/Debug/
-/Release/
-/.settings/
+!.gitignore
+!.vscode/tasks.json
+!build
+
+.project
+.cproject
+.settings
+build/*
