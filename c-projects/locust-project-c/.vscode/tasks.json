@@ -1,0 +1,47 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "GCC build active file",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "GCC build locust-project-c Project",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g",
+                "-o",
+                "${workspaceFolder}/build/locust",
+                "${workspaceFolder}/src/*/*.c"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
