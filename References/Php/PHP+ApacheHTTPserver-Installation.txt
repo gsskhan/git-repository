@@ -69,7 +69,7 @@ PHP installation
     $ make install
     $ cp php.ini-development ./lib/php.ini
 
-    Update php.ini file at /opt/apache2/lib/php.ini, and add below to it:
+    Update php.ini file at /opt/php/lib/php.ini, and add below to it:
     include_path = ".:/opt/php/lib/php"
 
 10. Edit httpd.conf to load the PHP module. 
@@ -116,7 +116,7 @@ Installing the MongoDB PHP Driver with PECL
 14.
 i) Run the following command to install the driver:
 
-    $ cs /opt/php
+    $ cd /opt/php
     $ export PATH=$PATH:/opt/php/bin (Do in your terminal onetime, no need to set globally)
     $ pecl search mongodb
     $ pecl install mongodb
