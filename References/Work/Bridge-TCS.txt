@@ -1,0 +1,73 @@
+Bridge details
+===============
+
+Host Pin Code : 54130505
+Participant Pin Code : 30216620
+
+Dialin Numbers
+=================
+Ahmedabad
+79-60015800
+Bangalore
+80-60015800
+Chennai
+44-60015800
+Kolkata
+33-60015800
+Mumbai
+22-60015800
+Pune
+20-60015800
+Delhi
+11-66754800
+Lucknow
+522-6001580
+Hyderabad
+40-60015800
+Bhubaneshwar
+674-6001580
+Trivandrum
+471-6001580
+Goa
+832-6001580
+Mangalore
+824-6001580
+Indore
+731-6001580
+Nagpur
+712-6001580
+Pondicherry
+413-6001580
+Chandigarh
+172-6001580
+Jaipur
+141-6001580
+Raipur
+771-6001580
+Vadodara
+265-6001580
+Rajkot
+281-6001580
+Cochin
+484-6001580
+Surat
+261-6001580
+International
++91-11-66754800
+
+Moderator control features :
+=============================
+*0 Speak To an Operator
+*1 Mute/Un-mute your own Line
+*2 Mute/Un-mute participant lines(participants cannot press *1 To un-mute themselves)
+*4 Lock/Unlock conference access
+*5 Mute/Un-mute participant lines(participants can press *1 To un-mute themselves)
+*6 Terminate Call when moderator disconnects
+*#2 Hear the number and/or names of participants
+#0 Listen to the help menu
+
+Participant control features:
+=============================
+*0 Speak To an Operator
+*1 Mute/Un-mute your own Line
+#0 Listen To the help menu
