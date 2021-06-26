@@ -1,0 +1,63 @@
+Step 1: Goto https://developer.android.com/studio#downloads .
+        Move to section "Command line tools only".
+        Click on latest zip version and agree to license and proceed to download.
+                
+        I downloaded file "commandlinetools-linux-7302050_latest.zip"
+        
+Step 2: Create folder "Android" in your HOME directory. Unzip it inside the folder.
+        We will get a folder "cmdline-tools".
+        Create a folder "tools" inside it, and move all files into it.
+
+	$ cd $HOME
+	$ mkdir Android
+	$ cd cmdline-tools
+	$ $ mkdir tools
+	$ mv -i * tools
+
+        Finally the folder structure will look like below.
+
+	Android
+	└── cmdline-tools
+	    └── tools
+		├── NOTICE.txt
+		├── bin
+		├── lib
+		└── source.properties
+
+Step 3: Add following as per your settings to system variables.
+
+	export ANDROID_HOME=$HOME/Android
+	export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
+	export PATH=$ANDROID_HOME/emulator/:$PATH
+	export PATH=$ANDROID_HOME/platform-tools/:$PATH
+	export PATH=$ANDROID_HOME/tools/bin:$PATH
+	
+Step 4: Logout and login back. Run: $ sdkmanager 
+        If it doesn't display and error, your cmdline tools are setup.
+        
+        $ sdkmanager
+        [=======================================] 100% Computing updates...
+        
+Step 5: Use the following command to list all the available sdks, platform-tools, build tools, emulator, ndks , etc.
+
+        $ sdkmanager --list
+        
+Step 6: We need to install these from list "platform-tools platforms;android-30 build-tools;30.0.3 emulator".
+        You can choose versions different based on available results from list.
+        
+        $ sdkmanager --install platform-tools
+        License android-sdk-license:            ] 10% Computing updates...      
+        ---------------------------------------
+        Accept? (y/N): y
+        
+        $ sdkmanager --install "platforms;android-30"
+        [=======================================] 100% Unzipping... android-11/framework
+        
+        $ sdkmanager --install "build-tools;30.0.3"
+        [=======================================] 100% Unzipping... android-11/lib64/lib
+        
+        $ sdkmanager --install emulator
+        [=======================================] 100% Computing updates...
+        
+        This will install all the basic necessary tools you’ll require to start up your android development.
+
