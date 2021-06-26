@@ -30,7 +30,6 @@ Step 3: Add following as per your settings to system variables.
 	export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
 	export PATH=$ANDROID_HOME/emulator/:$PATH
 	export PATH=$ANDROID_HOME/platform-tools/:$PATH
-	export PATH=$ANDROID_HOME/tools/bin:$PATH
 	
 Step 4: Logout and login back. Run: $ sdkmanager 
         If it doesn't display and error, your cmdline tools are setup.
