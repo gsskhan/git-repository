@@ -5,7 +5,6 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "learn": "node modern-javascript/functions.js",
     "test": "echo $0"
   },
   "author": "g.s.s.khan",
