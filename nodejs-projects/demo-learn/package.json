@@ -1,0 +1,13 @@
+{
+  "name": "demo-learn",
+  "version": "1.0.0",
+  "description": "Learning Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "learn": "node modern-javascript/functions.js",
+    "test": "echo $0"
+  },
+  "author": "g.s.s.khan",
+  "license": "ISC"
+}
