@@ -1,0 +1,13 @@
+{
+  "name": "demo-learn-typescript",
+  "version": "1.0.0",
+  "description": "Learning Typescript",
+  "main": "app.js",
+  "scripts": {
+    "build-all": "tsc *.ts --out app.js",
+    "run" : "node app.js",
+    "test": "echo 0"    
+  },
+  "author": "gsskhan",
+  "license": "ISC"
+}
