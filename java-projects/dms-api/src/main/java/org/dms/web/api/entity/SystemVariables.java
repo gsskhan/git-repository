@@ -29,10 +29,10 @@ public class SystemVariables {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "SV_NAME", nullable = false)
+	@Column(name = "SV_NAME", nullable = false, length = 50)
 	private String name;
 
-	@Column(name = "SV_VALUE")
+	@Column(name = "SV_VALUE", length = 1000)
 	private String value;
 
 }
