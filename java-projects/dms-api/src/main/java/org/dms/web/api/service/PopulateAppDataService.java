@@ -2,8 +2,8 @@ package org.dms.web.api.service;
 
 import java.util.List;
 
-import org.dms.web.api.dao.SystemVariablesDao;
-import org.dms.web.api.entity.SystemVariables;
+import org.dms.web.api.dao.SystemVariableDao;
+import org.dms.web.api.entity.SystemVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class PopulateAppDataService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PopulateAppDataService.class);
 
 	@Autowired
-	private SystemVariablesDao systemVariablesRepository;
+	private SystemVariableDao systemVariableDao;
 
 	public void run() {
 		// Add roles
@@ -31,34 +31,33 @@ public class PopulateAppDataService {
 	}
 
 	private void populateRoles() {
-		List<SystemVariables> list = systemVariablesRepository.findByName("ROLES");
+		List<SystemVariable> list = systemVariableDao.findByName("ROLES");
 
-		SystemVariables examineeRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINEE")).findFirst()
+		SystemVariable examineeRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINEE")).findFirst()
 				.orElse(null);
 		if (examineeRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "EXAMINEE"));
+			list.add(new SystemVariable("ROLES", "EXAMINEE"));
 		}
 
-		SystemVariables examinerRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINER")).findFirst()
+		SystemVariable examinerRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINER")).findFirst()
 				.orElse(null);
 		if (examinerRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "EXAMINER"));
+			list.add(new SystemVariable("ROLES", "EXAMINER"));
 		}
 
-		SystemVariables reviewerRoleSV = list.stream().filter(sv -> sv.getValue().equals("REVIEWER")).findFirst()
+		SystemVariable reviewerRoleSV = list.stream().filter(sv -> sv.getValue().equals("REVIEWER")).findFirst()
 				.orElse(null);
 		if (reviewerRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "REVIEWER"));
+			list.add(new SystemVariable("ROLES", "REVIEWER"));
 		}
 
-		SystemVariables AdministratorRoleSV = list.stream().filter(sv -> sv.getValue().equals("ADMINISTRATOR"))
+		SystemVariable AdministratorRoleSV = list.stream().filter(sv -> sv.getValue().equals("ADMINISTRATOR"))
 				.findFirst().orElse(null);
 		if (AdministratorRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "ADMINISTRATOR"));
-
+			list.add(new SystemVariable("ROLES", "ADMINISTRATOR"));
 		}
 
-		systemVariablesRepository.saveAllAndFlush(list);
+		systemVariableDao.saveAllAndFlush(list);
 		LOGGER.info("Roles refreshed - {}", list);
 	}
 

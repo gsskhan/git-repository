@@ -2,23 +2,25 @@ package org.dms.web.api.controller;
 
 import java.util.List;
 
-import static org.dms.web.api.common.ApiServiceConstants.CONSTANTS_CONTROLLER_URI;
-import static org.dms.web.api.common.ApiServiceConstants.GET_ALL_SYSTEM_VARIABLES_URI;
-import static org.dms.web.api.common.ApiServiceConstants.GET_SYSTEM_VARIABLES_BY_NAME_URI;
-import static org.dms.web.api.common.ApiServiceConstants.GET_SYSTEM_VARIABLES_BY_VALUE_URI;
-import static org.dms.web.api.common.ApiServiceConstants.GET_SYSTEM_VARIABLES_BY_ID_URI;
-import static org.dms.web.api.common.ApiServiceConstants.POST_ADD_SYSTEM_VARIABLES;
+import static org.dms.web.api.common.AppConstants.CONSTANTS_CONTROLLER_URI;
+import static org.dms.web.api.common.AppConstants.GET_ALL_SYSTEM_VARIABLES_URI;
+import static org.dms.web.api.common.AppConstants.GET_SYSTEM_VARIABLES_BY_NAME_URI;
+import static org.dms.web.api.common.AppConstants.GET_SYSTEM_VARIABLES_BY_VALUE_URI;
+import static org.dms.web.api.common.AppConstants.GET_SYSTEM_VARIABLES_BY_ID_URI;
+import static org.dms.web.api.common.AppConstants.POST_ADD_SYSTEM_VARIABLES;
 
-import org.dms.web.api.entity.SystemVariables;
+import org.dms.web.api.entity.SystemVariable;
 import org.dms.web.api.exception.DmsApiException;
-import org.dms.web.api.service.ConstantsDataService;
+import org.dms.web.api.service.ConstantsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,40 +30,40 @@ public class ConstantsController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConstantsController.class);
 
 	@Autowired
-	private ConstantsDataService constantsDataService;
+	private ConstantsService constantsDataService;
 
-	@RequestMapping(value = GET_ALL_SYSTEM_VARIABLES_URI, method = RequestMethod.GET)
-	public List<SystemVariables> getAllSystemVariables() throws DmsApiException {
-		List<SystemVariables> list = constantsDataService.getAll();
+	@GetMapping(path = GET_ALL_SYSTEM_VARIABLES_URI, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SystemVariable> getAllSystemVariables() throws DmsApiException {
+		List<SystemVariable> list = constantsDataService.getAll();
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
-	@RequestMapping(value = GET_SYSTEM_VARIABLES_BY_NAME_URI, method = RequestMethod.GET)
-	public List<SystemVariables> getSystemVariablesByName(@PathVariable(name = "name") String name)
+	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_NAME_URI, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SystemVariable> getSystemVariablesByName(@PathVariable(name = "name") String name)
 			throws DmsApiException {
-		List<SystemVariables> list = constantsDataService.getByName(name);
+		List<SystemVariable> list = constantsDataService.getByName(name);
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
-	@RequestMapping(value = GET_SYSTEM_VARIABLES_BY_VALUE_URI, method = RequestMethod.GET)
-	public List<SystemVariables> getSystemVariablesByValue(@PathVariable(name = "value") String value)
+	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_VALUE_URI, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SystemVariable> getSystemVariablesByValue(@PathVariable(name = "value") String value)
 			throws DmsApiException {
-		List<SystemVariables> list = constantsDataService.getByValue(value);
+		List<SystemVariable> list = constantsDataService.getByValue(value);
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
-	@RequestMapping(value = GET_SYSTEM_VARIABLES_BY_ID_URI, method = RequestMethod.GET)
-	public SystemVariables getSystemVariablesById(@PathVariable(name = "id") Long id) throws DmsApiException {
-		SystemVariables sv = constantsDataService.getById(id);
+	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_ID_URI, produces = MediaType.APPLICATION_JSON_VALUE)
+	public SystemVariable getSystemVariablesById(@PathVariable(name = "id") Long id) throws DmsApiException {
+		SystemVariable sv = constantsDataService.getById(id);
 		LOGGER.info("controller completed... returned all system variables");
 		return sv;
 	}
 
-	@RequestMapping(value = POST_ADD_SYSTEM_VARIABLES, method = RequestMethod.POST)
-	public void getSystemVariablesById(@RequestBody SystemVariables sv) throws DmsApiException {
+	@PostMapping(path = POST_ADD_SYSTEM_VARIABLES, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void addOrUpdateSystemVariables(@RequestBody SystemVariable sv) throws DmsApiException {
 		constantsDataService.addOrUpdate(sv);
 		LOGGER.info("controller completed... saved or updated system variable.");
 	}

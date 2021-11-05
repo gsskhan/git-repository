@@ -1,8 +1,8 @@
 package org.dms.web.api.common;
 
-public class ApiServiceConstants {
+public class AppConstants {
 
-	private ApiServiceConstants() {
+	private AppConstants() {
 	}
 
 	public static final String API_VERSION = "/api/v1";
@@ -13,5 +13,9 @@ public class ApiServiceConstants {
 	public static final String GET_SYSTEM_VARIABLES_BY_VALUE_URI = "/sysvars/value/{value}";
 	public static final String GET_SYSTEM_VARIABLES_BY_ID_URI = "/sysvars/id/{id}";
 	public static final String POST_ADD_SYSTEM_VARIABLES = "/sysvars/add";
+
+	public static final String USER_CONTROLLER_URI = API_VERSION + "/user";
+	public static final String POST_LOGIN_VERIFY = "/login";
+	public static final String POST_REGISTER = "/register";
 
 }

@@ -22,7 +22,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableJpaRepositories(basePackages = {
 		"org.dms.web.api.dao" }, transactionManagerRef = "txManager", entityManagerFactoryRef = "entityMgrFactory")
-public class DatabaseConfiguration {
+public class DatabaseConfig {
 
 	@Autowired
 	private Environment env;

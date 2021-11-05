@@ -43,4 +43,7 @@ public class User {
 	@Column(name = "PHONE_NO", length = 50)
 	private String phoneNumber;
 
+	@Column(name = "ROLE", nullable = false, length = 50)
+	private String role;
+
 }
