@@ -7,19 +7,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "SYS_VARS")
 public class SystemVariables {
 
+	public SystemVariables(String name, String value) {
+		this.name = name;
+		this.value = value;
+	}
+
 	@Id
 	@Column(name = "SV_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	@Column(name = "SV_NAME", unique = true)
+	@Column(name = "SV_NAME")
 	private String name;
 
 	@Column(name = "SV_VALUE")
