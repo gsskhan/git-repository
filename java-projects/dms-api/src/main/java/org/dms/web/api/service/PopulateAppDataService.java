@@ -1,7 +1,8 @@
 package org.dms.web.api.service;
 
 import java.util.List;
-import org.dms.web.api.dao.repo.SystemVariablesRepository;
+
+import org.dms.web.api.dao.SystemVariablesRepository;
 import org.dms.web.api.entity.SystemVariables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

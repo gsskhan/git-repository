@@ -1,4 +1,4 @@
-package org.dms.web.api.dao.repo;
+package org.dms.web.api.dao;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SystemVariablesRepository extends JpaRepository<SystemVariables, Long> {
 
 	List<SystemVariables> findByName(String name);
+
+	List<SystemVariables> findByValue(String value);
 
 	List<SystemVariables> findByNameAndValue(String name, String value);
 
