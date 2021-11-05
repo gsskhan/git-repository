@@ -25,10 +25,13 @@ public class User {
 	@Column(name = "USER_NAME", unique = true, nullable = false, length = 25)
 	private String userName;
 
-	@Column(name = "FIRST_NAME", nullable = false, length = 255)
+	@Column(name = "PASSWORD", nullable = false, length = 50)
+	private String password;
+
+	@Column(name = "FIRST_NAME", nullable = false, length = 250)
 	private String firstName;
 
-	@Column(name = "LAST_NAME", nullable = false, length = 255)
+	@Column(name = "LAST_NAME", nullable = false, length = 250)
 	private String lastName;
 
 	@Column(name = "EMAIL", length = 500)

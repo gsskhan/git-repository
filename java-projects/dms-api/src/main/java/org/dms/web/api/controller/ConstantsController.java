@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(CONSTANTS_CONTROLLER_URI)
-public class ConstantsDataController {
+public class ConstantsController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConstantsDataController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConstantsController.class);
 
 	@Autowired
 	private ConstantsDataService constantsDataService;

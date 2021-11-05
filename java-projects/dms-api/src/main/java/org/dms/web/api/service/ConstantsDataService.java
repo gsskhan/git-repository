@@ -2,7 +2,7 @@ package org.dms.web.api.service;
 
 import java.util.List;
 
-import org.dms.web.api.dao.SystemVariablesRepository;
+import org.dms.web.api.dao.SystemVariablesDao;
 import org.dms.web.api.entity.SystemVariables;
 import org.dms.web.api.exception.DmsApiException;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class ConstantsDataService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConstantsDataService.class);
 
 	@Autowired
-	private SystemVariablesRepository systemVariablesRepository;
+	private SystemVariablesDao systemVariablesRepository;
 
 	public List<SystemVariables> getAll() throws DmsApiException {
 		List<SystemVariables> list = systemVariablesRepository.findAll();
