@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/home">Home</button>
+        <button mat-menu-item>Item 2</button>
+    </mat-menu>
+    <div>{{title}}</div>
+    <span class="header-spacer"></span>
+    <button mat-icon-button aria-label="Home icon" routerLink="/home">
+        <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Login icon">
+        <mat-icon>login</mat-icon>
+    </button>
+</mat-toolbar>
