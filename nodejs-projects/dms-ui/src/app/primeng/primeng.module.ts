@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ToolbarModule } from "primeng/toolbar";
+import { ButtonModule } from "primeng/button";
 
 /**
  * @author G S S KHAN
@@ -14,7 +15,8 @@ import { ToolbarModule } from "primeng/toolbar";
 @NgModule({
   declarations: [],
   exports: [
-    ToolbarModule
+    ToolbarModule,
+    ButtonModule
   ],
   imports: [
     CommonModule
