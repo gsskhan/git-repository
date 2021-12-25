@@ -38,6 +38,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
 		states
 			.withStates()
 			.initial(States.SI)
+			.end(States.S2)
 			.states(EnumSet.allOf(States.class));
 	}
 	
