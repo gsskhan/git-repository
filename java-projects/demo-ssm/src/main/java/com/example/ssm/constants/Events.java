@@ -2,6 +2,10 @@ package com.example.ssm.constants;
 
 public enum Events {
 
-	BUY, PAYMENT
+	// Shopping
+	BUY, PAY,
+
+	// Approvals
+	SUBMIT, VERIFY, APPROVE, CANCEL, RESEND
 
 }

@@ -23,68 +23,171 @@ public class StateMachineController {
 
 	private static final Logger log = LoggerFactory.getLogger(StateMachineController.class);
 
-	private StateMachine<States, Events> stateMachine;
+	private StateMachine<States, Events> currentShoppingStateMachine;
+
+	private StateMachine<States, Events> currentDocumentStateMachine;
 
 	@Autowired
 	private StateMachineService<States, Events> shoppingMachineService;
 
+	@Autowired
+	private StateMachineService<States, Events> documentMachineService;
+
 	/**
+	 * To begin shopping flow
 	 * 
 	 * @param machineId
 	 * @return
 	 */
-	@GetMapping(path = "/start/{id}")
-	public String init(@PathVariable(name = "id") String machineId) {
-		log.info("StateMachineController... init method... started.");
+	@GetMapping(path = "/shopping/start/{id}")
+	public String startShopping(@PathVariable(name = "id") String machineId) {
+		log.info("StateMachineController... startShopping method... started.");
 
 		try {
-			stateMachine = getStateMachine(machineId);
+			currentShoppingStateMachine = getShoppingStateMachine(machineId);
 		} catch (Exception e) {
-			log.error("StateMachineController... init method... error occured.", e);
+			log.error("StateMachineController... startShopping method... error occured.", e);
 			return "error";
 		}
 
-		log.info("StateMachineController... init method... state machine [{}:{}] initialized to state [{}].",
-				stateMachine.getId(), stateMachine.getUuid(), stateMachine.getState().getId());
+		log.info("StateMachineController... startShopping method... state machine [{}:{}] initialized to state [{}].",
+				currentShoppingStateMachine.getId(), currentShoppingStateMachine.getUuid(),
+				currentShoppingStateMachine.getState().getId());
 		return "success";
 	}
 
-	@GetMapping(path = "/proceed/{id}/{event}")
-	public String proceed(@PathVariable(name = "id") String machineId, @PathVariable(name = "event") String eventName) {
-		log.info("StateMachineController... proceed method... started.");
+	/**
+	 * To proceed in shopping flow
+	 * 
+	 * @param machineId
+	 * @param eventName
+	 * @return
+	 */
+	@GetMapping(path = "/shopping/proceed/{id}/{event}")
+	public String proceedShopping(@PathVariable(name = "id") String machineId,
+			@PathVariable(name = "event") String eventName) {
+		log.info("StateMachineController... proceedShopping method... started.");
 
 		try {
-			stateMachine = getStateMachine(machineId);
-			log.info("StateMachineController... proceed method... state machine [{}:{}] started at state [{}].",
-					stateMachine.getId(), stateMachine.getUuid(), stateMachine.getState().getId());
+			currentShoppingStateMachine = getShoppingStateMachine(machineId);
+			log.info("StateMachineController... proceedShopping method... state machine [{}:{}] started at state [{}].",
+					currentShoppingStateMachine.getId(), currentShoppingStateMachine.getUuid(),
+					currentShoppingStateMachine.getState().getId());
 
 			// Sending Event
-			stateMachine
+			currentShoppingStateMachine
 					.sendEvent(Mono
 							.just(MessageBuilder.withPayload(Events.valueOf(eventName.toUpperCase().trim())).build()))
 					.blockLast();
 		} catch (Exception e) {
-			log.error("StateMachineController... proceed method... error occured.", e);
+			log.error("StateMachineController... proceedShopping method... error occured.", e);
 			return "error";
 		}
 
-		log.info("StateMachineController... proceed method... state machine [{}:{}] proceeded to state [{}].",
-				stateMachine.getId(), stateMachine.getUuid(), stateMachine.getState().getId());
+		log.info("StateMachineController... proceedShopping method... state machine [{}:{}] proceeded to state [{}].",
+				currentShoppingStateMachine.getId(), currentShoppingStateMachine.getUuid(),
+				currentShoppingStateMachine.getState().getId());
 		return "success";
 	}
 
-	// Synchronized method for fetching persisted State Machine from repository.
-	private synchronized StateMachine<States, Events> getStateMachine(String machineId) throws Exception {
-		if (stateMachine == null) {
-			stateMachine = shoppingMachineService.acquireStateMachine(machineId);
-			stateMachine.startReactively().block();
-		} else if (!ObjectUtils.nullSafeEquals(stateMachine.getId(), machineId)) {
-			shoppingMachineService.releaseStateMachine(stateMachine.getId());
-			stateMachine.stopReactively().block();
-			stateMachine = shoppingMachineService.acquireStateMachine(machineId);
-			stateMachine.startReactively().block();
+	/**
+	 * Synchronized method for shopping state machine
+	 * 
+	 * @param machineId
+	 * @return
+	 * @throws Exception
+	 */
+	private synchronized StateMachine<States, Events> getShoppingStateMachine(String machineId) throws Exception {
+		if (currentShoppingStateMachine == null) {
+			currentShoppingStateMachine = shoppingMachineService.acquireStateMachine(machineId);
+			currentShoppingStateMachine.startReactively().block();
+		} else if (!ObjectUtils.nullSafeEquals(currentShoppingStateMachine.getId(), machineId)) {
+			shoppingMachineService.releaseStateMachine(currentShoppingStateMachine.getId());
+			currentShoppingStateMachine.stopReactively().block();
+			currentShoppingStateMachine = shoppingMachineService.acquireStateMachine(machineId);
+			currentShoppingStateMachine.startReactively().block();
 		}
-		return stateMachine;
+		return currentShoppingStateMachine;
+	}
+
+	/**
+	 * To begin document flow
+	 * 
+	 * @param machineId
+	 * @return
+	 */
+	@GetMapping(path = "/document/start/{id}")
+	public String startDocumentFlow(@PathVariable(name = "id") String machineId) {
+		log.info("StateMachineController... startDocumentFlow method... started.");
+
+		try {
+			currentDocumentStateMachine = getDocumentStateMachine(machineId);
+		} catch (Exception e) {
+			log.error("StateMachineController... startDocumentFlow method... error occured.", e);
+			return "error";
+		}
+
+		log.info(
+				"StateMachineController... startDocumentFlow method... state machine [{}:{}] initialized to state [{}].",
+				currentDocumentStateMachine.getId(), currentDocumentStateMachine.getUuid(),
+				currentDocumentStateMachine.getState().getId());
+		return "success";
+	}
+
+	/**
+	 * To proceed in document flow
+	 * 
+	 * @param machineId
+	 * @param eventName
+	 * @return
+	 */
+	@GetMapping(path = "/document/proceed/{id}/{event}")
+	public String proceedDocumentFlow(@PathVariable(name = "id") String machineId,
+			@PathVariable(name = "event") String eventName) {
+		log.info("StateMachineController... proceedDocumentFlow method... started.");
+
+		try {
+			currentDocumentStateMachine = getDocumentStateMachine(machineId);
+			log.info(
+					"StateMachineController... proceedDocumentFlow method... state machine [{}:{}] started at state [{}].",
+					currentDocumentStateMachine.getId(), currentDocumentStateMachine.getUuid(),
+					currentDocumentStateMachine.getState().getId());
+
+			// Sending Event
+			currentDocumentStateMachine
+					.sendEvent(Mono
+							.just(MessageBuilder.withPayload(Events.valueOf(eventName.toUpperCase().trim())).build()))
+					.blockLast();
+		} catch (Exception e) {
+			log.error("StateMachineController... proceedDocumentFlow method... error occured.", e);
+			return "error";
+		}
+
+		log.info(
+				"StateMachineController... proceedDocumentFlow method... state machine [{}:{}] proceeded to state [{}].",
+				currentDocumentStateMachine.getId(), currentDocumentStateMachine.getUuid(),
+				currentDocumentStateMachine.getState().getId());
+		return "success";
+	}
+
+	/**
+	 * Synchronized method for document state machine
+	 * 
+	 * @param machineId
+	 * @return
+	 * @throws Exception
+	 */
+	private synchronized StateMachine<States, Events> getDocumentStateMachine(String machineId) throws Exception {
+		if (currentDocumentStateMachine == null) {
+			currentDocumentStateMachine = documentMachineService.acquireStateMachine(machineId);
+			currentDocumentStateMachine.startReactively().block();
+		} else if (!ObjectUtils.nullSafeEquals(currentDocumentStateMachine.getId(), machineId)) {
+			documentMachineService.releaseStateMachine(currentDocumentStateMachine.getId());
+			currentDocumentStateMachine.stopReactively().block();
+			currentDocumentStateMachine = documentMachineService.acquireStateMachine(machineId);
+			currentDocumentStateMachine.startReactively().block();
+		}
+		return currentDocumentStateMachine;
 	}
 
 }
