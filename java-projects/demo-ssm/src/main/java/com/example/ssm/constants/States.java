@@ -2,6 +2,6 @@ package com.example.ssm.constants;
 
 public enum States {
 
-	SI, S1, S2
+	CHOOSE_ITEMS, PAYMENT_COUNTER, PACKAGE_HANDOVER
 
 }

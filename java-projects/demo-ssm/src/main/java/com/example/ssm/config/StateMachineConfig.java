@@ -1,7 +1,5 @@
 package com.example.ssm.config;
 
-import java.util.EnumSet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,67 +24,81 @@ import com.example.ssm.constants.Events;
 import com.example.ssm.constants.States;
 
 @Configuration
-@EnableStateMachineFactory
-public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events>{
+public class StateMachineConfig {
 	
 	private static final Logger log = LoggerFactory.getLogger(StateMachineConfig.class);
 	
-	@Autowired
-	private JpaStateMachineRepository jpaStateMachineRepository;
-	
-	@Override
-	public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {		
-		config
-			.withPersistence()
-			.runtimePersister(stateMachineRuntimePersister());	
-	}
-	
-	@Override
-    public void configure(StateMachineStateConfigurer<States, Events> states)
-            throws Exception {
-		states
-			.withStates()
-			.initial(States.SI)
-			.states(EnumSet.allOf(States.class));
-	}
-	
-	@Override
-    public void configure(StateMachineTransitionConfigurer<States, Events> transitions)
-            throws Exception {
-		transitions
-			.withExternal().source(States.SI)
-						   .target(States.S1)
-						   .event(Events.E1)
-			.and()
-			.withExternal().source(States.S1)
-						   .target(States.S2)
-						   .event(Events.E2);
-	}
-	
 	@Bean
-	public StateMachineRuntimePersister<States, Events, String> stateMachineRuntimePersister() {
+	public StateMachineRuntimePersister<States, Events, String> stateMachineRuntimePersister(
+			JpaStateMachineRepository jpaStateMachineRepository) {
 		return new JpaPersistingStateMachineInterceptor<>(jpaStateMachineRepository);
 	}
-    
-    @Bean
-	public StateMachineService<States, Events> stateMachineService(StateMachineFactory<States, Events> stateMachineFactory,
+
+	@Bean
+	public StateMachineService<States, Events> shoppingMachineService(
+			StateMachineFactory<States, Events> shoppingStateMachineFactory,
 			StateMachineRuntimePersister<States, Events, String> stateMachineRuntimePersister) {
-		return new DefaultStateMachineService<States, Events>(stateMachineFactory, stateMachineRuntimePersister);
+		return new DefaultStateMachineService<States, Events>(shoppingStateMachineFactory,
+				stateMachineRuntimePersister);
 	}
 
 	@Bean
-    public StateMachineListener<States, Events> listener() {
-        return new StateMachineListenerAdapter<States, Events>() {
-            @Override
-            public void stateChanged(State<States, Events> from, State<States, Events> to) {
-                if (from == null) {
-                    log.info("State machine initialised in state [{}].", to.getId());
-                } else {
-                    log.info("State changed from [{}] to [{}].", from.getId(), to.getId());
-                }
-            }
-        };
-    }
-
+	public StateMachineListener<States, Events> listener() {
+		return new StateMachineListenerAdapter<States, Events>() {
+			@Override
+			public void stateChanged(State<States, Events> from, State<States, Events> to) {
+				if (from == null) {
+					log.info("State machine initialised in state [{}].", to.getId());
+				} else {
+					log.info("State changed from [{}] to [{}].", from.getId(), to.getId());
+				}
+			}
+		};
+	}	
+	
+	@Configuration
+	@EnableStateMachineFactory(name = "shoppingStateMachineFactory")
+	public static class ShoppingMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
+		
+		@Autowired
+		private StateMachineRuntimePersister<States, Events, String> stateMachineRuntimePersister;
+		
+		@Autowired
+		private StateMachineListener<States, Events> listener;
+		
+		@Override
+		public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {		
+			config
+			.withConfiguration()
+				.listener(listener)
+			.and()
+			.withPersistence()
+				.runtimePersister(stateMachineRuntimePersister);	
+		}
+		
+		@Override
+	    public void configure(StateMachineStateConfigurer<States, Events> states)
+	            throws Exception {
+			states
+				.withStates()
+				.initial(States.CHOOSE_ITEMS)
+				.state(States.PAYMENT_COUNTER)
+				.state(States.PACKAGE_HANDOVER);
+		}
+		
+		@Override
+	    public void configure(StateMachineTransitionConfigurer<States, Events> transitions)
+	            throws Exception {
+			transitions
+				.withExternal().source(States.CHOOSE_ITEMS)
+							   .target(States.PAYMENT_COUNTER)
+							   .event(Events.BUY)
+				.and()
+				.withExternal().source(States.PAYMENT_COUNTER)
+							   .target(States.PACKAGE_HANDOVER)
+							   .event(Events.PAYMENT);
+		}
+		
+	}
 
 }
