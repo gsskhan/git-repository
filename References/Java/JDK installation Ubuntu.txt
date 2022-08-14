@@ -1,0 +1,62 @@
+JDK installation Ubuntu
+#######################
+
+Step 1: Check whether your Ubuntu is 32-bit or 64-bit.You can go to settings and check your Ubuntu version.
+
+Step 2: Next download a Java version from Oracle site
+
+Step 3: Set the path of the terminal to where you downloaded the zip file
+
+Step 4: Use the following command to extract the downloaded file
+
+	$ sudo tar -xvf <your file name>.tar.gz
+	
+Step 5: Open /etc/profile file. To do it use the following command
+
+	$ sudo gedit /etc/profile
+	
+	Now enter the following to the end of /etc/profile file.
+	
+	JAVA_HOME=<Directory where JAVA has been extracted>/jdk1.8.0
+	PATH=$PATH:$JAVA_HOME/bin
+	export JAVA_HOME
+	export PATH
+	
+Step 6: Now reload the environment
+
+	$ . /etc/profile
+	
+Step 7: Now give the location of Java to Ubuntu using following commands
+
+	Syntax:
+	sudo update-alternatives --install "/usr/bin/java" "java" "<Directory where JAVA has been extracted>/bin/java" 1
+	sudo update-alternatives --install "/usr/bin/javac" "javac" "<Directory where JAVA has been extracted>/bin/javac" 1
+	sudo update-alternatives --install "/usr/bin/javaws" "javaws" "<Directory where JAVA has been extracted>/bin/javaws" 1
+	
+	Example:
+	sudo update-alternatives --install "/usr/bin/java" "java" "/opt/java/jdk/bin/java" 1
+	sudo update-alternatives --install "/usr/bin/javac" "javac" "/opt/java/jdk/bin/javac" 1
+	sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/opt/java/jdk/bin/javaws" 1
+	
+Step 8: Now set the installed version as the default version of java
+	
+	Syntax:
+	sudo update-alternatives --set java <Directory where JAVA has been extracted>/bin/java
+	sudo update-alternatives --set javac <Directory where JAVA has been extracted>/bin/ javac
+	sudo update-alternatives --set javaws <Directory where JAVA has been extracted>/bin/javaws
+	
+	Example:
+	sudo update-alternatives --set java /opt/java/jdk/bin/java
+	sudo update-alternatives --set javac /opt/java/jdk/bin/javac
+	sudo update-alternatives --set javaws /opt/java/jdk/bin/javaws
+	
+Step 9: Verify your Java version with the following command
+
+	$ java -version
+	$ javac -version
+
+
+
+
+
+
