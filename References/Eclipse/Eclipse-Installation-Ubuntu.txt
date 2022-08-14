@@ -1,0 +1,27 @@
+Eclipse Installation Ubuntu
+===========================
+
+Step 1: Download eclipse *.tar.gz file and extract and move it to /opt/eclipse folder.
+
+Step 1: Create a file named eclipse.desktop with following entry.
+
+	$ cat eclipse.desktop 
+	[Desktop Entry]
+	Version=2022-06R
+	Name=Eclipse
+	Comment=Java IDE
+	Type=Application
+	Categories=Development;IDE;
+	Exec=/opt/eclipse/eclipse
+	Terminal=false
+	StartupNotify=true
+	Icon=/opt/eclipse/icon.xpm
+	Name[en_US]=Eclipse
+	
+Step 2: Copy eclipse.desktop to /usr/share/applications
+
+	$ cp ./eclipse.desktop /usr/share/applications
+	
+Step 3: Now, eclipse should appear in Ubuntu menus.
+	
+
