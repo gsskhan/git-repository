@@ -1,4 +1,4 @@
-package org.demo.async.app;
+package org.demo.async.app.config;
 
 import java.util.concurrent.Executor;
 
