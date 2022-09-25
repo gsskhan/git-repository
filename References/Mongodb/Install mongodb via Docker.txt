@@ -1,0 +1,135 @@
+Install mongodb via Docker
+==========================
+
+1. Pull latest mongo image from docker hub.
+    $ docker pull mongo
+    Using default tag: latest
+    latest: Pulling from library/mongo
+    675920708c8b: Pull complete 
+    6f9c8c301e0f: Pull complete 
+    73738965c4ce: Pull complete 
+    7fd6635b9ddf: Pull complete 
+    73a471eaa4ad: Pull complete 
+    bcf274af89b0: Pull complete 
+    04fc489f2a3b: Pull complete 
+    6eff8a505292: Pull complete 
+    a5ef4431fce7: Pull complete 
+    Digest: sha256:59448b028874b9ce3150cc692a3f85e8beed92cb8dc9479bdc3fd453b70e1fb1
+    Status: Downloaded newer image for mongo:latest
+    docker.io/library/mongo:latest
+
+2. Check the downloaded image.
+
+    $ docker images
+    REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+    mongo        latest    d34d21a9eb5b   3 weeks ago   693MB
+
+3. Create directory (in laptop Filesystem) to store mongo data files.
+    $ sudo mkdir -p /mongodata 
+
+4. Create and run the container.
+    
+    a) (Optional Security Feature) Add your user account by setting the username and password using the environment variables during container creation. 
+    Use the -e flag to specify the environment variables MONGODB_INITDB_ROOT_USERNAME and MONGODB_INITDB_ROOT_PASSWORD.
+
+    b) -it: Provides an interactive shell to the Docker container.
+       -v : Use this option to attach the /mongodata host volume to the /data/db container volume.
+       -d : Starts the container as a background process.
+       -p : to expose the port to external access.
+       --name : Name of the container.
+
+    Syntax: docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db -e MONGODB_INITDB_ROOT_USERNAME=gsskhan -e MONGODB_INITDB_ROOT_PASSWORD=password mongo:latest
+    
+    Example: (PS: I taken first option)
+
+    docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db mongo:latest
+    00d21a75b44eb2bc85cd9239250139893c20f0c25742bcf2d9b729c6a8c9e4a4
+
+    OR,
+
+    $ docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db -e MONGODB_INITDB_ROOT_USERNAME=gsskhan -e MONGODB_INITDB_ROOT_PASSWORD=password mongo:latest
+    8a6028a61f62f5b93916eaba04b2b580778f83df3689de80b85369ca31d11092
+
+    
+View container status
+=====================
+
+    $ docker ps -a
+    CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                                           NAMES
+    00d21a75b44e   mongo:latest   "docker-entrypoint.s…"   8 seconds ago   Up 7 seconds   0.0.0.0:27017->27017/tcp, :::27017->27017/tcp   mongodb
+
+View container logs
+===================
+
+To see the container logs.
+    $ docker logs mongodb
+
+Start Interactive Docker Terminal (Bash Shell) to Manage MongoDB Database
+=========================================================================
+
+1. The container is currently running in detached mode. Connect to the container using the interactive terminal instead:
+    $ docker exec -it mongodb bash
+    root@8a6028a61f62:/#
+
+2. Connect via mongosh ( using username/password is you have set up) in interactive shell.
+    (Note: mongosh is new mongo equivalent).
+    
+    root@8a6028a61f62:/# mongosh
+
+3. Create admin user creadentials 
+    (Here we are setting admin username/password = admin/password).
+
+    root@8a6028a61f62:/# mongosh
+    test> use admin
+    switched to db admin
+    
+    admin> db.createUser({user:"admin", pwd:"password", roles:[{role:"root", db:"admin"}]});
+    { ok: 1 }
+    admin> 
+
+4. Next, exit current login and try to login by admin user.
+
+    You can now connect with your MongoDB, by first restarting MongoDB and then using the following line of code:
+
+    $ docker stop mongodb
+    $ docker start mongodb
+    $ docker logs mongodb
+    $ docker ps -a
+    $ docker exec -it mongodb bash
+    root@00d21a75b44e:/# mongosh -u admin -p password --authenticationDatabase admin
+    OR,
+    root@00d21a75b44e:/# mongosh -u admin -p password 
+
+
+Stopping and Restarting MongoDB Database
+========================================
+
+User docker start/stop to start mongo server container.
+
+    Here our container name is: mongodb. Hence execute following:-
+
+    $ docker stop mongodb
+    $ docker ps
+    $ docker start mongodb
+    $ docker ps
+
+    Example:
+    $ docker stop mongodb
+    mongodb
+
+    $ docker ps -a
+    CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                     PORTS     NAMES
+    00d21a75b44e   mongo:latest   "docker-entrypoint.s…"   4 minutes ago   Exited (0) 5 seconds ago             mongodb
+
+
+Mongo compass GUI client
+========================
+
+Install mongo compass and use following connection parameters to connect from PC to mongodb container.
+
+If connecting directly:
+    mongodb://localhost:27017
+
+OR, 
+If connecting via user credentials of user "admin".
+    mongodb://admin:password@localhost:27017/?authMechanism=DEFAULT&authSource=admin
