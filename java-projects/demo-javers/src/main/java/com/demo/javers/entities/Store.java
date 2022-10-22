@@ -20,5 +20,8 @@ public class Store implements Serializable {
 
 	@Column(name = "STORE_NAME")
 	private String storeName;
+	
+	@Embedded
+	private Address address;
 
 }

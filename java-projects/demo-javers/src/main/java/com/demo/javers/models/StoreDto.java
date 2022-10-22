@@ -17,4 +17,10 @@ public class StoreDto {
 	@JsonProperty("storeName")
 	private String storeName;
 
+	@JsonProperty("address")
+	private String address;
+
+	@JsonProperty("zipcode")
+	private String zipcode;
+
 }
