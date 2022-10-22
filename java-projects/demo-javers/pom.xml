@@ -32,11 +32,20 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- JaVers Dependencies-->
+		<dependency>
+			<groupId>org.javers</groupId>
+			<artifactId>javers-spring-boot-starter-sql</artifactId>
+			<version>6.7.1</version>
+		</dependency>
 
 		<!-- Database Dependencies-->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<!-- Latest H2 version has sequence error with JaVers -->
+			<version>1.4.200</version>
 			<scope>runtime</scope>
 		</dependency>
 
