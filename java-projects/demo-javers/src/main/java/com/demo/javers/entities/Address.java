@@ -12,6 +12,6 @@ public class Address {
 	private String address;
 	
 	@Column(name = "ZIP_CODE")
-	private Integer zipCode;
+	private Long zipCode;
 
 }
