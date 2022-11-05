@@ -1,0 +1,56 @@
+Cassandra Install Intructions
+=============================
+
+Download cassandra latest tarball from -> https://cassandra.apache.org/_/index.html
+
+	Example: apache-cassandra-4.0.7-bin.tar.gz
+	
+Extract the tar.gz file to /opt/cassandra
+
+	$ ls -lart /opt/cassandra/
+	total 640
+	drwxr-xr-x  4 gsskhan gsskhan   4096 Oct 19 14:30 tools
+	drwxr-xr-x  3 gsskhan gsskhan   4096 Oct 19 14:30 pylib
+	-rwxr-xr-x  1 gsskhan gsskhan    349 Oct 19 14:30 NOTICE.txt
+	-rwxr-xr-x  1 gsskhan gsskhan 139201 Oct 19 14:30 NEWS.txt
+	-rwxr-xr-x  1 gsskhan gsskhan  12960 Oct 19 14:30 LICENSE.txt
+	drwxr-xr-x  3 gsskhan gsskhan   4096 Oct 19 14:30 lib
+	drwxr-xr-x  3 gsskhan gsskhan   4096 Oct 19 14:30 doc
+	drwxr-xr-x  3 gsskhan gsskhan   4096 Oct 19 14:30 conf
+	-rwxr-xr-x  1 gsskhan gsskhan 445997 Oct 19 14:30 CHANGES.txt
+	-rwxr-xr-x  1 gsskhan gsskhan   4832 Oct 19 14:30 CASSANDRA-14092.txt
+	drwxr-xr-x  2 gsskhan gsskhan   4096 Oct 19 14:30 bin
+	
+Set PATH environment variable:	
+	export CASSANDRA_HOME=/opt/cassandra
+	export PATH=$PATH:$CASSANDRA_HOME/bin
+	
+Make sure java is installed. Cassandra needs java to run.
+
+	 $ java -version
+
+Start Cassandra:
+
+	 $ cd /opt/cassandra/bin
+	 $ ./cassandra
+	 
+	 On successfully start up, it will create 2 folders "data" and "logs" in /opt/cassandra
+	 
+Check the status of Cassandra:
+	 $ cd /opt/cassandra/bin
+	 $ ./nodetool status
+	 
+Check logs of Cassandra:
+	$ cd /opt/cassandra/logs
+	$ tail -100f system.log
+	 
+Alternatively, connect to the database with:
+	 $ cd /opt/cassandra/bin
+	 $ ./cqlsh
+
+Stop Cassandra: Find the running process id and Kill it
+	 $ ps -eaf| grep -i cassandra
+	 $ kill <pid>
+
+
+	 
