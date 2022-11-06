@@ -21,7 +21,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-		"org.dms.web.api.dao" }, transactionManagerRef = "txManager", entityManagerFactoryRef = "entityMgrFactory")
+		"org.dms.web.api.repository" }, transactionManagerRef = "txManager", entityManagerFactoryRef = "entityMgrFactory")
 public class DatabaseConfig {
 
 	@Autowired

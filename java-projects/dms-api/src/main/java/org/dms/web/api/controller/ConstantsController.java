@@ -9,7 +9,7 @@ import static org.dms.web.api.common.AppConstants.GET_SYSTEM_VARIABLES_BY_VALUE_
 import static org.dms.web.api.common.AppConstants.GET_SYSTEM_VARIABLES_BY_ID_URI;
 import static org.dms.web.api.common.AppConstants.POST_ADD_SYSTEM_VARIABLES;
 
-import org.dms.web.api.entity.SystemVariable;
+import org.dms.web.api.entity.SystemVariables;
 import org.dms.web.api.exception.DmsApiException;
 import org.dms.web.api.service.ConstantsService;
 import org.slf4j.Logger;
@@ -33,37 +33,37 @@ public class ConstantsController {
 	private ConstantsService constantsDataService;
 
 	@GetMapping(path = GET_ALL_SYSTEM_VARIABLES_URI, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<SystemVariable> getAllSystemVariables() throws DmsApiException {
-		List<SystemVariable> list = constantsDataService.getAll();
+	public List<SystemVariables> getAllSystemVariables() throws DmsApiException {
+		List<SystemVariables> list = constantsDataService.getAll();
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
 	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_NAME_URI, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<SystemVariable> getSystemVariablesByName(@PathVariable(name = "name") String name)
+	public List<SystemVariables> getSystemVariablesByName(@PathVariable(name = "name") String name)
 			throws DmsApiException {
-		List<SystemVariable> list = constantsDataService.getByName(name);
+		List<SystemVariables> list = constantsDataService.getByName(name);
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
 	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_VALUE_URI, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<SystemVariable> getSystemVariablesByValue(@PathVariable(name = "value") String value)
+	public List<SystemVariables> getSystemVariablesByValue(@PathVariable(name = "value") String value)
 			throws DmsApiException {
-		List<SystemVariable> list = constantsDataService.getByValue(value);
+		List<SystemVariables> list = constantsDataService.getByValue(value);
 		LOGGER.info("controller completed... returned all system variables");
 		return list;
 	}
 
 	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_ID_URI, produces = MediaType.APPLICATION_JSON_VALUE)
-	public SystemVariable getSystemVariablesById(@PathVariable(name = "id") Long id) throws DmsApiException {
-		SystemVariable sv = constantsDataService.getById(id);
+	public SystemVariables getSystemVariablesById(@PathVariable(name = "id") Long id) throws DmsApiException {
+		SystemVariables sv = constantsDataService.getById(id);
 		LOGGER.info("controller completed... returned all system variables");
 		return sv;
 	}
 
 	@PostMapping(path = POST_ADD_SYSTEM_VARIABLES, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addOrUpdateSystemVariables(@RequestBody SystemVariable sv) throws DmsApiException {
+	public void addOrUpdateSystemVariables(@RequestBody SystemVariables sv) throws DmsApiException {
 		constantsDataService.addOrUpdate(sv);
 		LOGGER.info("controller completed... saved or updated system variable.");
 	}

@@ -1,11 +1,11 @@
-package org.dms.web.api.dao;
+package org.dms.web.api.repository;
 
 import java.util.List;
 
 import org.dms.web.api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDao extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findByUserName(String userName);
 

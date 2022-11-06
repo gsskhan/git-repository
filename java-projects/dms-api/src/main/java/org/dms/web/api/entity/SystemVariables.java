@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "SYS_VARS", uniqueConstraints = @UniqueConstraint(columnNames = { "SV_NAME", "SV_VALUE" }))
-public class SystemVariable {
+public class SystemVariables {
 
-	public SystemVariable(String name, String value) {
+	public SystemVariables(String name, String value) {
 		this.name = name;
 		this.value = value;
 	}
