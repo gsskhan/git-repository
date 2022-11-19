@@ -1,26 +1,23 @@
 package org.dms.web.api.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
+
+import javax.persistence.*;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = -302298194323095840L;
 
 	@Id
 	@Column(name = "USER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long userId;
 
 	@Column(name = "USER_NAME", unique = true, nullable = false, length = 25)
 	private String userName;
@@ -43,7 +40,8 @@ public class User {
 	@Column(name = "PHONE_NO", length = 50)
 	private String phoneNumber;
 
-	@Column(name = "ROLE", nullable = false, length = 50)
-	private String role;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ROLE_ID", nullable = false)
+	private Role role;
 
 }

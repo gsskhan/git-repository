@@ -1,13 +1,12 @@
 package org.dms.web.api.service;
 
-import java.util.List;
+import java.util.*;
 
-import org.dms.web.api.entity.SystemVariables;
-import org.dms.web.api.repository.SystemVariablesRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.dms.web.api.entity.*;
+import org.dms.web.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This class has single run() method. And its sole purpose is to populate the
@@ -17,13 +16,12 @@ import org.springframework.stereotype.Service;
  *
  */
 
+@Slf4j
 @Service
 public class PopulateAppDataService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PopulateAppDataService.class);
-
 	@Autowired
-	private SystemVariablesRepository systemVariablesRepository;
+	private RoleRepository roleRepository;
 
 	public void run() {
 		// Add roles
@@ -31,34 +29,35 @@ public class PopulateAppDataService {
 	}
 
 	private void populateRoles() {
-		List<SystemVariables> list = systemVariablesRepository.findByName("ROLES");
+		List<Role> roleList = Optional.ofNullable(roleRepository.getAllRoles()).orElse(new ArrayList<>());
 
-		SystemVariables examineeRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINEE")).findFirst()
-				.orElse(null);
-		if (examineeRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "EXAMINEE"));
+		Optional<Role> examinee = roleList.stream().filter(r -> r.getRoleName().equalsIgnoreCase("EXAMINEE"))
+				.findFirst();
+		if (examinee.isEmpty()) {
+			roleList.add(new Role("EXAMINEE"));
 		}
 
-		SystemVariables examinerRoleSV = list.stream().filter(sv -> sv.getValue().equals("EXAMINER")).findFirst()
-				.orElse(null);
-		if (examinerRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "EXAMINER"));
+		Optional<Role> examiner = roleList.stream().filter(r -> r.getRoleName().equalsIgnoreCase("EXAMINER"))
+				.findFirst();
+		if (examiner.isEmpty()) {
+			roleList.add(new Role("EXAMINER"));
 		}
 
-		SystemVariables reviewerRoleSV = list.stream().filter(sv -> sv.getValue().equals("REVIEWER")).findFirst()
-				.orElse(null);
-		if (reviewerRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "REVIEWER"));
+		Optional<Role> reviewer = roleList.stream().filter(r -> r.getRoleName().equalsIgnoreCase("REVIEWER"))
+				.findFirst();
+		if (reviewer.isEmpty()) {
+			roleList.add(new Role("REVIEWER"));
 		}
 
-		SystemVariables AdministratorRoleSV = list.stream().filter(sv -> sv.getValue().equals("ADMINISTRATOR"))
-				.findFirst().orElse(null);
-		if (AdministratorRoleSV == null) {
-			list.add(new SystemVariables("ROLES", "ADMINISTRATOR"));
+		Optional<Role> admin = roleList.stream().filter(r -> r.getRoleName().equalsIgnoreCase("ADMINISTRATOR"))
+				.findFirst();
+		if (admin.isEmpty()) {
+			roleList.add(new Role("ADMINISTRATOR"));
 		}
 
-		systemVariablesRepository.saveAllAndFlush(list);
-		LOGGER.info("Roles refreshed - {}", list);
+		roleList = roleRepository.saveAllAndFlush(roleList);
+		log.info("{} roles saved in ROLES Table.", roleList.size());
+
 	}
 
 }

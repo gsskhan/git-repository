@@ -2,47 +2,46 @@ package org.dms.web.api.service;
 
 import java.util.List;
 
-import org.dms.web.api.entity.SystemVariables;
+import org.dms.web.api.entity.SystemVariable;
 import org.dms.web.api.exception.DmsApiException;
-import org.dms.web.api.repository.SystemVariablesRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.dms.web.api.repository.SystemVariableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ConstantsService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConstantsService.class);
-
+	
 	@Autowired
-	private SystemVariablesRepository systemVariablesRepository;
+	private SystemVariableRepository systemVariablesRepository;
 
-	public List<SystemVariables> getAll() throws DmsApiException {
-		List<SystemVariables> list = systemVariablesRepository.findAll();
-		LOGGER.info("Found {} system variables.", list.stream().count());
+	public List<SystemVariable> getAll() throws DmsApiException {
+		List<SystemVariable> list = systemVariablesRepository.findAll();
+		log.info("Found {} system variables.", list.stream().count());
 		return list;
 	}
 
-	public SystemVariables getById(Long id) throws DmsApiException {
-		SystemVariables sv = systemVariablesRepository.findById(id).orElse(null);
-		LOGGER.info("Found by id - {}.", sv);
+	public SystemVariable getById(Long id) throws DmsApiException {
+		SystemVariable sv = systemVariablesRepository.findById(id).orElse(null);
+		log.info("Found by id - {}.", sv);
 		return sv;
 	}
 
-	public List<SystemVariables> getByName(String name) throws DmsApiException {
-		List<SystemVariables> list = systemVariablesRepository.findByName(name);
-		LOGGER.info("Found {} system variables.", list.stream().count());
+	public List<SystemVariable> getByName(String name) throws DmsApiException {
+		List<SystemVariable> list = systemVariablesRepository.findByName(name);
+		log.info("Found {} system variables.", list.stream().count());
 		return list;
 	}
 
-	public List<SystemVariables> getByValue(String value) throws DmsApiException {
-		List<SystemVariables> list = systemVariablesRepository.findByValue(value);
-		LOGGER.info("Found {} system variables.", list.stream().count());
+	public List<SystemVariable> getByValue(String value) throws DmsApiException {
+		List<SystemVariable> list = systemVariablesRepository.findByValue(value);
+		log.info("Found {} system variables.", list.stream().count());
 		return list;
 	}
 
-	public SystemVariables addOrUpdate(SystemVariables sv) throws DmsApiException {
+	public SystemVariable addOrUpdate(SystemVariable sv) throws DmsApiException {
 		// Check for inputs to be null or empty.
 		if (sv == null) {
 			throw new DmsApiException("No data to add or update.");
@@ -52,7 +51,7 @@ public class ConstantsService {
 		}
 		
 		// check if record already exists in db.
-		SystemVariables svTemp = null;
+		SystemVariable svTemp = null;
 		if (sv.getId() == null) {
 			svTemp = systemVariablesRepository.findByNameAndValue(sv.getName(), sv.getValue()).stream().findFirst().orElse(null);
 		} else {
@@ -60,8 +59,8 @@ public class ConstantsService {
 		}
 		
 		// Add or Update
-		svTemp = systemVariablesRepository.saveAndFlush(new SystemVariables(sv.getName(), sv.getValue()));
-		LOGGER.info("Added/Updated to system variables- {}.", sv);
+		svTemp = systemVariablesRepository.saveAndFlush(new SystemVariable(sv.getName(), sv.getValue()));
+		log.info("Added/Updated to system variables- {}.", sv);
 		return svTemp;
 	}
 
