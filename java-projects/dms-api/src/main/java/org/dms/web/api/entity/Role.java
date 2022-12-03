@@ -2,7 +2,7 @@ package org.dms.web.api.entity;
 
 import java.io.Serializable;
 import java.util.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
