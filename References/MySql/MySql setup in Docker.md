@@ -23,11 +23,13 @@ Starting a MySQL Server Instance
 ================================
 Command: docker run --name=container_name -p <outside port>:<inside container port> -e MYSQL_ROOT_PASSWORD=<mysql root user password> -d image_name:tag
 
-* The -d option used in the docker run command above makes the container run in the background.)
+The -d option used in the docker run command above makes the container run in the background.)
 
-* We need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
+We need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
 
-* Also we cant connect as root user outside docker container. There, is trick. To set root user password, Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As below).
+Also we cant connect as root user outside docker container. 
+
+There are few tricks. First set root user password in docker run command. Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As below).
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -p 33406:33060 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
     925cf15c10c83e7f2fb03c71e8ed7d02c0f6df65d6eddb5a52fa7162a934cd5a
@@ -86,8 +88,8 @@ Command: docker logs container_name
 Connect to MySQL database
 =========================
 
-[ From inside container. Eg; SQL workbench, DB visualizer, etc ]
-----------------------------------------------------------------
+From inside container. Eg; SQL workbench, DB visualizer, etc
+------------------------------------------------------------
 
 Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD in docker run command.
 
@@ -115,12 +117,14 @@ Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD 
     gsskhan@gsskhan-Inspiron-3542:~$ 
 
 
-[ From outside container. Eg; SQL workbench, DB visualizer, etc ]
------------------------------------------------------------------
+From outside container. Eg; SQL workbench, DB visualizer, etc
+-------------------------------------------------------------
 
-* These steps are required to login into MySQL from outside the container. 
-* The root user will not be able to log in from the host OS (Linux) by default. 
-* Login to container, next then login to mysql with user root; and password. Then, Create a new user, which can be accessed from outside container. 
+These steps are required to login into MySQL from outside the container. 
+
+The root user will not be able to log in from the host OS (Linux) by default. 
+
+Login to container, next then login to mysql with user root; and password. Then, Create a new user, which can be accessed from outside container. 
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
     bash-4.4# 
@@ -155,9 +159,9 @@ Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD 
     exit
     gsskhan@gsskhan-Inspiron-3542:~$ 
 
-* Above, I created a user named "dev", granted all privileges, and quit. Note, also that I used % instead of localhost in dev@localhost. Else "dev" user would not be accessible outside from container.
+Above, I created a user named "dev", granted all privileges, and quit. Note, also that I used % instead of localhost in dev@localhost. Else "dev" user would not be accessible outside from container.
 
-* Test your connection of new user "dev"
+Test your connection of new user "dev"
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
     bash-4.4# 
@@ -193,7 +197,7 @@ Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD 
     bash-4.4# 
     gsskhan@gsskhan-Inspiron-3542:~$
 
-* Open Workbench and use below as connection details
+Open Workbench and use below as connection details
 
     hostname: localhost
     port: 3406
@@ -206,9 +210,7 @@ For root user: You can do via Workbench - by logging as user "dev", since you gr
 
     In workbench, navigate to "Administration" > "Users And Priveledges" > Change "Limits to host matching" for root; user to % from localhost.
 
-Alternatively,
-
-    From docker container (Not verified -- Approach)
+Alternatively, From docker container (Not verified -- Approach)
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
     bash-4.4# mysql -u root -p
@@ -268,7 +270,7 @@ Alternatively,
     exit
     gsskhan@gsskhan-Inspiron-3542:~$ 
 
-* Open Workbench and use below as connection details
+Open Workbench and use below as connection details
 
     hostname: localhost
     port: 3406
