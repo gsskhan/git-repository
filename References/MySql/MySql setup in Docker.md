@@ -2,105 +2,105 @@ Downloading a MySQL Server Docker Image
 =======================================
 Command: docker pull mysql/mysql-server:tag
 
-    gsskhan@gsskhan-Inspiron-3542:~$ docker pull mysql/mysql-server
-    Using default tag: latest
-    latest: Pulling from mysql/mysql-server
-    c7127dfa6d78: Pull complete 
-    530b30ab10d9: Pull complete 
-    59c6388c2493: Pull complete 
-    cca3f8362bb0: Pull complete 
-    Digest: sha256:7cd104d6ff11f7e6a16087f88b1ce538bcb0126c048a60cd28632e7cf3dbe1b7
-    Status: Downloaded newer image for mysql/mysql-server:latest
-    docker.io/mysql/mysql-server:latest
+        gsskhan@gsskhan-Inspiron-3542:~$ docker pull mysql/mysql-server:latest
+        latest: Pulling from mysql/mysql-server
+        134439bbc243: Pull complete 
+        24197d57c06a: Pull complete 
+        a8ff14042390: Pull complete 
+        209d472e303b: Pull complete 
+        4158d94acc40: Pull complete 
+        807107bf7d7a: Pull complete 
+        5f5d5a703fe0: Pull complete 
+        Digest: sha256:1b2005199e9dc12d88d5950cd738dfd12172b1224675294646ea9d6031c78408
+        Status: Downloaded newer image for mysql/mysql-server:latest
+        docker.io/mysql/mysql-server:latest
 
-    gsskhan@gsskhan-Inspiron-3542:~$ docker images
-    REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
-    mysql/mysql-server   latest              a7a39f15d42d        2 months ago        381MB
+        gsskhan@gsskhan-Inspiron-3542:~$ docker images
+        REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
+        mysql/mysql-server   latest    3f3946d5572f   2 months ago   517MB
 
 Starting a MySQL Server Instance
 ================================
-Command: docker run --name=container_name -d image_name:tag
+Command: docker run --name=container_name -p <outside port>:<inside container port> -e MYSQL_ROOT_PASSWORD=<mysql root user password> -d image_name:tag
 
-(The -d option used in the docker run command above makes the container run in the background. )
+* The -d option used in the docker run command above makes the container run in the background.)
 
-    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name=mysql -d mysql/mysql-server:latest
-    04e6d9f9e16b7cbfd3e3f5534a80e2fe8576b36df02eef42aeff72789ef965b9
+* We need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
+
+* Also we cant connect as root user outside docker container. There, is trick. To set root user password, Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As below).
+
+    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -p 33406:33060 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
+    925cf15c10c83e7f2fb03c71e8ed7d02c0f6df65d6eddb5a52fa7162a934cd5a
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
-    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                            PORTS                 NAMES
-    04e6d9f9e16b        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   10 seconds ago      Up 9 seconds (health: starting)   3306/tcp, 33060/tcp   mysql
+    CONTAINER ID   IMAGE                       COMMAND                  CREATED             STATUS                      PORTS                                                                                                 NAMES
+    925cf15c10c8   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   38 seconds ago      Up 36 seconds (healthy)     33061/tcp, 0.0.0.0:3406->3306/tcp, :::3406->3306/tcp, 0.0.0.0:33406->33060/tcp, :::33406->33060/tcp   mysql
 
 Monitor output of container
 ===========================
 Command: docker logs container_name
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker logs mysql
-    [Entrypoint] MySQL Docker Image 8.0.19-1.1.15
-    [Entrypoint] No password option specified for new database.
-    [Entrypoint]   A random onetime password will be generated.
+    [Entrypoint] MySQL Docker Image 8.0.31-1.2.10-server
     [Entrypoint] Initializing database
-    2020-04-10T11:52:39.503389Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.19) initializing of server in progress as process 20
-    2020-04-10T11:52:44.498576Z 5 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+    2022-12-31T10:09:43.480391Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+    2022-12-31T10:09:43.480626Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 17
+    2022-12-31T10:09:43.500505Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+    2022-12-31T10:09:44.892012Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+    2022-12-31T10:09:47.545793Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
     [Entrypoint] Database initialized
-    2020-04-10T11:52:49.025005Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.19) starting as process 68
-    2020-04-10T11:52:50.303315Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-    2020-04-10T11:52:50.351552Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.19'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
-    2020-04-10T11:52:50.477798Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mysqld/mysqlx.sock'
+    2022-12-31T10:09:54.701951Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+    2022-12-31T10:09:54.704942Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 66
+    2022-12-31T10:09:54.783946Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+    2022-12-31T10:09:55.325975Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+    2022-12-31T10:09:56.705829Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+    2022-12-31T10:09:56.705884Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+    2022-12-31T10:09:56.760050Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+    2022-12-31T10:09:56.760312Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
     Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
     Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
     Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
     Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
     Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-    [Entrypoint] GENERATED ROOT PASSWORD: nIDgErGON9yfgAcuRYwH3fR@gq
 
     [Entrypoint] ignoring /docker-entrypoint-initdb.d/*
 
-    2020-04-10T11:52:54.287962Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.19).
-    2020-04-10T11:52:55.661864Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.19)  MySQL Community Server - GPL.
+    2022-12-31T10:10:02.278662Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
+    2022-12-31T10:10:06.419907Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
     [Entrypoint] Server shut down
-    [Entrypoint] Setting root user as expired. Password will need to be changed before database can be used.
 
     [Entrypoint] MySQL init process done. Ready for start up.
 
-    [Entrypoint] Starting MySQL 8.0.19-1.1.15
-    2020-04-10T11:52:56.882367Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.19) starting as process 1
-    2020-04-10T11:52:57.826285Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-    2020-04-10T11:52:57.903867Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.19'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
-    2020-04-10T11:52:57.947661Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: '/var/run/mysqld/mysqlx.sock' bind-address: '::' port: 33060
+    [Entrypoint] Starting MySQL 8.0.31-1.2.10-server
+    2022-12-31T10:10:07.742119Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+    2022-12-31T10:10:07.747396Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
+    2022-12-31T10:10:07.785916Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+    2022-12-31T10:10:08.821646Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+    2022-12-31T10:10:09.469950Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+    2022-12-31T10:10:09.470002Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+    2022-12-31T10:10:09.525841Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+    2022-12-31T10:10:09.526133Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
     gsskhan@gsskhan-Inspiron-3542:~$ 
 
-Get the random password generated for the root user
-===================================================
-Once initialization is finished, the command's output is going to contain the random password generated for the root user. 
-Check the password with, for example, with following: 
 
-Command: docker logs container_name 2>&1 | grep GENERATED
+Connect to MySQL database
+=========================
 
-    gsskhan@gsskhan-Inspiron-3542:~$ docker logs mysql 2>&1 | grep GENERATED
-    [Entrypoint] GENERATED ROOT PASSWORD: nIDgErGON9yfgAcuRYwH3fR@gq
+[ From inside container. Eg; SQL workbench, DB visualizer, etc ]
+----------------------------------------------------------------
 
-Connecting to MySQL Server from within the Container
-====================================================
-Once the server is ready, you can run the mysql client within the MySQL Server container you just started, and connect it to the MySQL Server. 
-Use the "docker exec -it" command to start a mysql client inside the Docker container you have started, like the following:
+Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD in docker run command.
 
-Command: docker exec -it container_name mysql -uroot -p
+    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
+    bash-4.4# 
+    bash-4.4# mysql -u root -p
 
-When asked, enter the GENERATED ROOT PASSWORD (From the above section). 
-Because the MYSQL_ONETIME_PASSWORD option is true by default, after you have connected a mysql client to the server, 
-you must reset the server root password by issuing this statement:
-
-    mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
-
-Substitute password with the password of your choice. Once the password is reset, the server is ready for use.
-
-    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql mysql -uroot -p
-    Enter password: 
+    Enter password:
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 32
-    Server version: 8.0.19
+    Your MySQL connection id is 28
+    Server version: 8.0.31 MySQL Community Server - GPL
 
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2000, 2022, Oracle and/or its affiliates.
 
     Oracle is a registered trademark of Oracle Corporation and/or its
     affiliates. Other names may be trademarks of their respective
@@ -108,82 +108,29 @@ Substitute password with the password of your choice. Once the password is reset
 
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-    mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
-    Query OK, 0 rows affected (0.01 sec)
-
-    mysql> exit
-    Bye
-    gsskhan@gsskhan-Inspiron-3542:~$ 
-
-    (Note: I have here for simplicity reset password as string password only)
-
-Container Shell Access
-======================
-To have shell access to your MySQL Server container, use the docker exec -it command to start a bash shell inside the container:
-
-Command: docker exec -it container_name bash 
-
-    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
-    bash-4.2# ls /var/lib/mysql
-    #innodb_temp   binlog.000002  ca.pem	       ib_buffer_pool  ibdata1	mysql.ibd	 performance_schema  server-cert.pem  undo_001
-    auto.cnf       binlog.index   client-cert.pem  ib_logfile0     ibtmp1	mysql.sock	 private_key.pem     server-key.pem   undo_002
-    binlog.000001  ca-key.pem     client-key.pem   ib_logfile1     mysql	mysql.sock.lock  public_key.pem      sys
-    bash-4.2# exit
+    mysql> quit
+    Bye     
+    bash-4.4# exit
     exit
+    gsskhan@gsskhan-Inspiron-3542:~$ 
 
 
-Stopping and Deleting a MySQL Container
-=======================================
-To stop the MySQL Server container we have created, use this 
+[ From outside container. Eg; SQL workbench, DB visualizer, etc ]
+-----------------------------------------------------------------
 
-Command: docker stop container_name
-
-    gsskhan@gsskhan-Inspiron-3542:~$ docker stop mysql
-    mysql
-
-To start the MySQL Server container again:
-==========================================
-docker start mysql
-
-To stop and start again the MySQL Server container with a single command:
-========================================================================
-docker restart mysql
-
-To delete the MySQL container, stop it first, and then use the docker rm command:
-=================================================================================
-docker stop mysql
-docker rm mysql
-
-
-# Connecting with Mysql Workbench
-=================================
-=================================
-
-Download and install same version of Workbench from MySql Oracle website, as same/compatible to mysql version you are running.
-
-Then, we need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
-
-Also we cant connect as root user outside docker container. 
-
-    gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -p 33406:33060 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
-    f46ab2a9236098a602604277ec9b023b9e396ebfd21b9491bc912592985fb834
-
-There, is trick. To set root user password, Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As above).
-
-    gsskhan@gsskhan-Inspiron-3542:~$ docker ps -a
-    CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                      PORTS                                              NAMES
-    f46ab2a92360        mysql/mysql-server:latest   "/entrypoint.sh mysq…"   39 seconds ago      Up 39 seconds (healthy)     0.0.0.0:3406->3306/tcp, 0.0.0.0:33406->33060/tcp   mysql
-
-Login to container, then login to mysql with user root; and password. Create a new user, which can be accessed from outside container.
+* These steps are required to login into MySQL from outside the container. 
+* The root user will not be able to log in from the host OS (Linux) by default. 
+* Login to container, next then login to mysql with user root; and password. Then, Create a new user, which can be accessed from outside container. 
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
-    bash-4.2# mysql -uroot -p
+    bash-4.4# 
+    bash-4.4# mysql -u root -p
     Enter password: 
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 10
-    Server version: 8.0.19 MySQL Community Server - GPL
+    Your MySQL connection id is 58
+    Server version: 8.0.31 MySQL Community Server - GPL
 
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2000, 2022, Oracle and/or its affiliates.
 
     Oracle is a registered trademark of Oracle Corporation and/or its
     affiliates. Other names may be trademarks of their respective
@@ -191,33 +138,36 @@ Login to container, then login to mysql with user root; and password. Create a n
 
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-    mysql>
-
-I create a user named "dev", grant all privileges, and quit.
-
-Important:
-=========
-This step is required to log into MySQL from outside the container. The root user will not be able to log in from the host OS (Linux) by default. Use % instead of localhost in dev@localhost.
-
+    mysql> 
 
     mysql> CREATE USER 'dev'@'%' IDENTIFIED BY 'password';
-    Query OK, 0 rows affected (0.02 sec)
+    Query OK, 0 rows affected (0.04 sec)
 
     mysql> GRANT ALL PRIVILEGES ON * . * TO 'dev'@'%';
     Query OK, 0 rows affected (0.00 sec)
 
-    mysql> exit
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.01 sec)
+
+    mysql> quit
     Bye
+    bash-4.4# exit
+    exit
+    gsskhan@gsskhan-Inspiron-3542:~$ 
 
-Test your connection of new user "dev"
+* Above, I created a user named "dev", granted all privileges, and quit. Note, also that I used % instead of localhost in dev@localhost. Else "dev" user would not be accessible outside from container.
 
-    bash-4.2# mysql -udev -ppassword
+* Test your connection of new user "dev"
+
+    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
+    bash-4.4# 
+    bash-4.4# mysql -udev -ppassword
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 14
-    Server version: 8.0.19 MySQL Community Server - GPL
+    Your MySQL connection id is 74
+    Server version: 8.0.31 MySQL Community Server - GPL
 
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2000, 2022, Oracle and/or its affiliates.
 
     Oracle is a registered trademark of Oracle Corporation and/or its
     affiliates. Other names may be trademarks of their respective
@@ -240,19 +190,18 @@ Test your connection of new user "dev"
 
     mysql> quit
     Bye
-    bash-4.2# exit
-    exit
+    bash-4.4# 
     gsskhan@gsskhan-Inspiron-3542:~$
 
-Open Workbench and use below as connection details
-==================================================
+* Open Workbench and use below as connection details
+
     hostname: localhost
     port: 3406
     username: dev
     password: password
 
-To enable external access to the database, you need to change localhost to % for user.
-======================================================================================
+IMPORTANT! To enable external access to the database, you need to change localhost to % for any user.
+=====================================================================================================
 For root user: You can do via Workbench - by logging as user "dev", since you granted all previledges to it.
 
     In workbench, navigate to "Administration" > "Users And Priveledges" > Change "Limits to host matching" for root; user to % from localhost.
@@ -261,14 +210,14 @@ Alternatively,
 
     From docker container (Not verified -- Approach)
 
-    gsskhan@gsskhan-Inspiron-3542:~/Downloads$ docker exec -it mysql bash
-    bash-4.2# mysql -uroot -p        
+    gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
+    bash-4.4# mysql -u root -p
     Enter password: 
     Welcome to the MySQL monitor.  Commands end with ; or \g.
-    Your MySQL connection id is 89
-    Server version: 8.0.19 MySQL Community Server - GPL
+    Your MySQL connection id is 102
+    Server version: 8.0.31 MySQL Community Server - GPL
 
-    Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2000, 2022, Oracle and/or its affiliates.
 
     Oracle is a registered trademark of Oracle Corporation and/or its
     affiliates. Other names may be trademarks of their respective
@@ -281,17 +230,17 @@ Alternatively,
     | User             | Host      |
     +------------------+-----------+
     | dev              | %         |
-    | root             | localhost |
     | healthchecker    | localhost |
     | mysql.infoschema | localhost |
     | mysql.session    | localhost |
     | mysql.sys        | localhost |
+    | root             | localhost |
     +------------------+-----------+
     6 rows in set (0.00 sec)
 
     mysql> UPDATE mysql.user SET Host='%' WHERE Host='localhost' AND User='root';
-    Query OK, 0 rows affected (0.00 sec)
-    Rows matched: 0  Changed: 0  Warnings: 0
+    Query OK, 1 row affected (0.01 sec)
+    Rows matched: 1  Changed: 1  Warnings: 0
 
     mysql> UPDATE mysql.db SET Host='%' WHERE Host='localhost' AND User='root';
     Query OK, 0 rows affected (0.00 sec)
@@ -313,7 +262,16 @@ Alternatively,
     mysql> FLUSH PRIVILEGES;
     Query OK, 0 rows affected (0.01 sec)
 
-    mysql> 
+    mysql> exit;
+    Bye
+    bash-4.4# exit
+    exit
+    gsskhan@gsskhan-Inspiron-3542:~$ 
 
+* Open Workbench and use below as connection details
 
+    hostname: localhost
+    port: 3406
+    username: root
+    password: password
 

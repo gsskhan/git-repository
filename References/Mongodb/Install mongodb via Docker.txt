@@ -24,13 +24,7 @@ Install mongodb via Docker
     REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
     mongo        latest    d34d21a9eb5b   3 weeks ago   693MB
 
-3. Create directory (in laptop Filesystem) to store mongo data files.
-    $ sudo mkdir -p /mongodata 
-
-4. Create and run the container.
-    
-    a) (Optional Security Feature) Add your user account by setting the username and password using the environment variables during container creation. 
-    Use the -e flag to specify the environment variables MONGODB_INITDB_ROOT_USERNAME and MONGODB_INITDB_ROOT_PASSWORD.
+3. Create and run the container.
 
     b) -it: Provides an interactive shell to the Docker container.
        -v : Use this option to attach the /mongodata host volume to the /data/db container volume.
@@ -38,18 +32,10 @@ Install mongodb via Docker
        -p : to expose the port to external access.
        --name : Name of the container.
 
-    Syntax: docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db -e MONGODB_INITDB_ROOT_USERNAME=gsskhan -e MONGODB_INITDB_ROOT_PASSWORD=password mongo:latest
-    
-    Example: (PS: I taken first option)
+    Syntax: docker run --name mongodb -d -p 27017:27017 mongo:latest
 
-    docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db mongo:latest
+    $ docker run --name mongodb -d -p 27017:27017 mongo:latest
     00d21a75b44eb2bc85cd9239250139893c20f0c25742bcf2d9b729c6a8c9e4a4
-
-    OR,
-
-    $ docker run -d -p 27017:27017 --name mongodb -v mongodata:/data/db -e MONGODB_INITDB_ROOT_USERNAME=gsskhan -e MONGODB_INITDB_ROOT_PASSWORD=password mongo:latest
-    8a6028a61f62f5b93916eaba04b2b580778f83df3689de80b85369ca31d11092
-
     
 View container status
 =====================
