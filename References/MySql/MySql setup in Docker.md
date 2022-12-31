@@ -23,13 +23,13 @@ Starting a MySQL Server Instance
 ================================
 Command: docker run --name=container_name -p <outside port>:<inside container port> -e MYSQL_ROOT_PASSWORD=<mysql root user password> -d image_name:tag
 
-The -d option used in the docker run command above makes the container run in the background.)
+The -d option used in the docker run command above makes the container run in the background.
 
-We need to run the mysql image exposing ports. Below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
+We need to run the mysql image exposing ports. Refer below, 3406 port is exposed for classic connections. And 33406 has been exposed for MySql X connections.
 
-Also we cant connect as root user outside docker container. 
+Also we cant connect as root user outside docker container by default. However, there are few tricks. 
 
-There are few tricks. First set root user password in docker run command. Set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As below).
+First, make sure to set root user password in docker run command. To do this, set the environment variable MYSQL_ROOT_PASSWORD to a password you want (As below). It will make mysql server on startup to set root user password provided by yourself.
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker run --name mysql -p 3406:3306 -p 33406:33060 -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server:latest
     925cf15c10c83e7f2fb03c71e8ed7d02c0f6df65d6eddb5a52fa7162a934cd5a
@@ -84,6 +84,17 @@ Command: docker logs container_name
     2022-12-31T10:10:09.526133Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
     gsskhan@gsskhan-Inspiron-3542:~$ 
 
+Stopping and Restarting MySQL Database
+========================================
+
+User docker start/stop to start MySQL server container.
+
+    Here our container name is: mysql. Hence execute following:-
+
+    $ docker stop mysql
+    $ docker ps
+    $ docker start mysql
+    $ docker ps
 
 Connect to MySQL database
 =========================
@@ -120,11 +131,9 @@ Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD 
 From outside container. Eg; SQL workbench, DB visualizer, etc
 -------------------------------------------------------------
 
-These steps are required to login into MySQL from outside the container. 
+The root user will not be able to log in from the host OS (Linux) by default. These steps are required to login into MySQL from outside the container. 
 
-The root user will not be able to log in from the host OS (Linux) by default. 
-
-Login to container, next then login to mysql with user root; and password. Then, Create a new user, which can be accessed from outside container. 
+Login to container, next then login to mysql with user root; and password. Then, Create a new user, which can be accessed from outside container. Remember to use % in hostname.
 
     gsskhan@gsskhan-Inspiron-3542:~$ docker exec -it mysql bash
     bash-4.4# 
@@ -276,4 +285,3 @@ Open Workbench and use below as connection details
     port: 3406
     username: root
     password: password
-

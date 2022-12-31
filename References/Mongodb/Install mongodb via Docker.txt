@@ -1,7 +1,7 @@
 Install mongodb via Docker
 ==========================
+Pull latest mongo image from docker hub.
 
-1. Pull latest mongo image from docker hub.
     $ docker pull mongo
     Using default tag: latest
     latest: Pulling from library/mongo
@@ -18,21 +18,21 @@ Install mongodb via Docker
     Status: Downloaded newer image for mongo:latest
     docker.io/library/mongo:latest
 
-2. Check the downloaded image.
+Check the downloaded image.
+===========================
 
     $ docker images
     REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
     mongo        latest    d34d21a9eb5b   3 weeks ago   693MB
 
-3. Create and run the container.
+Create and run the container.
+=============================
+Syntax: docker run --name mongodb -d -p 27017:27017 mongo:latest
 
-    b) -it: Provides an interactive shell to the Docker container.
-       -v : Use this option to attach the /mongodata host volume to the /data/db container volume.
-       -d : Starts the container as a background process.
-       -p : to expose the port to external access.
-       --name : Name of the container.
-
-    Syntax: docker run --name mongodb -d -p 27017:27017 mongo:latest
+-it: Provides an interactive shell to the Docker container.
+-d : Starts the container as a background process.
+-p : to expose the port to external access.
+--name : Name of the container.
 
     $ docker run --name mongodb -d -p 27017:27017 mongo:latest
     00d21a75b44eb2bc85cd9239250139893c20f0c25742bcf2d9b729c6a8c9e4a4
@@ -46,7 +46,6 @@ View container status
 
 View container logs
 ===================
-
 To see the container logs.
     $ docker logs mongodb
 
