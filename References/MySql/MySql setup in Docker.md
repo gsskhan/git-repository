@@ -99,8 +99,8 @@ User docker start/stop to start MySQL server container.
 Connect to MySQL database
 =========================
 
-From inside container. Eg; SQL workbench, DB visualizer, etc
-------------------------------------------------------------
+From inside container
+---------------------
 
 Use user as root and password as that value which we set to MYSQL_ROOT_PASSWORD in docker run command.
 
