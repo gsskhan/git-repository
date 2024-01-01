@@ -9,7 +9,7 @@ print( "located python script [%s] at [%s]" %( main_script, exec_dir))
 a1 = numpy.array( [1,2] )
 print ( "a1: %s" %(a1) )
 
-a2 = numpy.array( [ [1,2,3] ,[7,9,8,5] ] )
+a2 = numpy.array( [ [1,2,3] ,[7,9,8] ] )
 print ( "a2: %s" %(a2) )
 
 a3 = numpy.array([1, 2, 3, 4, 5], ndmin=2)

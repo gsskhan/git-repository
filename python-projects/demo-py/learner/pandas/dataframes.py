@@ -1,7 +1,7 @@
 import sys, os 
 import json
 import pandas as pd
-from pandas.io.json import json_normalize
+from pandas import json_normalize
 
 print( "started program ...")
 main_script = sys.argv[0]
