@@ -34,11 +34,11 @@ public class NotificationController {
 		log.info("send html notification controller execution started.");
 		String status = "success";
 		
-		CompletableFuture<Boolean> FirstEmail = emailService.sendHtmlEmail("demo.user1@demo.org", "Welcome email", "Hi There User1.");
+		CompletableFuture<Boolean> firstEmail = emailService.sendHtmlEmail("demo.user1@demo.org", "Welcome email", "Hi There User1.");
 		CompletableFuture<Boolean> secondEmail = emailService.sendHtmlEmail("demo.user2@demo.org", "Welcome email", "Hi There User2.");
 		CompletableFuture<Boolean> thirdEmail = emailService.sendHtmlEmail("demo.user3@demo.org", "Welcome email", "Hi There User3.");
 		CompletableFuture<Boolean> fourthEmail = emailService.sendHtmlEmail("demo.user4@demo.org", "Welcome email", "Hi There User4.");
-		CompletableFuture.allOf(FirstEmail, secondEmail, thirdEmail, fourthEmail).join();
+		CompletableFuture.allOf(firstEmail, secondEmail, thirdEmail, fourthEmail).join();
 		
 		log.info("send html notification controller execution finished.");
 		return Collections.singletonMap("message", status);
