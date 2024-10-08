@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.sql.DataSource;
 
+import org.dms.web.api.exception.DmsRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -19,13 +20,19 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import com.zaxxer.hikari.HikariDataSource;
 
+import jakarta.persistence.EntityManagerFactory;
+
 @Configuration
 @EnableJpaRepositories(basePackages = {
 		"org.dms.web.api.repository" }, transactionManagerRef = "txManager", entityManagerFactoryRef = "entityMgrFactory")
 public class DatabaseConfig {
 
-	@Autowired
-	private Environment env;
+	private final Environment env;
+
+    @Autowired
+    public DatabaseConfig(Environment env) {
+        this.env = env;
+    }
 
 	@Bean(name = "dataSourceProperties")
 	@ConfigurationProperties(prefix = "app.datasource")
@@ -39,7 +46,7 @@ public class DatabaseConfig {
 	}
 
 	@Bean(name = "jdbcTemplate")
-	public JdbcTemplate JdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
+	public JdbcTemplate jdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 	}
 
@@ -47,12 +54,12 @@ public class DatabaseConfig {
 	public LocalContainerEntityManagerFactoryBean entityMgrFactory(@Qualifier("dataSource") DataSource dataSource) {
 		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource);
-		em.setPackagesToScan(new String[] { env.getProperty("app.hibernate.packages-to-scan") });
+		em.setPackagesToScan(env.getProperty("app.hibernate.packages-to-scan"));
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 
-		HashMap<String, String> properties = new HashMap<String, String>();
+		HashMap<String, String> properties = new HashMap<>();
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("app.hibernate.ddl-auto"));
 		properties.put("hibernate.dialect", env.getProperty("app.hibernate.dialect"));
 		properties.put("hibernate.show_sql", env.getProperty("app.hibernate.show-sql"));
@@ -65,7 +72,11 @@ public class DatabaseConfig {
 	@Bean(name = "txManager")
 	public PlatformTransactionManager txManager(
 			final @Qualifier("entityMgrFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory.getObject());
+		EntityManagerFactory emf = entityManagerFactory.getObject();
+		if (emf == null) {
+			throw new DmsRuntimeException("EntityManagerFactory is null.");			
+		}
+		return new JpaTransactionManager(emf);
 	}
 
 }

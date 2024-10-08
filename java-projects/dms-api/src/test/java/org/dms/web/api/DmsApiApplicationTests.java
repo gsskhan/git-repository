@@ -8,8 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class DmsApiApplicationTests {
 
+	private final PopulateAppDataService populateAppDataService;
+
 	@Autowired
-	PopulateAppDataService populateAppDataService;
+	public DmsApiApplicationTests(PopulateAppDataService populateAppDataService) {
+		this.populateAppDataService = populateAppDataService;
+	}
 
 	@Test
 	void contextLoads() {

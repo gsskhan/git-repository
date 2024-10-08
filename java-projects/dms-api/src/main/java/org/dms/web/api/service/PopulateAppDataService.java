@@ -20,14 +20,29 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class PopulateAppDataService {
 
-	@Autowired
-	private RoleRepository roleRepository;
+	
+	private final RoleRepository roleRepository;
 
+	@Autowired
+	public PopulateAppDataService(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+
+	/**
+	 * Runs the population of the application data. This method is to be called only
+	 * once when the application is started. It populates the required data in the
+	 * database tables.
+	 */
 	public void run() {
 		// Add roles
 		this.populateRoles();
 	}
 
+	/**
+	 * Populates the ROLES table with default roles required by the application to
+	 * function properly. If the roles are already present in the table, then it
+	 * simply ignores and does nothing.
+	 */
 	private void populateRoles() {
 		List<Role> roleList = Optional.ofNullable(roleRepository.getAllRoles()).orElse(new ArrayList<>());
 

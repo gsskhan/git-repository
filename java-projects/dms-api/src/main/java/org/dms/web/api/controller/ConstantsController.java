@@ -18,13 +18,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(CONSTANTS_CONTROLLER_URI)
 public class ConstantsController {
 
+	
+	private final ConstantsService constantsDataService;
+
 	@Autowired
-	private ConstantsService constantsDataService;
+	public ConstantsController(ConstantsService constantsDataService) {
+		this.constantsDataService = constantsDataService;
+	}
 
 	@GetMapping(path = GET_ALL_SYSTEM_VARIABLES_URI, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<SystemVariable> getAllSystemVariables() throws DmsApiException {
 		List<SystemVariable> list = constantsDataService.getAll();
-		log.info("controller completed... returned all system variables");
+		log.info("controller completed... returned all system variables.");
 		return list;
 	}
 
@@ -32,7 +37,7 @@ public class ConstantsController {
 	public List<SystemVariable> getSystemVariablesByName(@PathVariable(name = "name") String name)
 			throws DmsApiException {
 		List<SystemVariable> list = constantsDataService.getByName(name);
-		log.info("controller completed... returned all system variables");
+		log.info("controller completed... returned system variables by name {}.", name);
 		return list;
 	}
 
@@ -40,14 +45,14 @@ public class ConstantsController {
 	public List<SystemVariable> getSystemVariablesByValue(@PathVariable(name = "value") String value)
 			throws DmsApiException {
 		List<SystemVariable> list = constantsDataService.getByValue(value);
-		log.info("controller completed... returned all system variables");
+		log.info("controller completed... returned all system variables by value {}.", value);
 		return list;
 	}
 
 	@GetMapping(path = GET_SYSTEM_VARIABLES_BY_ID_URI, produces = MediaType.APPLICATION_JSON_VALUE)
 	public SystemVariable getSystemVariablesById(@PathVariable(name = "id") Long id) throws DmsApiException {
 		SystemVariable sv = constantsDataService.getById(id);
-		log.info("controller completed... returned all system variables");
+		log.info("controller completed... returned all system variables by id {}.", id);
 		return sv;
 	}
 
