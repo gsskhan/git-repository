@@ -45,7 +45,8 @@ public class ReduceMain {
         var resultTotalSalariesByRole = listTwo.stream()
             .collect(Collectors.groupingBy(
                     Employee::role,
-                    // Collectors.summingDouble(e -> e.salary() == null ? 0 : e.salary()))
+                    // Collectors.summingDouble(Employee::salary) // Doesn't work, as it can't handle null
+                    // Collectors.summingDouble(e -> e.salary() == null ? 0 : e.salary()) // Works, but i want to use reduce
                     Collectors.reducing(0.0, e -> e.salary() == null ? 0 : e.salary(), Double::sum)
             ));
         System.out.println("Result total salaries by role: " + resultTotalSalariesByRole);
