@@ -1,4 +1,4 @@
-package org.demo.core.streams;
+package org.demo.core.collections;
 
 import java.util.List;
 import java.util.stream.Collectors;
