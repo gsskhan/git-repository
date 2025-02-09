@@ -50,5 +50,16 @@ public class ReduceMain {
                     Collectors.reducing(0.0, e -> e.salary() == null ? 0 : e.salary(), Double::sum)
             ));
         System.out.println("Result total salaries by role: " + resultTotalSalariesByRole);
+
+        // Average of salaries by roles.
+        var resultAverageSalariesByRole = listTwo.stream()
+            .map(employee -> employee.salary() == null ? 
+                new Employee(employee.id(), employee.name(), employee.age(), 0.0, employee.role()) : employee            
+            )
+            .collect(Collectors.groupingBy(
+                    Employee::role,
+                    Collectors.averagingDouble(Employee::salary)
+            ));
+        System.out.println("Result average salaries by role: " + resultAverageSalariesByRole);
     }
 }
