@@ -1,0 +1,35 @@
+To install the neo4j graph database in ubuntu.
+==============================================
+
+
+Step 1: Download the community edition neo4j graph database.
+
+        https://neo4j.com/deployment-center/#gdb-tab
+
+        I downloaded the community edition neo4j graph database file -> neo4j-community-5.26.2-unix.tar.gz
+
+Step 2: Extract the tar
+
+        $ tar -xf neo4j-community-5.26.2-unix.tar.gz
+
+        Rename the extracted folder to neo4j
+        
+        $ mv neo4j-community-5.26.2-unix.tar.gz neo4j
+
+        move the extracted folder to /opt and set permissions you desire.
+
+        $ sudo mv neo4j /opt/
+        $ sudo chown root:root /opt/neo4j
+
+Step 3: Navigate to /opt/neo4j/bin and start the server.
+
+        $ cd /opt/neo4j/bin
+        $ ./neo4j-admin server console
+
+Step 4: Open any browser and visit this localhost http://localhost:7474
+
+        The username and password is neo4j by default. 
+        After putting the password we will have to update the default password.
+
+        I reset the new password as password
+
