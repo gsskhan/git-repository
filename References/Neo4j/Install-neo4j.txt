@@ -14,19 +14,28 @@ Step 2: Extract the tar
 
         Rename the extracted folder to neo4j
         
-        $ mv neo4j-community-5.26.2-unix.tar.gz neo4j
+        $ mv neo4j-community-5.26.2-unix neo4j
 
         move the extracted folder to /opt and set permissions you desire.
 
         $ sudo mv neo4j /opt/
         $ sudo chown root:root /opt/neo4j
 
-Step 3: Navigate to /opt/neo4j/bin and start the server.
+Step 3: [Optional] To install the apoc library.
+
+        APOC Core is packaged with Neo4j and can be found in the $NEO4J_HOME/labs directory.
+
+        APOC Core can be installed by moving the APOC jar file from the $NEO4J_HOME/labs directory 
+        to the $NEO4J_HOME/plugins directory and restarting Neo4j.
+
+        $ cp /opt/neo4j/labs/apoc-5.26.2-core.jar /opt/neo4j/plugins/
+
+Step 4: Navigate to /opt/neo4j/bin and start the server. To stop the server press Ctrl+C
 
         $ cd /opt/neo4j/bin
         $ ./neo4j-admin server console
 
-Step 4: Open any browser and visit this localhost http://localhost:7474
+Step 5: Open any browser and visit this localhost http://localhost:7474
 
         The username and password is neo4j by default. 
         After putting the password we will have to update the default password.
