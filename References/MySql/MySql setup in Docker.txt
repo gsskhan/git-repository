@@ -1,0 +1,107 @@
+
+The following command will pull an image of mysql if one doesn't exist, then create a container for it.
+
+	$ docker run -d --name mysqldb -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD=password mysql:8
+	Unable to find image 'mysql:8' locally
+	8: Pulling from library/mysql
+	804bb8ae89de: Pull complete 
+	12f538368250: Pull complete 
+	7ec3ee0f0f08: Pull complete 
+	3d64c2aa182d: Pull complete 
+	779c43f76385: Pull complete 
+	7d08e04e916f: Pull complete 
+	c324f526407a: Pull complete 
+	a78747d9f656: Pull complete 
+	2dd85f24b56a: Pull complete 
+	29a2795e8756: Pull complete 
+	Digest: sha256:0f775a92980b41c87c58f934a204de80431dd4d854057160ec1cb936663eabe9
+	Status: Downloaded newer image for mysql:8
+	7999640a128e801ca4ea79cf5d6315a8313b0ae078656fbee0a7bdbb21b1871e
+	$ 
+	
+If containerization was successful, you should see the container when you run 'docker ps -a' from your terminal.
+
+	$ docker images
+	REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+	mysql        8         78e963ded248   2 months ago   769MB
+
+	$ docker ps -a
+	CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS                                                                                      NAMES
+	d2a89e28de9a   mysql:8   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 0.0.0.0:33060->33060/tcp, :::33060->33060/tcp   mysqldb
+
+At this point you will have a running container with MySQL running inside of it. 
+You can connect to the database using your terminal or from your local application by providing password value of variable MYSQL_ROOT_PASSWORD.
+
+You should now also be able to connect directly to the containerized database from your terminal via remote connection.
+
+	Remote connection: mysql -h 127.0.0.1 -P 3306  -u root -p
+	
+	Example:
+
+	gsskhan@gsskhan-Inspiron-3542:~$ mysql
+	Command 'mysql' not found, but can be installed with:
+	sudo apt install mysql-client-core-8.0  # version 8.0.41-0ubuntu0.24.04.1, or
+	sudo apt install mariadb-client-core    # version 1:10.11.8-0ubuntu0.24.04.1
+	
+	gsskhan@gsskhan-Inspiron-3542:~$ sudo apt install mysql-client-core-8.0 
+	[sudo] password for gsskhan: 
+	Reading package lists... Done
+	Building dependency tree... Done
+	Reading state information... Done
+	The following NEW packages will be installed:
+	  mysql-client-core-8.0
+	0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+	Need to get 2,727 kB of archives.
+	After this operation, 61.7 MB of additional disk space will be used.
+	Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 mysql-client-core-8.0 amd64 8.0.41-0ubuntu0.24.04.1 [2,727 kB]
+	Fetched 2,727 kB in 3s (1,055 kB/s)                
+	Selecting previously unselected package mysql-client-core-8.0.
+	(Reading database ... 223170 files and directories currently installed.)
+	Preparing to unpack .../mysql-client-core-8.0_8.0.41-0ubuntu0.24.04.1_amd64.deb ...
+	Unpacking mysql-client-core-8.0 (8.0.41-0ubuntu0.24.04.1) ...
+	Setting up mysql-client-core-8.0 (8.0.41-0ubuntu0.24.04.1) ...
+	Processing triggers for man-db (2.12.0-4build2) ...
+
+	gsskhan@gsskhan-Inspiron-3542:~$ mysql -h 127.0.0.1 -P 3306  -u root -p
+	Enter password: 
+	Welcome to the MySQL monitor.  Commands end with ; or \g.
+	Your MySQL connection id is 11
+	Server version: 8.4.4 MySQL Community Server - GPL
+
+	Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+	Oracle is a registered trademark of Oracle Corporation and/or its
+	affiliates. Other names may be trademarks of their respective
+	owners.
+
+	Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+	mysql> 
+	mysql> CREATE DATABASE grocerylist;
+	Query OK, 1 row affected (0.02 sec)
+
+	mysql> USE grocerylist;
+	Database changed
+	mysql> CREATE TABLE groceries ( item VARCHAR(50), quantity INT );
+	Query OK, 0 rows affected (0.04 sec)
+
+	mysql> INSERT INTO groceries VALUES ('banana', 5);
+	Query OK, 1 row affected (0.02 sec)
+
+	mysql> commit;
+	Query OK, 0 rows affected (0.00 sec)
+
+	mysql> select * from groceries;
+	+--------+----------+
+	| item   | quantity |
+	+--------+----------+
+	| banana |        5 |
+	+--------+----------+
+	1 row in set (0.00 sec)
+
+	mysql> exit
+	Bye
+
+Start/Stop the container using 
+	$ docker stop mysqldb
+	$ docker start mysqldb
