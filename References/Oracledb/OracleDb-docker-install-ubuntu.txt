@@ -1,128 +1,76 @@
 How to install oracle db free image in ubuntu.
 ==============================================
 
-Step 1. Pull the image you desire. I choose light version.
+Step 1. Pull the image you desire. I choose 23-slim-faststart.
 
-    docker pull container-registry.oracle.com/database/free:latest-lite
+	-slim -> An image focussed on smallest possible image size instead of additional functionality.
+	*-faststart -> The same image flavor as above but with an already expanded and ready-to-go database inside the image. 
+	               This image trades image size on disk for a faster database startup time.
+
+	docker pull gvenzl/oracle-free:23-slim-faststart
 
     Example:
     
-        $ docker pull container-registry.oracle.com/database/free:latest-lite
-        latest-lite: Pulling from database/free
-        6d6e36f7c9fb: Pull complete 
-        c5f67e724786: Pull complete 
-        c0264fef666c: Pull complete 
-        a35a934ec485: Pull complete 
-        39dc5d31b2c8: Pull complete 
-        3e275ed87583: Pull complete 
-        2fd2532a27ab: Pull complete 
-        97259f55f878: Pull complete 
-        800ec44fafa8: Pull complete 
-        Digest: sha256:2edaadead6f2c7b7b5591f602a206654c069657e2af929e4f89dc89c3aa5af13
-        Status: Downloaded newer image for container-registry.oracle.com/database/free:latest-lite
-        container-registry.oracle.com/database/free:latest-lite
+			$ docker pull gvenzl/oracle-free:23-slim-faststart
+			23-slim-faststart: Pulling from gvenzl/oracle-free
+			eaa6df4b5a8a: Pull complete 
+			6c5495ea095e: Pull complete 
+			1103088686d0: Pull complete 
+			5a4db3c7374f: Pull complete 
+			eb1da131145e: Pull complete 
+			85e1e12801e3: Pull complete 
+			dbeb77cddde2: Pull complete 
+			efcee17c125b: Pull complete 
+			62461f366002: Pull complete 
+			Digest: sha256:42124d7a0f4d3fcb82524a0fee72a513a8e575e7398e7ddca8f380a57c76146f
+			Status: Downloaded newer image for gvenzl/oracle-free:23-slim-faststart
+			docker.io/gvenzl/oracle-free:23-slim-faststart
+			
+			$ docker images
+			REPOSITORY           TAG                 IMAGE ID       CREATED       SIZE
+			gvenzl/oracle-free   23-slim-faststart   d0cace20ac87   3 weeks ago   4.61GB
 
-        $ docker images
-        REPOSITORY                                    TAG           IMAGE ID       CREATED       SIZE
-        container-registry.oracle.com/database/free   latest-lite   742f1b37af1d   8 weeks ago   1.82GB
+    
+Step 2. Run a new database container (data is removed when the container is removed, but kept throughout container restarts):
 
-Step 2. Before we start a new container running the database, its recommendable to create a local directory 
-        where all the data files can persist outside the container. By doing so, the data persistence is decoupled 
-        from the containers lifeycycle. 
-        
-        I created local directory /opt/oracle/oradata was created with write permissions for any user.  
+	docker run -d -p 1521:1521 --name oracledb \
+	-e ORACLE_PASSWORD=<your password> \
+	-e APP_USER=<new schema/user> \
+	-e APP_USER_PASSWORD=<new schema/user password> \
+	gvenzl/oracle-free:<tag>
+	
+	Note: 
+	It will create a new database schema user (specified by variable APP_USER) with the name specified in this variable 
+	and password (specified by variable APP_USER_PASSWORD).	For 18c and onwards, the user will be created in the default FREEPDB1 pluggable database.
+	
+	Example:
+	
+		$ docker run -d --name oracledb -p 1521:1521 -e ORACLE_PASSWORD=strongpassword -e APP_USER=NARCO -e APP_USER_PASSWORD=password gvenzl/oracle-free:23-slim-faststart
+		a76aa2e4eff9473eecda1f89866ec6b4e13dfa5bd6734d51ab6909022bd06322
 
-        $ sudo mkdir -p /opt/oracle/oradata
-        $ sudo chmod -R 777 /opt/oracle/
+		
+		$ docker container ls
+		CONTAINER ID   IMAGE                                  COMMAND                  CREATED              STATUS              PORTS                                       NAMES
+		a76aa2e4eff9   gvenzl/oracle-free:23-slim-faststart   "container-entrypoin…"   About a minute ago   Up About a minute   0.0.0.0:1521->1521/tcp, :::1521->1521/tcp   oracledb
 
-Step 3. Start the container. 
+Step 3. View the logs of container. And note the DB name. By default FREEPDB1 gets created.
 
-    It may takes several minutes to start. After the startup is completed, you should see DATABASE IS READY TO USE in the output. 
-    Also this gives you the SID of the started DB which is FREE in this case.
+	Example:
+	
+		$ docker logs oracledb
+		
+Step 4: To start and stop the oracledb
 
-    docker run --name oracle \
-    -p 1521:1521 \
-    -e ORACLE_PWD=Test123 \
-    -v /opt/oracle/oradata:/opt/oracle/oradata \
-    container-registry.oracle.com/database/free:latest-lite
+	Example:
+		$ docker stop oracledb
+		$ docker start oracledb
+		
+Step 5. Connect via sql developer to SYS, SYSTEM & narco (The schema/user created by variable APP_USER). Refer screenshots.
 
-    Example:
-
-        $ docker run --name oracle \
-                -p 1521:1521 \
-                -e ORACLE_PWD=Test123 \
-                -v /opt/oracle/oradata:/opt/oracle/oradata \
-                container-registry.oracle.com/database/free:latest-lite
-        Expanding oracle data
-        /home/oracle
-        Starting Oracle Net Listener.
-        Oracle Net Listener started.
-        Starting Oracle Database instance FREE.
-        Oracle Database instance FREE started.
-        Pluggable Database FREEPDB1 opened.
-
-
-        SQL*Plus: Release 23.0.0.0.0 - for Oracle Cloud and Engineered Systems on Sun Oct 13 09:29:24 2024
-        Version 23.5.0.24.07
-
-        Copyright (c) 1982, 2024, Oracle.  All rights reserved.
-
-
-        Connected to:
-        Oracle Database 23ai Free Release 23.0.0.0.0 - Develop, Learn, and Run for Free
-        Version 23.5.0.24.07
-
-        SQL> 
-        User altered.
-
-        SQL> 
-        User altered.
-
-        SQL> 
-        Session altered.
-
-        SQL> 
-        User altered.
-
-        SQL> Disconnected from Oracle Database 23ai Free Release 23.0.0.0.0 - Develop, Learn, and Run for Free
-        Version 23.5.0.24.07
-        #########################
-        DATABASE IS READY TO USE!
-        #########################
-        The following output is now a tail of the alert.log:
-        Pluggable database FREEPDB1 with pdb id - 3 is now marked as NEW.
-        ****************************************************************
-        2024-10-13T09:29:12.016464+00:00
-        FREEPDB1(3):Opening pdb with Resource Manager plan: DEFAULT_PLAN
-        Completed: Pluggable database FREEPDB1 opened read write 
-        Completed:             alter pluggable database all open
-                    alter pluggable database FREEPDB1 save state
-        Completed:             alter pluggable database FREEPDB1 save state
-        2024-10-13T09:29:25.350098+00:00
-        FREEPDB1(3):TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P343 (3758) VALUES LESS THAN (TIMESTAMP' 2024-10-14 00:00:00')
-        2024-10-13T09:29:33.716161+00:00
-        TABLE SYS.WRP$_REPORTS: ADDED AUTOLIST FRAGMENT SYS_P402 (3) VALUES (( 1449104036, TO_DATE(' 2024-10-07 00:00:00', 'syyyy-mm-dd hh24:mi:ss', 'nls_calendar=gregorian') ))
-        TABLE SYS.WRP$_REPORTS_DETAILS: ADDED AUTOLIST FRAGMENT SYS_P403 (3) VALUES (( 1449104036, TO_DATE(' 2024-10-07 00:00:00', 'syyyy-mm-dd hh24:mi:ss', 'nls_calendar=gregorian') ))
-        TABLE SYS.WRP$_REPORTS_TIME_BANDS: ADDED AUTOLIST FRAGMENT SYS_P406 (3) VALUES (( 1449104036, TO_DATE(' 2024-10-07 00:00:00', 'syyyy-mm-dd hh24:mi:ss', 'nls_calendar=gregorian') ))
-
-Step 4. Connecting to the database
-
-    Install Oracle SQL Developer in VSCode.
-
-    To connect from outside of the container using SQL*Plus, run the following commands:
-
-        # To connect to the database at the CDB$ROOT level as sysdba:
-        sqlplus sys/<your password>@//localhost:<port mapped to 1521>/FREE as sysdba
-
-        # To connect as non sysdba at the CDB$ROOT level:
-        sqlplus system/<your password>@//localhost:<port mapped to 1521>/FREE
-
-        # To connect to the default Pluggable Database (PDB) within the FREE Database:
-        sqlplus pdbadmin/<your password>@//localhost:<port mapped to 1521>/FREEPDB1
-
-    Example:
-        sqlplus sys/Test123@//localhost:1521/FREE as sysdba
-        sqlplus system/Test123@//localhost:1521/FREE
-
-        After startup is completed you can connect to the database at localhost:1521 using the supplied password Test123. Refer screenshots.
-
+		Note: We can use the narco schema for application development activities.
+		
+		Hostname: localhost or 127.0.0.1
+		Port: 1521
+		Service name: FREEPDB1
+		Database App User: NARCO
+		Database App Password: password
