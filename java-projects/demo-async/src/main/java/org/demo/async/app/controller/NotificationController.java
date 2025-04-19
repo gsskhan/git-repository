@@ -20,6 +20,11 @@ public class NotificationController {
 	@Autowired
 	EmailService emailService;
 
+	/**
+	 * This method sends an email to the recipient asynchronously.
+	 * 
+	 * @return Map of status message and status.
+	 */
 	@GetMapping(path = "/send")
 	public Map<String, Object> sendNotification() {
 		log.info("send notification controller execution started.");		
@@ -29,6 +34,11 @@ public class NotificationController {
 		return Collections.singletonMap("message", status);
 	}
 	
+	/**
+	 * This method sends a HTML email to the recipient asynchronously.
+	 * 
+	 * @return Map of status message and status.
+	 */
 	@GetMapping(path = "/sendHtml")
 	public Map<String, Object> sendHtmlNotification() {
 		log.info("send html notification controller execution started.");
