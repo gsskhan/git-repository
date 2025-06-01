@@ -1,0 +1,17 @@
+{
+  "name": "demo-inversify-js",
+  "version": "1.0.0",
+  "description": "Demo of inversifyJS with plain javascript",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gssk",
+  "license": "ISC",
+  "dependencies": {
+    "inversify": "^7.5.2",
+    "reflect-metadata": "^0.2.2"
+  }
+}
