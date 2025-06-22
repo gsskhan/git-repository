@@ -7,7 +7,9 @@ like Llama 2 and Gemma on your local machine. It provides an easy-to-use interfa
 downloading, managing, and interacting with these models, allowing users to experiment
 with and build AI applications without needing to rely on external APIs or cloud services.
 
-I choose docker way to use it.
+===================
+Dcokerized Approach
+===================
 
 1. Run below cmd to get ollama container running in PC
 
@@ -66,3 +68,46 @@ I choose docker way to use it.
 6. To start container
 
 	$ docker start ollama
+
+===================
+Manual Approach
+===================
+
+1. Download from https://ollama.com/download/ollama-linux-amd64.tgz and extract to your home.
+
+2. Setup PATH
+
+	$ export PATH=$HOME/ollama-linux-amd64/bin/:$PATH
+
+3. Now start ollama
+
+    $ ollama serve
+
+	It will start a REST endpoints too.
+
+	GET http://localhost:11434/api/ps
+	GET http://localhost:11434/api/version
+
+	Above if returns results, then its good to go.
+
+4. Run one of the models available at https://ollama.com
+
+	$ ollama ps
+	NAME    ID    SIZE    PROCESSOR    UNTIL
+
+	$ ollama run gemma3:1b
+	pulling manifest 
+	pulling 7cd4618c1faf: 100% ▕████████████████████████████████████████████████████████████████████████████████████████████████████▏ 815 MB                         
+	pulling e0a42594d802: 100% ▕████████████████████████████████████████████████████████████████████████████████████████████████████▏  358 B                         
+	pulling dd084c7d92a3: 100% ▕████████████████████████████████████████████████████████████████████████████████████████████████████▏ 8.4 KB                         
+	pulling 3116c5225075: 100% ▕████████████████████████████████████████████████████████████████████████████████████████████████████▏   77 B                         
+	pulling 120007c81bf8: 100% ▕████████████████████████████████████████████████████████████████████████████████████████████████████▏  492 B                         
+	verifying sha256 digest 
+	writing manifest 
+	success 
+	>>> Send a message (/? for help)
+
+5. It downloads model at path variable: OLLAMA_MODELS=/home/gsskhan/.ollama/models
+   This is an inbuilt variable
+
+6. You can press CTRL+C to stop ollama.
