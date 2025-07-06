@@ -1,0 +1,43 @@
+Install Postgres DB with Docker
+===============================
+
+
+Step 1: Pull the image and run. I have pulled version 17 of postgres and exposed it at port 5432.
+
+
+	$ docker run --name postgres -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:17
+		Unable to find image 'postgres:17' locally
+		17: Pulling from library/postgres
+		3da95a905ed5: Pull complete 
+		b374722b7db6: Pull complete 
+		9e48f0d5503b: Pull complete 
+		c883d509c82b: Pull complete 
+		e9068395fab4: Pull complete 
+		f68d74b3ee3b: Pull complete 
+		420b84accc7f: Pull complete 
+		761152bb4395: Pull complete 
+		1eb73c80cbec: Pull complete 
+		bbce49c39241: Pull complete 
+		f028345d1934: Pull complete 
+		67bfaf72b9da: Pull complete 
+		ebb41c3a1a26: Pull complete 
+		a56d6197194e: Pull complete 
+		Digest: sha256:3962158596daaef3682838cc8eb0e719ad1ce520f88e34596ce8d5de1b6330a1
+		Status: Downloaded newer image for postgres:17
+		32dacb8c776dff472a7c96c140e83193bc907c51f151af019c4bda1598715da3
+		
+Step 2: The postgres db instance will be accesible with following properties:
+
+		Host: localhost
+		Port: 5432
+		Username: postgres
+		Password: (whatever I set it to above as value of POSTGRES_PASSWORD) 
+		Database: postgres
+		
+Step 3: (Optional)  Docker commands
+
+	To see db logs:            $ docker  logs postgres
+	To stop the db container:  $ docker  stop postgres
+	To start the db container: $ docker start postgres
+	
+
