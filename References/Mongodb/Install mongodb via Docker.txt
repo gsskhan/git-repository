@@ -1,22 +1,30 @@
 Install mongodb via Docker
 ==========================
-Pull latest mongo image from docker hub.
+Pull and run latest mongo image from docker hub.
 
-    $ docker pull mongo
-    Using default tag: latest
+    docker run -d \
+      --name <container_name> \
+      -p <host_port>:27017 \
+      -e MONGO_INITDB_ROOT_USERNAME=<username> \
+      -e MONGO_INITDB_ROOT_PASSWORD=<password> \
+      mongo:latest
+
+    Example: I choose mongodb as the container name, 27017 as the host port, admin as the username, and secret as the password.
+
+    $ docker run -d --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secret mongo:latest
+    Unable to find image 'mongo:latest' locally
     latest: Pulling from library/mongo
-    675920708c8b: Pull complete 
-    6f9c8c301e0f: Pull complete 
-    73738965c4ce: Pull complete 
-    7fd6635b9ddf: Pull complete 
-    73a471eaa4ad: Pull complete 
-    bcf274af89b0: Pull complete 
-    04fc489f2a3b: Pull complete 
-    6eff8a505292: Pull complete 
-    a5ef4431fce7: Pull complete 
-    Digest: sha256:59448b028874b9ce3150cc692a3f85e8beed92cb8dc9479bdc3fd453b70e1fb1
+    b08e2ff4391e: Pull complete 
+    eed64559232a: Pull complete 
+    ae1ed6a09b06: Pull complete 
+    43bb2c5eca20: Pull complete 
+    c7b0a7e2c789: Pull complete 
+    1720c22c25c2: Pull complete 
+    b9e8e2e5bd69: Pull complete 
+    e2095260615f: Pull complete 
+    Digest: sha256:f331890607b5cdce091da9823f91ab1e4c54d31fd572282037880b2eaafff454
     Status: Downloaded newer image for mongo:latest
-    docker.io/library/mongo:latest
+    7be9285d9585a8a0f8177d207d1af3f551ce1648d6069830ff70cdb949c87895
 
 Check the downloaded image.
 ===========================
@@ -24,18 +32,6 @@ Check the downloaded image.
     $ docker images
     REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
     mongo        latest    d34d21a9eb5b   3 weeks ago   693MB
-
-Create and run the container.
-=============================
-Syntax: docker run --name mongodb -d -p 27017:27017 mongo:latest
-
--it: Provides an interactive shell to the Docker container.
--d : Starts the container as a background process.
--p : to expose the port to external access.
---name : Name of the container.
-
-    $ docker run --name mongodb -d -p 27017:27017 mongo:latest
-    00d21a75b44eb2bc85cd9239250139893c20f0c25742bcf2d9b729c6a8c9e4a4
     
 View container status
 =====================
@@ -47,6 +43,7 @@ View container status
 View container logs
 ===================
 To see the container logs.
+
     $ docker logs mongodb
 
 Start Interactive Docker Terminal (Bash Shell) to Manage MongoDB Database
@@ -56,34 +53,12 @@ Start Interactive Docker Terminal (Bash Shell) to Manage MongoDB Database
     $ docker exec -it mongodb bash
     root@8a6028a61f62:/#
 
-2. Connect via mongosh ( using username/password is you have set up) in interactive shell.
-    (Note: mongosh is new mongo equivalent).
-    
-    root@8a6028a61f62:/# mongosh
+2. Connect via mongosh ( using username/password is you have set up) in Docker container. (Note: mongosh is new mongo equivalent).
 
-3. Create admin user creadentials 
-    (Here we are setting admin username/password = admin/password).
-
-    root@8a6028a61f62:/# mongosh
-    test> use admin
-    switched to db admin
-    
-    admin> db.createUser({user:"admin", pwd:"password", roles:[{role:"root", db:"admin"}]});
-    { ok: 1 }
-    admin> 
-
-4. Next, exit current login and try to login by admin user.
-
-    You can now connect with your MongoDB, by first restarting MongoDB and then using the following line of code:
-
-    $ docker stop mongodb
-    $ docker start mongodb
-    $ docker logs mongodb
-    $ docker ps -a
     $ docker exec -it mongodb bash
-    root@00d21a75b44e:/# mongosh -u admin -p password --authenticationDatabase admin
+    root@00d21a75b44e:/# mongosh -u admin -p secret --authenticationDatabase admin
     OR,
-    root@00d21a75b44e:/# mongosh -u admin -p password 
+    root@00d21a75b44e:/# mongosh -u admin -p secret 
 
 
 Stopping and Restarting MongoDB Database
@@ -106,6 +81,13 @@ User docker start/stop to start mongo server container.
     CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                     PORTS     NAMES
     00d21a75b44e   mongo:latest   "docker-entrypoint.s…"   4 minutes ago   Exited (0) 5 seconds ago             mongodb
 
+Mongosh
+=======
+
+Install mongosh cli in ubuntu to connect mongodb externally (ouside docker container). To connect use: 
+
+    $ mongosh --host localhost --port 27017 -u admin -p secret
+
 
 Mongo compass GUI client
 ========================
@@ -117,4 +99,4 @@ If connecting directly:
 
 OR, 
 If connecting via user credentials of user "admin".
-    mongodb://admin:password@localhost:27017/?authMechanism=DEFAULT&authSource=admin
+    mongodb://admin:secret@localhost:27017/?authMechanism=DEFAULT&authSource=admin
