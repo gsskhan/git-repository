@@ -100,3 +100,9 @@ If connecting directly:
 OR, 
 If connecting via user credentials of user "admin".
     mongodb://admin:secret@localhost:27017/?authMechanism=DEFAULT&authSource=admin
+
+Mongo extention in VSCode
+=========================
+In VSCode install extension "mongodb for vscode" and connect to mongodb container. To connect use:
+
+    mongodb://admin:secret@localhost:27017/
