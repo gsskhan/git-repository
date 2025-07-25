@@ -1,0 +1,77 @@
+================================
+To install Redis db using Docker
+================================
+
+Step 1. Download and run redis db.
+
+    Syntax:  docker run -d --name <name of container> -p 6379:6379 redis
+    Example:
+            $ docker run -d --name redisdb -p 6379:6379 redis
+            Unable to find image 'redis:latest' locally
+            latest: Pulling from library/redis
+            59e22667830b: Pull complete 
+            563069fa03b4: Pull complete 
+            49031c033a72: Pull complete 
+            c645e9c24a26: Pull complete 
+            ab52a92c7961: Pull complete 
+            4f4fb700ef54: Pull complete 
+            550e4087f9e6: Pull complete 
+            Digest: sha256:f957ce918b51f3ac10414244bedd0043c47db44a819f98b9902af1bd9d0afcea
+            Status: Downloaded newer image for redis:latest
+            8fe91d338549faf7f100246a31427c858be04b000f3e90c46c45972794ecb5ba
+            $ 
+
+    redisdb: This assigns a name to your Redis container, making it easier to identify and manage.
+    -d: This flag runs the container in detached mode.
+    -p 6379:6379: This maps port 6379 on your host machine to port 6379 inside the container, allowing external applications to connect to Redis.
+    redis: This specifies the Redis image to use.
+
+Step 2. Connect to Redis from inside the container.
+
+    Syntax: docker exec -it <name of container> sh
+    Example:
+            $ docker exec -it redisdb sh
+              # redis-cli
+              127.0.0.1:6379> ping
+              PONG
+              127.0.0.1:6379>
+
+    OR,
+
+    Syntax: docker exec -it <name of container> redis-cli 
+    Example:
+            $ docker exec -it redisdb redis-cli
+              127.0.0.1:6379> ping
+              PONG
+              127.0.0.1:6379> 
+
+Step 3. Connect to Redis from outside the container.
+    
+    [Not my preferred method] 
+    Install redis-cli in ubuntu.
+    Syntax: sudo apt install redis-tools
+    Example:
+            $ sudo apt install redis-tools
+
+    Next, use redis-cli to connect.
+    Syntax: redis-cli -h redis_server_endpoint -p port_number
+    Example:    
+            $ redis-cli -h localhost -p 6379
+            127.0.0.1:6379> ping
+            PONG        
+    
+    OR,
+
+    [My preffered method]
+    Install "Redis" extension in vscode and connect.
+    Use=> host: localhost , Port: 6379
+
+Step 4. Start/Stop redis
+
+    Syntax: docker start <name of container>
+            docker stop <name of container>
+    Example:
+            $ docker start redisdb
+            $ docker stop redisdb
+
+
