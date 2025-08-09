@@ -1,0 +1,77 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.dist-info/
+*.egg-info/
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+sdist/
+var/
+parts/
+sdist/
+wheels/
+share/python-wheels/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.coverage
+.tox/
+htmlcov/
+.pytest_cache/
+
+# Editors
+.vscode/
+.idea/
+.settings/
+.project
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.iml
+
+# Virtual environment
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Personal
+.python_history
+.ropeproject
+
+# PyInstaller
+*.spec
+
+# Sphinx documentation
+docs/_build/
+
+# Type checkers
+.pyre/
+.pytype/
+
+# Environments
+.env
