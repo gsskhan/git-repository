@@ -39,8 +39,8 @@
         {
             "job_id": "job2",
             "job_type": "cron",
-            "cron_expr": "30 10 * * *",
-            "job_name": "Morning Task",
+            "cron_expr": "*/5 * * * *",
+            "job_name": "Test Cron Task",
             "enabled": true
         }
 
