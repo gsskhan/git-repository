@@ -1,8 +1,11 @@
 package org.demo.core.collections;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class ReduceMain {
 
     record Employee(int id, String name, int age, Double salary, String role) {}
@@ -28,18 +31,18 @@ public class ReduceMain {
         // Concatenate strings
         String resultConcatedString = listOne.stream()
             .reduce("", (partialResult, element) -> partialResult + element);
-        System.out.println("Result concatenated string: " + resultConcatedString);
+        log.info("Result concatenated string: {}", resultConcatedString);
 
         // Concatenated strings with total length
         int resultConcatenatingLength = listOne.stream()
             .reduce(0, (partialResult, element) -> partialResult + element.length(), Integer::sum);
-        System.out.println("Result concatenated string length: " + resultConcatenatingLength);
+        log.info("Result concatenated string length: {}", resultConcatenatingLength);
 
         // Total employees by role
         var resultTotalEmployeesByRole = listTwo.stream()
             .collect(Collectors.groupingBy(
                     Employee::role, Collectors.counting()));
-        System.out.println("Result total employees by role: " + resultTotalEmployeesByRole);
+        log.info("Result total employees by role: {}", resultTotalEmployeesByRole);
 
         // Total salaries by role
         var resultTotalSalariesByRole = listTwo.stream()
@@ -49,7 +52,7 @@ public class ReduceMain {
                     // Collectors.summingDouble(e -> e.salary() == null ? 0 : e.salary()) // Works, but i want to use reduce
                     Collectors.reducing(0.0, e -> e.salary() == null ? 0 : e.salary(), Double::sum)
             ));
-        System.out.println("Result total salaries by role: " + resultTotalSalariesByRole);
+        log.info("Result total salaries by role: {}", resultTotalSalariesByRole);
 
         // Average of salaries by roles.
         var resultAverageSalariesByRole = listTwo.stream()
@@ -60,6 +63,6 @@ public class ReduceMain {
                     Employee::role,
                     Collectors.averagingDouble(Employee::salary)
             ));
-        System.out.println("Result average salaries by role: " + resultAverageSalariesByRole);
+        log.info("Result average salaries by role: {}", resultAverageSalariesByRole);
     }
 }
