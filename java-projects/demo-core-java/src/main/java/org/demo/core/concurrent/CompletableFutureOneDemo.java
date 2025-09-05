@@ -12,7 +12,7 @@ public class CompletableFutureOneDemo {
         System.out.println("List of Integer: " + numbers);
 
 
-        // Stream over each item in list "numbers" and create a list of Strings by converting each Integer too String but using CompletableFuture.
+        // Stream over each item in list "numbers" and create a list of Strings by converting each Integer to String but using CompletableFuture.
         List<CompletableFuture<String>> completableFuturesOfStrings = numbers.stream().map(number -> CompletableFuture.supplyAsync(() -> {
             System.out.println("Thread: " + Thread.currentThread().getName());
             return String.valueOf(number);
