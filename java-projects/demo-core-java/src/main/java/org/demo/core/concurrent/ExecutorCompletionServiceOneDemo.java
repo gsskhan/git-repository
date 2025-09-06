@@ -3,7 +3,6 @@ package org.demo.core.concurrent;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,15 +44,15 @@ public class ExecutorCompletionServiceOneDemo {
                 Future<String> completedFuture = completionService.poll(); // Using poll() here
                 if (completedFuture != null) {
                     completedCount++;
-                    // .get() is still a blocking call, but we only call it
+                    // .get() is still a blocking call get results. Where as .resultNow() is non blocking to get results.
                     // after poll() has confirmed the task is complete.
-                    log.info("Result received: {}", completedFuture.get());
+                    log.info("Result received: {}", completedFuture.resultNow());
                 } else {
                     // Optional: Do other work here or just sleep briefly to avoid a busy-wait loop
                     log.trace("No completed tasks yet, will check again...");
                     Thread.sleep(200); // Avoid spinning the CPU
                 }
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
                 completedCount++; // Count the task even if it failed
                 log.error("Error retrieving task result", e);
             }
