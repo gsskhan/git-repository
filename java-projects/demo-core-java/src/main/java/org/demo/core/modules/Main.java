@@ -1,6 +1,4 @@
-package org.demo.core;
-
-import org.demo.core.modules.PrintNumbers;
+package org.demo.core.modules;
 
 public class Main {
     /**
