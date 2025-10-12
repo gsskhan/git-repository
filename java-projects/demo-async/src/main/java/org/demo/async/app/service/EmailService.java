@@ -3,6 +3,7 @@ package org.demo.async.app.service;
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletableFuture;
 
+import org.demo.async.app.config.AsyncConfig;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +23,13 @@ public class EmailService {
 	 * @param bodyText
 	 *            the email's body.
 	 */
-	@Async
+	@Async(value = AsyncConfig.VIRTUAL_THREAD_TASK_EXECUTOR)
 	public void sendEmail(String toAddress, String subjectText, String bodyText) {
 		try {
-			log.info("sendEmail method start by {} at {}.", Thread.currentThread().getName(), LocalDateTime.now());
+			log.info("sendEmail method start by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
 			Thread.sleep(10000);
 			log.info("Mail sent to: [{}], Subject: [{}], Body [{}].", toAddress, subjectText, bodyText);
-			log.info("sendEmail method ended by {} at {}.", Thread.currentThread().getName(), LocalDateTime.now());
+			log.info("sendEmail method ended by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
 		} catch (Exception e) {
 			log.error("sendEmail method failed.", e);
 		}
@@ -45,13 +46,13 @@ public class EmailService {
 	 *            the email's body.
 	 * @return a CompletableFuture that completes with a boolean value indicating whether the email could be successfully sent.
 	 */
-	@Async
+	@Async(value = AsyncConfig.VIRTUAL_THREAD_TASK_EXECUTOR)
 	public CompletableFuture<Boolean> sendHtmlEmail(String toAddress, String subjectText, String bodyText) {
 		try {
-			log.info("sendHtmlEmail method start by {} at {}.", Thread.currentThread().getName(), LocalDateTime.now());
+			log.info("sendHtmlEmail method start by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
 			Thread.sleep(10000);
 			log.info("Html mail sent to: [{}], Subject: [{}], Body [{}].", toAddress, subjectText, bodyText);
-			log.info("sendHtmlEmail method ended by {} at {}.", Thread.currentThread().getName(), LocalDateTime.now());
+			log.info("sendHtmlEmail method ended by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
 		} catch (Exception e) {
 			log.error("sendHtmlEmail method failed.", e);
 			return CompletableFuture.completedFuture(Boolean.FALSE);
