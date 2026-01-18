@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.demo.async.app.service.EmailService;
+import org.demo.async.app.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,8 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = { "/notification" })
 public class NotificationController {
 
+	private final EmailService emailService;
+	private final EventService eventService;
+
 	@Autowired
-	EmailService emailService;
+	public NotificationController(@Autowired EmailService emailService, @Autowired EventService eventService) {
+		this.emailService = emailService;
+		this.eventService = eventService;
+	}
 
 	/**
 	 * This method sends an email to the recipient asynchronously.
@@ -51,6 +57,25 @@ public class NotificationController {
 		CompletableFuture.allOf(firstEmail, secondEmail, thirdEmail, fourthEmail).join();
 		
 		log.info("send html notification controller execution finished.");
+		return Collections.singletonMap("message", status);
+	}
+
+	/**
+	 * This method processes events asynchronously.
+	 *
+	 * @return Map of status message and status.
+	 */
+	@GetMapping(path = "/process")
+	public Map<String, Object> processEventNotification() {
+		log.info("process event notification controller execution started.");
+		String status = "success";
+
+		eventService.processEvent("event-1");
+		eventService.processEvent("event-2");
+		eventService.processEvent("event-3");
+		eventService.processEvent("event-4");
+
+		log.info("process event notification controller execution finished.");
 		return Collections.singletonMap("message", status);
 	}
 
