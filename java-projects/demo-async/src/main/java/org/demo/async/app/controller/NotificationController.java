@@ -21,7 +21,7 @@ public class NotificationController {
 	private final EventService eventService;
 
 	@Autowired
-	public NotificationController(@Autowired EmailService emailService, @Autowired EventService eventService) {
+	public NotificationController(EmailService emailService, EventService eventService) {
 		this.emailService = emailService;
 		this.eventService = eventService;
 	}
