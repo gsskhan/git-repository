@@ -1,3 +1,7 @@
+Prerequisite: Rust needs C/C++ libs. Hence, install build-essential package in ubuntu.
+
+		$ sudo apt update && sudo apt install build-essential
+
 Step 1. Download offline version at https://forge.rust-lang.org/infra/other-installation-methods.html
 
 		Choose the platform as: x86_64-unknown-linux-gnu
