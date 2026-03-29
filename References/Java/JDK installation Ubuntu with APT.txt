@@ -1,0 +1,106 @@
+Install JDK in Ubuntu with APT
+==============================
+
+
+Step 1: Open terminal and install open JDK versions.
+
+    Run command:
+        sudo apt install openjdk-25-jdk
+        sudo apt install openjdk-21-jdk
+        sudo apt install openjdk-17-jdk
+
+Step 2: To configure JDK 25 as your default on Ubuntu when you have versions 17 and 21 also installed, you use the update-alternatives system.
+
+    A. Set the Java Runtime (java)
+
+        Run command: sudo update-alternatives --config java
+
+        You will see a list of installed JDKs with a Selection number.
+        Look for the path containing java-25-openjdk (e.g., /usr/lib/jvm/java-25-openjdk-amd64/bin/java).
+        Type the corresponding number and press Enter.
+
+        Example:
+
+        $ sudo update-alternatives --config java
+        There are 3 choices for the alternative java (providing /usr/bin/java).
+
+        Selection    Path                                         Priority   Status
+        ------------------------------------------------------------
+        * 0          /usr/lib/jvm/java-25-openjdk-amd64/bin/java   2511      auto mode
+        1            /usr/lib/jvm/java-17-openjdk-amd64/bin/java   1711      manual mode
+        2            /usr/lib/jvm/java-21-openjdk-amd64/bin/java   2111      manual mode
+        3            /usr/lib/jvm/java-25-openjdk-amd64/bin/java   2511      manual mode
+
+        Press <enter> to keep the current choice[*], or type selection number: 
+        $ 
+
+    B. Set the Java Compiler (javac)
+
+        Run command: sudo update-alternatives --config javac
+
+        Select the number for JDK 25 as you did in the previous step.
+
+        Example:
+        $ sudo update-alternatives --config javac
+        There are 3 choices for the alternative javac (providing /usr/bin/javac).
+
+        Selection    Path                                          Priority   Status
+        ------------------------------------------------------------
+        * 0          /usr/lib/jvm/java-25-openjdk-amd64/bin/javac   2511      auto mode
+        1            /usr/lib/jvm/java-17-openjdk-amd64/bin/javac   1711      manual mode
+        2            /usr/lib/jvm/java-21-openjdk-amd64/bin/javac   2111      manual mode
+        3            /usr/lib/jvm/java-25-openjdk-amd64/bin/javac   2511      manual mode
+
+        Press <enter> to keep the current choice[*], or type selection number: 
+        $
+
+    C. (Optional) Bulk Switch with update-java-alternatives.
+
+        If you want to switch all Java-related tools (like jshell, jar, and javadoc) at once, use this convenience tool: 
+
+        Run command to list available names: update-java-alternatives --list
+
+        Example:
+        $ update-java-alternatives --list
+        java-1.17.0-openjdk-amd64      1711       /usr/lib/jvm/java-1.17.0-openjdk-amd64
+        java-1.21.0-openjdk-amd64      2111       /usr/lib/jvm/java-1.21.0-openjdk-amd64
+        java-1.25.0-openjdk-amd64      2511       /usr/lib/jvm/java-1.25.0-openjdk-amd64
+
+        Run command to set the version: sudo update-java-alternatives --set java-1.25.0-openjdk-amd64
+
+        (Note: Replace the name with the exact identifier found in the list step)
+
+        Example:
+        $ sudo update-java-alternatives --set java-1.25.0-openjdk-amd64
+
+Step 3: set JAVA_HOME
+
+    To find the correct path for setting JAVA_HOME on Ubuntu, 
+    the most reliable method is to use the update-alternatives tool, 
+    which lists all installed versions and their absolute locations.
+
+    Run command: update-alternatives --list java
+
+    Example:
+        $ update-alternatives --list java
+        /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+        /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+        /usr/lib/jvm/java-25-openjdk-amd64/bin/java
+
+    Then, open the file: /etc/profile
+
+    Add to end of file and save:
+
+        JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64
+        PATH=$PATH:$JAVA_HOME/bin
+        export JAVA_HOME
+        export PATH
+
+    Reboot the system.
+
+Step 4: To verify
+
+    Run command: 
+        java --version
+        javac --version
+        echo $JAVA_HOME
