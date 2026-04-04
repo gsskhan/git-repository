@@ -9,3 +9,7 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
