@@ -26,10 +26,13 @@ public class EmailService {
 	@Async(value = AsyncConfig.VIRTUAL_THREAD_TASK_EXECUTOR)
 	public void sendEmail(String toAddress, String subjectText, String bodyText) {
 		try {
-			log.info("sendEmail method start by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
+			log.info("sendEmail method start by {} at {}.", Thread.currentThread(), LocalDateTime.now());
 			Thread.sleep(10000);
 			log.info("Mail sent to: [{}], Subject: [{}], Body [{}].", toAddress, subjectText, bodyText);
-			log.info("sendEmail method ended by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
+			log.info("sendEmail method ended by {} at {}.", Thread.currentThread(), LocalDateTime.now());
+		} catch (InterruptedException e) {
+			log.error("sendEmail method interrupted.", e);
+			Thread.currentThread().interrupt();
 		} catch (Exception e) {
 			log.error("sendEmail method failed.", e);
 		}
@@ -49,10 +52,14 @@ public class EmailService {
 	@Async(value = AsyncConfig.VIRTUAL_THREAD_TASK_EXECUTOR)
 	public CompletableFuture<Boolean> sendHtmlEmail(String toAddress, String subjectText, String bodyText) {
 		try {
-			log.info("sendHtmlEmail method start by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
+			log.info("sendHtmlEmail method start by {} at {}.", Thread.currentThread(), LocalDateTime.now());
 			Thread.sleep(10000);
 			log.info("Html mail sent to: [{}], Subject: [{}], Body [{}].", toAddress, subjectText, bodyText);
-			log.info("sendHtmlEmail method ended by {} at {}.", Thread.currentThread().toString(), LocalDateTime.now());
+			log.info("sendHtmlEmail method ended by {} at {}.", Thread.currentThread(), LocalDateTime.now());
+		} catch (InterruptedException e) {
+			log.error("sendHtmlEmail method interrupted.", e);
+			Thread.currentThread().interrupt();
+			return CompletableFuture.completedFuture(Boolean.FALSE);
 		} catch (Exception e) {
 			log.error("sendHtmlEmail method failed.", e);
 			return CompletableFuture.completedFuture(Boolean.FALSE);
