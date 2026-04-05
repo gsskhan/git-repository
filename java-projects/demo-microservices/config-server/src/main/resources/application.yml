@@ -4,8 +4,10 @@ server:
 spring:
   application:
     name: config-server
+  profiles:
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/your-username/your-config-repo.git
+        native:
+          search-locations: classpath:/config/
