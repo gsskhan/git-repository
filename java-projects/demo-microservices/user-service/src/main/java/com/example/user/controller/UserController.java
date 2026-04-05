@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/{id}")
-    public String getUser(@PathVariable String id) {
+    public String getUser(@PathVariable("id") String id) {
         return "User " + id;
     }
 }

@@ -16,7 +16,7 @@ public class OrderController {
     private UserClient userClient;
 
     @GetMapping("/{id}")
-    public String getOrder(@PathVariable String id) {
+    public String getOrder(@PathVariable("id") String id) {
         return "Order for " + userClient.getUser(id);
     }
 }
