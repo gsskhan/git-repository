@@ -18,3 +18,5 @@ You can access them via the Config Server URL:
 
 ### Test via API Gateway (Best Practice)
 * Endpoint: GET [http://localhost:8080/users/1](http://localhost:8080/users/1)
+* Endpoint: GET [http://localhost:8080/orders/1](http://localhost:8080/orders/1)
+* Endpoint: GET [http://localhost:8080/products/1](http://localhost:8080/products/1)
