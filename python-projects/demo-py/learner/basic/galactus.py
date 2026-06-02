@@ -18,7 +18,7 @@ def fn_glactus_says(hero, *planets, **weapons):
     print ("\n")    
 
 
-
+# Calling the function with different number of arguments.
 fn_glactus_says("Blade")
 fn_glactus_says("Dr. Strange", "earth")
 fn_glactus_says("Superman", "earth", "krypton")
