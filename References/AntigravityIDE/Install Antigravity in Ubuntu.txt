@@ -1,0 +1,44 @@
+How to install antigravity IDE in Ubuntu
+========================================
+
+1. Download AntiGravity IDE for Linux from https://www.antigravity.com/download.
+
+    Filename = Antigravity IDE.tar.gz
+
+2. Extract the downloaded file and move to /opt
+
+    cd ~/Downloads
+    tar -xf 'Antigravity IDE.tar.gz'
+    mv 'Antigravity IDE' /opt/AntigravityIDE
+
+3. Provide nessessary permission to the extracted file.
+
+    cd /opt/AntigravityIDE
+    sudo chmod 777 -R /opt/AntigravityIDE
+    sudo chown -R root:root /opt/AntigravityIDE
+    sudo chmod 4755 /opt/AntigravityIDE/chrome-sandbox
+
+4. Create Desktop Entry.
+
+    Create a file named antigravity-ide.desktop with below content in it.
+
+        [Desktop Entry]
+        Name=Google Antigravity IDE
+        Comment=Antigravity IDE
+        Type=Application
+        Categories=Development;IDE;
+        Exec="/opt/AntigravityIDE/antigravity-ide" %F
+        Terminal=false
+        StartupNotify=true
+        Icon=/opt/AntigravityIDE/antigravity-icon.png
+        Name[en_US]=Google Antigravity IDE
+
+    Copy antigravity-ide.desktop to ~/.local/share/applications/
+
+        cp ~/antigravity-ide.desktop ~/.local/share/applications/antigravity-ide.desktop
+
+    Make the file executable.
+
+        chmod +x ~/.local/share/applications/antigravity-ide.desktop
+
+5. Verify the installation by opening it from applications menu.   
