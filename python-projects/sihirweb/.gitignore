@@ -16,3 +16,4 @@
 
 # Python virtual env
 /.env/
+/.venv/
