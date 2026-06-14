@@ -15,5 +15,4 @@
 **/*__pycache__/*
 
 # Python virtual env
-/.env/
 /.venv/

@@ -10,17 +10,21 @@
 
     $ source .venv/bin/activate
 
-## Install dependencies
+## Copy dependencies into a text file named as requirement.txt and install it via pip.
 
     $ pip install --upgrade pip
 
-    $ pip install "fastapi[all]"
+    $ pip install -r requirements.txt 
 
-    $ python -m pip list
+    $ pip list
 
-## Copy dependencies as requirement.txt
+## Run the Project
 
-    $ pip freeze > requirements.txt
+    $ uvicorn app.main:app --reload
+
+## Swagger URL can be found at /docs
+    
+    http://127.0.0.1:8000/docs
 
 ## Project structure (Router-Service-Repository Pattern)
 
