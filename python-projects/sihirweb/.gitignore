@@ -5,6 +5,8 @@
 /.project
 /.settings/
 /.vscode/
+/.idea/
+/.kiro/
 
 # app
 /build/
