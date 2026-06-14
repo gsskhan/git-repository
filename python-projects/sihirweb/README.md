@@ -22,7 +22,7 @@
 
     $ pip freeze > requirements.txt
 
-## Project structure
+## Project structure (Router-Service-Repository Pattern)
 
     sihirweb/
     ├── app/
