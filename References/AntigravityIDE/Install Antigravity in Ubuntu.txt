@@ -1,7 +1,7 @@
 How to install antigravity IDE in Ubuntu
 ========================================
 
-1. Download AntiGravity IDE for Linux from https://www.antigravity.com/download.
+1. Download AntiGravity IDE for Linux from https://antigravity.google/download#antigravity-ide
 
     Filename = Antigravity IDE.tar.gz
 
