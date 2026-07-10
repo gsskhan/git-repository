@@ -29,8 +29,8 @@ class NotificationControllerTest {
     private NotificationController notificationController;
 
     @Test
-    void testSendNotification() {
-        Map<String, Object> result = notificationController.sendNotification();
+    void testSendEmail() {
+        Map<String, Object> result = notificationController.sendEmail();
 
         assertNotNull(result);
         assertEquals(Boolean.TRUE, result.get("message"));
@@ -38,11 +38,11 @@ class NotificationControllerTest {
     }
 
     @Test
-    void testSendHtmlNotification() {
+    void testSendHtmlEmail() {
         when(emailService.sendHtmlEmail(anyString(), anyString(), anyString()))
                 .thenReturn(CompletableFuture.completedFuture(Boolean.TRUE));
 
-        Map<String, Object> result = notificationController.sendHtmlNotification();
+        Map<String, Object> result = notificationController.sendHtmlEmail();
 
         assertNotNull(result);
         assertEquals("success", result.get("message"));
