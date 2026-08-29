@@ -1,0 +1,84 @@
+==========================
+Install Kafka using docker
+==========================
+
+Step 1: Pull kafka on docker and run it.
+
+	Command: docker run -d --name kafka-broker -p 9092:9092 apache/kafka:latest
+
+	Example:
+		$ docker run -d --name kafka-broker -p 9092:9092 apache/kafka:latest
+		1d2e4351c6ca4d0b759543142b4a8f95d7ae7f8e927b3d952226007282b3101e
+		$	
+
+Step 2: Create a new topic named my-test-topic with 3 partitions and a replication factor of 1.
+
+	Comand: docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+			  --create \
+			  --bootstrap-server localhost:9092 \
+			  --replication-factor 1 \
+			  --partitions 3 \
+			  --topic my-test-topic
+
+	Example: 
+	$ docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+		  --create \
+		  --bootstrap-server localhost:9092 \
+		  --replication-factor 1 \
+		  --partitions 3 \
+		  --topic my-test-topic
+	Created topic my-test-topic.
+
+Step 3: Confirm that your topic was successfully created.
+
+	Command: docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+			  --list \
+			  --bootstrap-server localhost:9092
+
+	Example:
+	$ docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+		  --list \
+		  --bootstrap-server localhost:9092
+	my-test-topic
+
+Step 4: Describe Topic Details. Check the configuration, partition distribution, and leaders of your topic.
+
+	Command: docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+			  --describe \
+			  --bootstrap-server localhost:9092 \
+			  --topic my-test-topic
+
+	Example:
+	$ docker exec -it kafka-broker /opt/kafka/bin/kafka-topics.sh \
+	  --describe \
+	  --bootstrap-server localhost:9092 \
+	  --topic my-test-topic
+	Topic: my-test-topic	TopicId: Q9d_1v_pSgK_jXXOaq3FzQ	PartitionCount: 3	ReplicationFactor: 1	Configs: min.insync.replicas=1,segment.bytes=1073741824
+		Topic: my-test-topic	Partition: 0	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+		Topic: my-test-topic	Partition: 1	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+		Topic: my-test-topic	Partition: 2	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+
+
+(Optional) Produce and Consume Messages
+---------------------------------------
+Open two separate terminal windows to produce and consume messages in real time.
+
+	Terminal 1: Run this command to start a console producer. Type a few messages and hit Enter after each one:
+
+	Command: docker exec -it kafka-broker /opt/kafka/bin/kafka-console-producer.sh \
+			  --bootstrap-server localhost:9092 \
+			  --topic my-test-topic
+
+
+	Terminal 2: Run the console consumer to read messages from the beginning of the topic:
+
+	Command: docker exec -it kafka-broker /opt/kafka/bin/kafka-console-consumer.sh \
+			  --bootstrap-server localhost:9092 \
+			  --topic my-test-topic \
+			  --from-beginning
+
+
+Stop and Start
+--------------
+To stop:  docker stop kafka-broker
+To start: docker start kafka-broker
