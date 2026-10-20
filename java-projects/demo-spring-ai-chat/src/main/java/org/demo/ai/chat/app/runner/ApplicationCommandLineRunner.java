@@ -24,7 +24,7 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
         try {
             var promptText = "Generate the names of any 5 famous cities of the world.";
             var response = applicationChatClient.call(promptText);
-            log.info("Reply from model: {} {}", System.lineSeparator(), response);
+            log.info("Reply from model:{}{}", System.lineSeparator(), response);
         } catch (Exception e) {
             log.error("Exception occurred at {}: {}", this.getClass().getSimpleName(), e.getMessage(), e);
             throw new Exception(e);
