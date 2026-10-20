@@ -1,4 +1,4 @@
-package org.demo.ai.chat.demo_ai_chat;
+package org.demo.ai.chat.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DemoAiChatApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoAiChatApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(DemoAiChatApplication.class, args);
+    }
 }
